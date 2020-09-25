@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/unsw-cse-capstone-project/capstone-project-comp3900-f13a-405_found/issues"
   },
-  "homepage": "https://github.com/unsw-cse-capstone-project/capstone-project-comp3900-f13a-405_found#readme"
+  "homepage": "https://github.com/unsw-cse-capstone-project/capstone-project-comp3900-f13a-405_found#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
 }
