@@ -1,4 +1,4 @@
-To run the app from the root folder
+#Instructions to run the app from the root folder
 
 ## Firstly, install all the dependancies by running this command
 ```bash setup.sh```
