@@ -1,6 +1,6 @@
 # Instructions to run the app from the root folder
 
-## Firstly, install all the dependancies by running this command
+## Firstly, install all the dependencies by running this command
 ```bash setup.sh```
 
 ## Use this command to run the backend and frontend concurrently
