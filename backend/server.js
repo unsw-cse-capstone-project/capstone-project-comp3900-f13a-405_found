@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+app.use("/api/dashboard.js", require("./routes/api/dashboard"));
+
 
 const PORT = process.env.PORT || 5000;
 
