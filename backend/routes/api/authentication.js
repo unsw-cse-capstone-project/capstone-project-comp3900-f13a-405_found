@@ -94,9 +94,30 @@ router.post(
               if (error) {
                 return next(error);
               }
-              const body = { _id: user._id, email: user.email };
-              const token = jwt.sign({ user: body}, config.get("jwtSecret"));
-              return res.json({ token });
+              //
+              // Set cookie on succesful signup, so the user can access the dashboard directly, (no need to go through the login process again)
+              const jwtPayload = {
+                user: {
+                  id: user.id,
+                },
+              };
+
+              jwt.sign(
+                jwtPayload,
+                config.get("jwtSecret"),
+                {
+                  expiresIn: config.get("jwtExpirationTime"),
+                  algorithm: "HS256",
+                },
+                (err, token) => {
+                  if (err) throw new Errors([{ msg: "JWT error" }], true);
+                  res.cookie("token", token, { httpOnly: true });
+                  return res.status(200).json({
+                    success: true,
+                  });
+                }
+              );
+              //
             }
           );
         } catch (error) {

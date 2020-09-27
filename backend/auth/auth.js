@@ -14,6 +14,7 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
       passReqToCallback: true,
+      algorithms: ["HS256"]
     },
     async (req, email, password, done) => {
       try {
@@ -47,7 +48,8 @@ passport.use(
   new localStrategy(
     {
       usernameField: "email",
-      passwordField: "password"
+      passwordField: "password",
+      algorithms: ["HS256"]
     },
     async (email, password, done) => {
       try {
@@ -71,7 +73,8 @@ passport.use(
   new JWTStrategy(
     {
       secretOrKey: config.get("jwtSecret"),
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token'),
+      algorithms: ["HS256"]
     },
     async (token, done) => {
       try {
