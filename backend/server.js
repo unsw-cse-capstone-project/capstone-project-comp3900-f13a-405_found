@@ -1,11 +1,16 @@
 const express = require("express");
+const errorHandler = require("./middleware/errorHandler");
 const connectToMongoDB = require("./config/db");
 const app = express();
 // prevent mongodb injections
 const mongoSanitize = require("express-mongo-sanitize");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 connectToMongoDB();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(mongoSanitize());
 app.use(
@@ -19,6 +24,9 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+
+// error handler
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
