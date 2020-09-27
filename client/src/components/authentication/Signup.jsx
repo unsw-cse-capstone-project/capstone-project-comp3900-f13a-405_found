@@ -52,14 +52,14 @@ const Signup = () => {
     switch (name) {
       case "name":
         errorsList.name =
-          value.length < 4 ? "Atleast 4 characaters required" : "";
+          value.length < 4 ? "At least 4 characaters required" : "";
         break;
       case "email":
         errorsList.email = regExp.test(value) ? "" : "Email address is invalid";
         break;
       case "password":
         errorsList.password =
-          value.length < 6 ? "Atleast 6 characaters required" : "";
+          value.length < 6 ? "At least 6 characters required" : "";
         break;
       case "confirmPassword":
         errorsList.confirmPassword =
