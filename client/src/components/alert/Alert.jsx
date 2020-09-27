@@ -17,7 +17,9 @@ const Alert = () => {
         }}
         dismissible
       >
-        <AlertBootstrap.Heading>Oh snap!</AlertBootstrap.Heading>
+        <AlertBootstrap.Heading>
+          Oh snap! You got an error!
+        </AlertBootstrap.Heading>
         <p>{alert.msg}</p>
       </AlertBootstrap>
     ))
