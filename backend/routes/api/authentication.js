@@ -22,7 +22,7 @@ router.post(
     // Validate fields
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      next(errors.array());
+      return next(errors.array());
     }
     passport.authenticate("signup", { session: false }, (err, user, info) => {
       if (!user) {
