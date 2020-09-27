@@ -4,6 +4,7 @@ import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
+import Signup from "./components/authentication/Signup";
 
 const testToSeeIfItWorks = () => (
   <div className='App'>
@@ -29,6 +30,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Route exact path='/' component={testToSeeIfItWorks} />
+        <Route exact path='/signup' component={Signup} />
       </Router>
     </Provider>
   );
