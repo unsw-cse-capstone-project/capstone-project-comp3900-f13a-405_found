@@ -6,6 +6,7 @@ const app = express();
 const mongoSanitize = require("express-mongo-sanitize");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const passport = require("passport")
 
 connectToMongoDB();
 
@@ -24,6 +25,9 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+
+// Test route protected by JWT auth. Delete later
+app.use('/api/secure', passport.authenticate('jwt', { session: false }), require('./routes/api/secure-routes'));
 
 // error handler
 app.use(errorHandler);
