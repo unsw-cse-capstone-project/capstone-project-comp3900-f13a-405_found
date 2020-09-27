@@ -51,7 +51,7 @@ const Signup = () => {
     switch (name) {
       case "name":
         errorsList.name =
-          value.length < 4 ? "At least 4 characaters required" : "";
+          value.length < 4 ? "At least 4 characters required" : "";
         break;
       case "email":
         errorsList.email = regExp.test(value) ? "" : "Email address is invalid";
