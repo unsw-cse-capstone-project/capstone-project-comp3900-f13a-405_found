@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-import Container from "react-bootstrap/Container";
+import { Redirect } from "react-router-dom";
 import "./Signup.scss";
 
 const Signup = () => {
@@ -20,27 +19,27 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const checkFormErrors = () => {
+      for (const [key, value] of Object.entries(signupForm)) {
+        if (value.length === 0) {
+          return true;
+        }
+      }
+      for (const [key, value] of Object.entries(errors)) {
+        if (value.length > 0) {
+          return true;
+        }
+      }
+      return false;
+    };
+
     setIsDisabled(checkFormErrors());
-  }, [errors]);
+  }, [errors, signupForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password } = signupForm;
     dispatch(signup({ name, email, password }));
-  };
-
-  const checkFormErrors = () => {
-    for (const [key, value] of Object.entries(signupForm)) {
-      if (value.length == 0) {
-        return true;
-      }
-    }
-    for (const [key, value] of Object.entries(errors)) {
-      if (value.length > 0) {
-        return true;
-      }
-    }
-    return false;
   };
 
   const onFormChange = (e) => {
@@ -64,6 +63,7 @@ const Signup = () => {
       case "confirmPassword":
         errorsList.confirmPassword =
           value !== signupForm.password ? "Passwords do not match!" : "";
+        break;
       default:
         break;
     }
@@ -76,7 +76,7 @@ const Signup = () => {
     return <Redirect to='/dashboard' />;
   }
   return (
-    <Container>
+    <>
       <h2>Sign up!</h2>
       <form onSubmit={handleSubmit} noValidate>
         <div className='form-group'>
@@ -151,7 +151,7 @@ const Signup = () => {
           Create User
         </button>
       </form>
-    </Container>
+    </>
   );
 };
 

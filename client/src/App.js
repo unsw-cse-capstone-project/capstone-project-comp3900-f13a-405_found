@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -6,6 +6,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Signup from "./components/authentication/Signup";
 import Alert from "./components/alert/Alert";
+import Container from "react-bootstrap/Container";
 
 const testToSeeIfItWorks = () => (
   <div className='App'>
@@ -30,9 +31,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Alert />
-        <Route exact path='/' component={testToSeeIfItWorks} />
-        <Route exact path='/signup' component={Signup} />
+        <Container>
+          <Alert />
+          <Route exact path='/' component={testToSeeIfItWorks} />
+          <Route exact path='/signup' component={Signup} />
+        </Container>
       </Router>
     </Provider>
   );

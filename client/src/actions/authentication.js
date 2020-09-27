@@ -12,7 +12,7 @@ export const signup = ({ name, email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    const res = await axios.post("api/authentication/signup", body, config);
+    await axios.post("api/authentication/signup", body, config);
     dispatch({
       type: SIGNUP_SUCCESS,
     });
