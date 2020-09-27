@@ -38,3 +38,28 @@ passport.use(
     }
   )
 );
+
+passport.use(
+  "login",
+  new localStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password"
+    },
+    async (email, password, done) => {
+      try {
+        let user = await UserModel.findOne({ email });
+        if (!user) {
+          return done(null, false, {message: "Invalid credentials"});
+        }
+        let validate = await user.isValidPassword(password);
+        if (!validate) {
+          return done(null, false, {message: "Invalid credentials"});
+        } 
+        return done(null, user, {message: "Login successful"});
+      } catch(error) {
+        return done(error);
+      }
+    }
+  )
+);

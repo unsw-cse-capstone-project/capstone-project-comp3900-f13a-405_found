@@ -73,4 +73,38 @@ router.post(
   }
 );
 
+// @route   POST api/authentication/login
+// @desc    Login an existing user
+// @access  Public
+router.post(
+  "/login",
+  async (req, res, next) => {
+    passport.authenticate(
+      "login",
+      async (err, user, info) => {
+        try {
+          if (err || !user) {
+            const error = new Errors("An error occurred");
+            return next(error);
+          }
+          req.login(
+            user,
+            { session: false },
+            async (error) => {
+              if (error) {
+                return next(error);
+              }
+              const body = { _id: user._id, email: user.email };
+              const token = jwt.sign({ user: body}, config.get("jwtSecret"));
+              return res.json({ token });
+            }
+          );
+        } catch (error) {
+          return next(error);
+        }
+      }
+    )(req, res, next);
+  }
+);
+
 module.exports = router;
