@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
+const { Errors, BadRequest } = require("../../utils/errors");
 
 // @route   POST api/authentication/signup
 // @desc    Register a new user
@@ -21,26 +22,25 @@ router.post(
     // Validate fields
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-      });
+      next(errors.array());
     }
     passport.authenticate("signup", { session: false }, (err, user, info) => {
       if (!user) {
-        return res.status(400).json({
-          errors: [
-            {
-              msg: info.message,
-            },
-          ],
-        });
+        next([
+          {
+            msg: info.message,
+          },
+        ]);
       }
       req.user = user;
-      next();
+      next([]);
     })(req, res, next);
   },
-  async (req, res, next) => {
+  async (err, req, res, next) => {
     try {
+      if (err.length > 0) {
+        throw new BadRequest(err);
+      }
       // Set cookie on succesful signup, so the user can access the dashboard directly, (no need to go through the login process again)
       const jwtPayload = {
         user: {
@@ -56,19 +56,19 @@ router.post(
           algorithm: "HS256",
         },
         (err, token) => {
-          if (err) throw err;
+          if (err) throw new Errors([{ msg: "JWT error" }]);
           // send a jwt httpOnly cookie that has the user id in it
           // might be good to have "secure" attribute set if
           // we're gonna deploy this using https :D
           res.cookie("token", token, { httpOnly: true });
-          res.json({
+          return res.status(200).json({
             success: true,
           });
         }
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      next(err);
     }
   }
 );

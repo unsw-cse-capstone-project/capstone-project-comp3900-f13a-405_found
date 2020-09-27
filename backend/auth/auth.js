@@ -3,7 +3,6 @@ const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const UserModel = require("../models/UserModel");
 const gravatar = require("gravatar");
-const { compareSync } = require("bcryptjs");
 
 passport.use(
   "signup",

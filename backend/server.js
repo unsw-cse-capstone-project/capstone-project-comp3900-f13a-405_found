@@ -1,4 +1,5 @@
 const express = require("express");
+const errorHandler = require("./middleware/errorHandler");
 const connectToMongoDB = require("./config/db");
 const app = express();
 // prevent mongodb injections
@@ -23,6 +24,9 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+
+// error handler
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
