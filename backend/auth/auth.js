@@ -1,8 +1,11 @@
 // passport js auth middleware
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
+const JWTStrategy = require("passport-jwt").Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 const UserModel = require("../models/UserModel");
 const gravatar = require("gravatar");
+const config = require("config");
 
 passport.use(
   "signup",
@@ -59,6 +62,22 @@ passport.use(
         return done(null, user, {message: "Login successful"});
       } catch(error) {
         return done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  new JWTStrategy(
+    {
+      secretOrKey: config.get("jwtSecret"),
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
       }
     }
   )
