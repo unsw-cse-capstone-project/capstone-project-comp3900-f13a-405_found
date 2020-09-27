@@ -39,7 +39,7 @@ router.post(
   async (err, req, res, next) => {
     try {
       if (err.length > 0) {
-        throw new BadRequest(err);
+        throw new BadRequest(err, true);
       }
       // Set cookie on succesful signup, so the user can access the dashboard directly, (no need to go through the login process again)
       const jwtPayload = {
@@ -56,7 +56,7 @@ router.post(
           algorithm: "HS256",
         },
         (err, token) => {
-          if (err) throw new Errors([{ msg: "JWT error" }]);
+          if (err) throw new Errors([{ msg: "JWT error" }], true);
           // send a jwt httpOnly cookie that has the user id in it
           // might be good to have "secure" attribute set if
           // we're gonna deploy this using https :D

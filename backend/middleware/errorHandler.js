@@ -1,8 +1,10 @@
 const { Errors } = require("../utils/errors");
 
 const errorHandler = (err, req, res, next) => {
-  // for any errors, remove the cookie
-  res.clearCookie("token");
+  // remove the cookie if explicitly set
+  if (err.getShouldRemoveCookie()) {
+    res.clearCookie("token");
+  }
   if (err instanceof Errors) {
     return res.status(err.code()).json({
       errors: err.errors,

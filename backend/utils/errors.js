@@ -1,7 +1,8 @@
 class Errors extends Error {
-  constructor(errors) {
+  constructor(errors, removeCookie = false) {
     super();
     this.errors = errors;
+    this.removeCookie = removeCookie;
   }
 
   code() {
@@ -12,6 +13,10 @@ class Errors extends Error {
     } else {
       return 500;
     }
+  }
+
+  getShouldRemoveCookie() {
+    return this.removeCookie;
   }
 }
 
