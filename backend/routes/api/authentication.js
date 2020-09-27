@@ -24,6 +24,7 @@ router.post(
     if (!errors.isEmpty()) {
       return next(errors.array());
     }
+    req.body.email = req.body.email.toLowerCase();
     passport.authenticate("signup", { session: false }, (err, user, info) => {
       if (!user) {
         next([
