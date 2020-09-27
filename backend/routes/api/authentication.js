@@ -14,9 +14,9 @@ router.post(
   "/signup",
   [
     body("email", "Email is not valid").isEmail(),
-    body("password", "Password must be 6 or more characters")
-      .exists()
-      .isLength({ min: 6 }),
+    body("password", "Password must be 6 or more characters").isLength({
+      min: 6,
+    }),
   ],
   (req, res, next) => {
     // Validate fields

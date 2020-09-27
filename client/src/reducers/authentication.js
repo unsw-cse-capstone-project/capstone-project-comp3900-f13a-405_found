@@ -4,7 +4,6 @@ const initialState = {
   isLoaded: false,
   isAuthenticated: false,
   user: null,
-  errors: [],
 };
 
 export default function (state = initialState, action) {
@@ -18,7 +17,6 @@ export default function (state = initialState, action) {
     case SIGNUP_FAIL:
       return {
         ...state,
-        ...action.payload,
         isAuthenticated: false,
         isLoaded: true,
       };
