@@ -4,7 +4,7 @@ const { NotFound } = require("../../utils/errors");
 const router = express.Router();
 
 // @route   GET api/spotify/search/:queryToBeSearched
-// @desc    Search for episodes & shows
+// @desc    Search for shows
 // @access  Public
 router.get(
   "/search/:queryToBeSearched",
@@ -14,7 +14,7 @@ router.get(
       // https://developer.spotify.com/documentation/web-api/reference/search/search/
       // available types : album , artist, playlist, track, show and episode.
       const uri = encodeURI(
-        `https://api.spotify.com/v1/search?q=${req.params.queryToBeSearched}&type=episode,show&market=AU&include_external=audio`
+        `https://api.spotify.com/v1/search?q=${req.params.queryToBeSearched}&type=show&market=AU&include_external=audio`
       );
       const headers = {
         "user-agent": "node.js",
