@@ -27,7 +27,12 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
-app.use("/api/spotify", require("./routes/api/spotify"));
+// Protected Route, only logged in users can access this :p
+app.use(
+  "/api/spotify",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/api/spotify")
+);
 
 // Test route protected by JWT auth. Delete later
 app.use(

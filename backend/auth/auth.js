@@ -2,10 +2,11 @@
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
+const ExtractJWT = require("passport-jwt").ExtractJwt;
 const UserModel = require("../models/UserModel");
 const gravatar = require("gravatar");
 const config = require("config");
+const jwt = require("jsonwebtoken");
 
 passport.use(
   "signup",
@@ -14,7 +15,7 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
       passReqToCallback: true,
-      algorithms: ["HS256"]
+      algorithms: ["HS256"],
     },
     async (req, email, password, done) => {
       try {
@@ -49,37 +50,46 @@ passport.use(
     {
       usernameField: "email",
       passwordField: "password",
-      algorithms: ["HS256"]
+      algorithms: ["HS256"],
     },
     async (email, password, done) => {
       try {
         let user = await UserModel.findOne({ email });
         if (!user) {
-          return done(null, false, {message: "Invalid credentials"});
+          return done(null, false, { message: "Invalid credentials" });
         }
         let validate = await user.isValidPassword(password);
         if (!validate) {
-          return done(null, false, {message: "Invalid credentials"});
-        } 
-        return done(null, user, {message: "Login successful"});
-      } catch(error) {
+          return done(null, false, { message: "Invalid credentials" });
+        }
+        return done(null, user, { message: "Login successful" });
+      } catch (error) {
         return done(error);
       }
     }
   )
 );
 
+const tokenExtractorFromCookie = (req) => {
+  let token = null;
+  if (req && req.cookies.token) {
+    token = req.cookies.token;
+  }
+  return token;
+};
+
 passport.use(
   new JWTStrategy(
     {
       secretOrKey: config.get("jwtSecret"),
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token'),
-      algorithms: ["HS256"]
+      jwtFromRequest: tokenExtractorFromCookie,
+      algorithms: ["HS256"],
     },
     async (token, done) => {
       try {
         return done(null, token.user);
       } catch (error) {
+        console.error(error);
         done(error);
       }
     }
