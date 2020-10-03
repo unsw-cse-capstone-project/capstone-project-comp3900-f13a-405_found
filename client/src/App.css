@@ -14,3 +14,7 @@
   padding-top: 8%;
   background-color: #CFD7DC;
 }
+
+button:disabled {
+  cursor: not-allowed;
+}

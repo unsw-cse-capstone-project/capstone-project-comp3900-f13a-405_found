@@ -1,4 +1,5 @@
 {
   "mongoURI": "mongodb+srv://devaccount:H80MySLuHPocrTj0@ultracast.lqoc1.mongodb.net/ultraCastDB?retryWrites=true&w=majority",
-  "jwtSecret": "superSECr3t!!:p"
+  "jwtSecret": "superSECr3t!!:p",
+  "jwtExpirationTime": 3600
 }

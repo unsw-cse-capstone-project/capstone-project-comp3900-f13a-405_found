@@ -1,9 +1,12 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import logo from "./logo.png";
 import "./App.css";
+import Signup from "./components/authentication/Signup";
+import Alert from "./components/alert/Alert";
+import Container from "react-bootstrap/Container";
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import Typography from '@material-ui/core/Typography';
@@ -35,7 +38,12 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Route exact path='/' component={loginComp} />
+        <Container>
+          <Alert />
+          <Route exact path='/' component={loginComp} />
+          <Route exact path='/signup' component={Signup} />
+        </Container>
+
       </Router>
     </Provider>
   );
