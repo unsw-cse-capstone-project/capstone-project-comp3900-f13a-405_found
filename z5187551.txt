@@ -1,0 +1,11 @@
+Week 1
+We had our first meeting to discuss our first sprint and we selected our scrum master who is Theon. 
+Me and Theon started working on the user stories.
+
+Week 2
+The start of the first sprint,  
+I started setting up the project structure and worked on user registration BE and FE.
+
+Week 3
+We had backlog refinement for the 2nd sprint. 
+I integrated Spotify API into the BE and worked on the search endpoint.
