@@ -4,6 +4,11 @@ import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import logo from "./logo.png";
 import "./App.css";
+import TextField from "@material-ui/core/TextField"
+import Button from "@material-ui/core/Button"
+import Typography from '@material-ui/core/Typography';
+
+
 
 const loginComp = () => (
   <div className='App'>
@@ -12,7 +17,12 @@ const loginComp = () => (
     <div className="row">
           <div className="middle-column">
           <img src={logo} className='App-logo' alt='logo' />
-            <h2>UltraCast</h2>
+          <Typography variant="h5" gutterBottom> UltraCast </Typography>
+            <TextField id="outlined-basic" label="Email Address" variant="outlined" />
+            <p></p>
+            <Button variant="contained">Log in</Button>
+            <p></p>
+            <Button variant="contained">Sign up</Button>
           </div>
           </div>
       

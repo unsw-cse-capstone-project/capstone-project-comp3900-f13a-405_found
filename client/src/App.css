@@ -4,12 +4,12 @@
 
 .App-logo {
   height: 20vmin;
-  top: 20%;
+  padding-bottom: 10px;
 }
 
 .middle-column {
   width: 28%;
-  height: 100vh;
+  height: 85vh;
   margin: auto;
   padding-top: 8%;
   background-color: #CFD7DC;
