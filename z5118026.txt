@@ -1,0 +1,13 @@
+Week 1:
+Had our first group meeting where we introduced ourselves and chose Theon to be the scrum master.
+
+Week 2:
+Started the first sprint (week end):
+I worked on the System Architecture diagram and came up with a rough draft on draw.io
+
+Week 3:
+Started second sprint (week end):
+I redesigned the System Architecture diagram to have a lot more depth and with help
+from Matt wrote up a description of the SA diagram.
+I attempted to integrate a BE endpoint for the dashboard. This was revised to be a task that 
+is encapsulated by other tasks and removed due to the big overlap. 
