@@ -6,9 +6,11 @@ const app = express();
 const mongoSanitize = require("express-mongo-sanitize");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const passport = require("passport")
+const passport = require("passport");
+const updateAccessTokenPeriodically = require("./utils/spotifyApiUtils");
 
 connectToMongoDB();
+updateAccessTokenPeriodically();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -25,9 +27,19 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+// Protected Route, only logged in users can access this :p
+app.use(
+  "/api/spotify",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/api/spotify")
+);
 
 // Test route protected by JWT auth. Delete later
-app.use('/api/secure', passport.authenticate('jwt', { session: false }), require('./routes/api/secure-routes'));
+app.use(
+  "/api/secure",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/api/secure-routes")
+);
 
 // error handler
 app.use(errorHandler);
