@@ -1,0 +1,20 @@
+.row {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 20vmin;
+    padding-bottom: 10px;
+  }
+  
+  .middle-column2 {
+    width: 28%;
+    height: 100vh;
+    margin: auto;
+    padding-top: 8%;
+    background-color: #CFD7DC;
+  }
+  
+  button:disabled {
+    cursor: not-allowed;
+  }

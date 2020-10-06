@@ -3,6 +3,7 @@ import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./Signup.scss";
+import mySignup from "./Signupform"
 
 const Signup = () => {
   const initialFormData = {
@@ -16,7 +17,7 @@ const Signup = () => {
 
   const [signupForm, setSignupForm] = useState(initialFormData);
   const authenticationState = useSelector((state) => state.authentication);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   useEffect(() => {
     const checkFormErrors = () => {
@@ -39,7 +40,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password } = signupForm;
-    dispatch(signup({ name, email, password }));
+    //dispatch(signup({ name, email, password }));
   };
 
   const onFormChange = (e) => {
@@ -76,82 +77,7 @@ const Signup = () => {
     return <Redirect to='/dashboard' />;
   }
   return (
-    <>
-      <h2>Sign up!</h2>
-      <form onSubmit={handleSubmit} noValidate>
-        <div className='form-group'>
-          <label>Name</label>
-          <input
-            type='text'
-            className={
-              errors.name.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='name'
-            onChange={onFormChange}
-          />
-          {errors.name.length > 0 && (
-            <span className='invalid-feedback'>{errors.name}</span>
-          )}
-        </div>
-
-        <div className='form-group'>
-          <label>Email</label>
-          <input
-            type='email'
-            className={
-              errors.email.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='email'
-            onChange={onFormChange}
-          />
-          {errors.email.length > 0 && (
-            <span className='invalid-feedback'>{errors.email}</span>
-          )}
-        </div>
-
-        <div className='form-group'>
-          <label>Password</label>
-          <input
-            type='password'
-            className={
-              errors.password.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='password'
-            onChange={onFormChange}
-          />
-          {errors.password.length > 0 && (
-            <span className='invalid-feedback'>{errors.password}</span>
-          )}
-        </div>
-
-        <div className='form-group'>
-          <label>Confirm Password</label>
-          <input
-            type='password'
-            className={
-              errors.confirmPassword.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='confirmPassword'
-            onChange={onFormChange}
-          />
-          {errors.confirmPassword.length > 0 && (
-            <span className='invalid-feedback'>{errors.confirmPassword}</span>
-          )}
-        </div>
-
-        <button disabled={isDisabled} type='submit' className='btn btn-primary'>
-          Create User
-        </button>
-      </form>
-    </>
+    mySignup()
   );
 };
 
