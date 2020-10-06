@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { signup } from "../../actions/authentication";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import "./Signupform.css";
 import { TextField } from '@material-ui/core';
 import Button from "@material-ui/core/Button"
 import { makeStyles } from "@material-ui/core";
 import logo from "../landing/logo.png";
 import Typography from '@material-ui/core/Typography';
+import { Redirect } from "react-router-dom";
 
 
 function FormA(initialValues, validateOnChange = false, validate) {
@@ -60,6 +61,7 @@ const initialValues= {
 export default function SignupForm() {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const authenticationState = useSelector((state) => state.authentication);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -70,7 +72,8 @@ export default function SignupForm() {
         if ('password' in fieldValues)
             temp.password = fieldValues.password.length < 6 ? "At least 6 characters required" : ""
         if ('confirmPassword' in fieldValues)
-            temp.confirmPassword = temp.confirmPassword !== temp.password ? "Passwords do not match!" : ""
+        temp.confirmPassword = fieldValues.confirmPassword !== values.password ? "Passwords do not match!" : ""
+
         setErrors({
             ...temp
         })
@@ -97,6 +100,9 @@ export default function SignupForm() {
         }
     }
 
+    if (authenticationState.isLoaded && authenticationState.isAuthenticated) {
+        return <Redirect to='/dashboard' />;
+      }
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
@@ -138,7 +144,7 @@ export default function SignupForm() {
                     /><p></p>
                     <TextField
                         variant="outlined"
-                        label="confirm Password"
+                        label="Confirm Password"
                         name="confirmPassword"
                         className={classes.root}
                         value={values.confirmPassword}
