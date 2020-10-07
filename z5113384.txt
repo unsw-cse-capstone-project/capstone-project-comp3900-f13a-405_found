@@ -1,0 +1,20 @@
+Week 1
+
+Had our first project meeting. We delegated roles for writing the project proposal. 
+I helped flesh out some user stories started by Matthew and contributed some of my own. 
+I also set up JIRA for the project and the google documents to be used for the report. 
+I worked out some reasonable dates for the sprints, based on the deadlines throughout 
+the term and wrote up the sprint proposal section.
+
+Week 2
+I cleaned up the user stories and ensured that all features in the spec were addressed by the user stories. 
+I also added acceptance criteria to each user story and started drafting up tentative sub tasks. 
+
+Week 3
+I implemented the backend logic for the login endpoint. I also reviewed PRs for backend code from other team members. 
+At this point, we have completed user story CAP-6, Account creation for users and have completed the backend for CAP-3, 
+Login for users. CAP-4, User dashboard, is pending work from previous endpoints and we have pulled in CAP-12, 
+Search for podcast episodes, and CAP-17, Detailed view of podcasts, for the upcoming sprint. Last sprint, we 
+may have overestimated our working capabilities. For the upcoming sprint, we have even more tasks but the team 
+is confident that we can complete them given that there is more availability in the week. It is good that team 
+members are across each other’s code when reviewing pull requests.
