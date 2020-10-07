@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector} from "react-redux";
 import "./Signupform.css";
-import { TextField } from '@material-ui/core';
+import { FormLabel, TextField } from '@material-ui/core';
 import Button from "@material-ui/core/Button"
 import { makeStyles } from "@material-ui/core";
 import logo from "../landing/logo.png";
 import Typography from '@material-ui/core/Typography';
 import { Redirect } from "react-router-dom";
+import  CustomTextField from "../CustomTextField"
 
 
-function FormA(initialValues, validateOnChange = false, validate) {
+const FormA = (initialValues, validateOnChange = false, validate) => {
 
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
+    //const dispatch = useDispatch();
 
     const handleInputChange = e => {
         const { name, value } = e.target
@@ -37,7 +39,7 @@ function FormA(initialValues, validateOnChange = false, validate) {
         setErrors,
         handleInputChange,
         resetForm
-
+        //handleSubmit
     }
 }
 
@@ -62,6 +64,15 @@ export default function SignupForm() {
     const dispatch = useDispatch();
     const classes = useStyles();
 
+    const handleSubmit = e => {
+        e.preventDefault()
+        if (validate()){
+            const { id, name, email, password } = values;
+            dispatch(signup({ name, email, password }));
+            //resetForm()
+        }
+    }
+
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('name' in fieldValues)
@@ -77,8 +88,8 @@ export default function SignupForm() {
             ...temp
         })
 
-        if (fieldValues == values)
-            return Object.values(temp).every(x => x == "")
+        if (fieldValues === values)
+            return Object.values(temp).every(x => x === "")
     }
 
     const {
@@ -88,23 +99,17 @@ export default function SignupForm() {
         setErrors,
         handleInputChange,
         resetForm
+        //handleSubmit
     } = FormA(initialValues, true, validate);
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        if (validate()){
-            const { name, email, password } = initialValues
-            dispatch(signup({ name, email, password }));
-            //resetForm()
-        }
-    }
+    
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
           <div className="middle-column2">
           <img src={logo} className='App-logo' alt='logo' />
           <Typography variant="h5" gutterBottom> Sign up for UltraCast </Typography>
-                    <TextField
+                    <CustomTextField
                         name="name"
                         label="Full Name"
                         variant="outlined"
@@ -112,10 +117,10 @@ export default function SignupForm() {
                         value={values.name}
                         onChange={handleInputChange}
                         error={errors.name}
-                        helperText={errors.name}
-                        autoComplete='off'
+                        //helperText={errors.name}
+                        
                     /><p></p>
-                    <TextField
+                    <CustomTextField
                         label="Email"
                         name="email"
                         variant="outlined"
@@ -123,10 +128,8 @@ export default function SignupForm() {
                         value={values.email}
                         onChange={handleInputChange}
                         error={errors.email}
-                        helperText={errors.email}
-                        autoComplete='off'
                     /><p></p>
-                    <TextField
+                    <CustomTextField
                         label="Password"
                         name="password"
                         variant="outlined"
@@ -134,10 +137,8 @@ export default function SignupForm() {
                         value={values.password}
                         onChange={handleInputChange}
                         error={errors.password}
-                        helperText={errors.password}
-                        autoComplete='off'
                     /><p></p>
-                    <TextField
+                    <CustomTextField
                         variant="outlined"
                         label="Confirm Password"
                         name="confirmPassword"
@@ -145,13 +146,10 @@ export default function SignupForm() {
                         value={values.confirmPassword}
                         onChange={handleInputChange}
                         error={errors.confirmPassword}
-                        helperText={errors.confirmPassword}
-                        autoComplete='off'
                     /><p></p>
                     <Button variant="contained"
                             type="submit">
                                 Submit</Button>
-                             
                         <Button variant="contained"
                             onClick={resetForm} > Reset</Button>
                     </div>
@@ -162,3 +160,4 @@ export default function SignupForm() {
         </form>
     )
 }
+
