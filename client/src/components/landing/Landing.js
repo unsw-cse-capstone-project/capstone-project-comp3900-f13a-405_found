@@ -31,8 +31,6 @@ const LoginComp = () => (
             </form>
           </div>
           </div>
-
-
     </header>
   </div>
 );

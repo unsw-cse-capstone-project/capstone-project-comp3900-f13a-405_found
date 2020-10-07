@@ -61,7 +61,6 @@ const initialValues= {
 export default function SignupForm() {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const authenticationState = useSelector((state) => state.authentication);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -99,10 +98,6 @@ export default function SignupForm() {
             //resetForm()
         }
     }
-
-    if (authenticationState.isLoaded && authenticationState.isAuthenticated) {
-        return <Redirect to='/dashboard' />;
-      }
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
@@ -162,10 +157,7 @@ export default function SignupForm() {
                     </div>
                     
           </div>
-
-                    <div>
-                        
-                            
+                    <div>            
                     </div>
         </form>
     )
