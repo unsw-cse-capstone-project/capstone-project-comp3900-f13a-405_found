@@ -1,4 +1,9 @@
-import { SIGNUP_SUCCESS, SIGNUP_FAIL } from "../actions/types";
+import {
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+} from "../actions/types";
 
 const initialState = {
   isLoaded: false,
@@ -8,12 +13,14 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case LOGIN_SUCCESS:
     case SIGNUP_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
         isLoaded: true,
       };
+    case LOGIN_FAIL:
     case SIGNUP_FAIL:
       return {
         ...state,

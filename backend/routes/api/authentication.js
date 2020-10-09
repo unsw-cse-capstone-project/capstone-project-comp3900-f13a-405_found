@@ -24,7 +24,7 @@ router.post(
     if (!errors.isEmpty()) {
       return next(errors.array());
     }
-    req.body.email = req.body.email.toLowerCase();
+    req.body.email = req.body.email.trim().toLowerCase();
     passport.authenticate("signup", { session: false }, (err, user, info) => {
       if (!user) {
         next([
@@ -77,56 +77,45 @@ router.post(
 // @route   POST api/authentication/login
 // @desc    Login an existing user
 // @access  Public
-router.post(
-  "/login",
-  async (req, res, next) => {
-    passport.authenticate(
-      "login",
-      async (err, user, info) => {
-        try {
-          if (err || !user) {
-            const error = new Errors("An error occurred");
-            return next(error);
-          }
-          req.login(
-            user,
-            { session: false },
-            async (error) => {
-              if (error) {
-                return next(error);
-              }
-              //
-              // Set cookie on succesful signup, so the user can access the dashboard directly, (no need to go through the login process again)
-              const jwtPayload = {
-                user: {
-                  id: user.id,
-                },
-              };
-
-              jwt.sign(
-                jwtPayload,
-                config.get("jwtSecret"),
-                {
-                  expiresIn: config.get("jwtExpirationTime"),
-                  algorithm: "HS256",
-                },
-                (err, token) => {
-                  if (err) throw new Errors([{ msg: "JWT error" }], true);
-                  res.cookie("token", token, { httpOnly: true });
-                  return res.status(200).json({
-                    success: true,
-                  });
-                }
-              );
-              //
-            }
-          );
-        } catch (error) {
-          return next(error);
-        }
+router.post("/login", async (req, res, next) => {
+  passport.authenticate("login", async (err, user, info) => {
+    try {
+      if (err || !user) {
+        return next(new BadRequest([{ msg: "Invalid Credentials" }]));
       }
-    )(req, res, next);
-  }
-);
+      req.login(user, { session: false }, async (error) => {
+        if (error) {
+          return next(new BadRequest([{ msg: "Invalid Credentials" }]));
+        }
+        //
+        // Set cookie on succesful signup, so the user can access the dashboard directly, (no need to go through the login process again)
+        const jwtPayload = {
+          user: {
+            id: user.id,
+          },
+        };
+
+        jwt.sign(
+          jwtPayload,
+          config.get("jwtSecret"),
+          {
+            expiresIn: config.get("jwtExpirationTime"),
+            algorithm: "HS256",
+          },
+          (err, token) => {
+            if (err) throw new Errors([{ msg: "JWT error" }], true);
+            res.cookie("token", token, { httpOnly: true });
+            return res.status(200).json({
+              success: true,
+            });
+          }
+        );
+        //
+      });
+    } catch (error) {
+      return next(error);
+    }
+  })(req, res, next);
+});
 
 module.exports = router;
