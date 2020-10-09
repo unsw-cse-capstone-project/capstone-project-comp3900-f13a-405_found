@@ -63,7 +63,7 @@ export const login = ({ email, password }) => async (dispatch) => {
   }
 };
 
-// User Login
+// Check if the user's cookie is still valid
 export const checkUserStillVerified = () => async (dispatch) => {
   try {
     const config = {
