@@ -30,7 +30,7 @@ router.get(
   }
 );
 
-// @route   GET api/spotify/shows/:podcast_id
+// @route   GET api/spotify/shows/:id
 // @desc    Get detailed information about a show by id
 // @access  Public
 router.get(
@@ -52,6 +52,32 @@ router.get(
     } catch (err) {
       console.error(err.message);
       next(new NotFound([{msg: "No shows found with id: " + req.params.id}]));
+    }
+  }
+);
+
+// @route   GET api/spotify/episodes/:id
+// @desc    Get detailed information about an episode by id
+// @access  Public
+router.get(
+  "/episodes/:id",
+
+  async(req, res, next) => {
+    try {
+      // https://developer.spotify.com/documentation/web-api/reference/episodes/
+      const uri = encodeURI(
+        `https://api.spotify.com/v1/episodes/${req.params.id}?market=AU`
+      );
+      const headers = {
+        "user-agent": "node.js",
+        Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+      };
+      const spotifyResponse = await axios.get(uri, { headers });
+    
+      return res.status(200).json(spotifyResponse.data);
+    } catch (err) {
+      console.error(err.message);
+      next(new NotFound([{msg: "No episode found with id: " + req.params.id}]));
     }
   }
 );
