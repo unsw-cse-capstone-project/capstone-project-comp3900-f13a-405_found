@@ -40,7 +40,7 @@ router.get(
     try {
       // https://developer.spotify.com/documentation/web-api/reference/shows/
       const uri = encodeURI(
-        `https://api.spotify.com/v1/shows?q=${req.params.id}`
+        `https://api.spotify.com/v1/shows?q=${req.params.id}&market=AU`
       );
       const headers = {
         "user-agent": "node.js",
