@@ -30,4 +30,30 @@ router.get(
   }
 );
 
+// @route   GET api/spotify/shows/:podcast_id
+// @desc    Get detailed information about a show by id
+// @access  Public
+router.get(
+  "/shows/:id",
+
+  async(req, res, next) => {
+    try {
+      // https://developer.spotify.com/documentation/web-api/reference/shows/
+      const uri = encodeURI(
+        `https://api.spotify.com/v1/shows?q=${req.params.id}`
+      );
+      const headers = {
+        "user-agent": "node.js",
+        Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+      };
+      const spotifyResponse = await axios.get(uri, { headers });
+    
+      return res.status(200).json(spotifyResponse.data);
+    } catch (err) {
+      console.error(err.message);
+      next(new NotFound([{msg: "No shows found with id: " + req.params.id}]));
+    }
+  }
+);
+
 module.exports = router;
