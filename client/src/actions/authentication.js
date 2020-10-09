@@ -62,3 +62,21 @@ export const login = ({ email, password }) => async (dispatch) => {
     });
   }
 };
+
+// User Login
+export const checkUserStillVerified = () => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    await axios.get("api/secure/", config);
+    dispatch({
+      type: LOGIN_SUCCESS,
+    });
+    dispatch(removeAllAlerts());
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};

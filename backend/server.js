@@ -34,13 +34,11 @@ app.use(
   require("./routes/api/spotify")
 );
 
-// Test route protected by JWT auth. Delete later
 app.use(
   "/api/secure",
   passport.authenticate("jwt", { session: false }),
   require("./routes/api/secure-routes")
 );
-
 // error handler
 app.use(errorHandler);
 
