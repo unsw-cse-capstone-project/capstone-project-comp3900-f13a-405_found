@@ -1,157 +1,132 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import "./Signup.scss";
+import "./Signup.css";
+
+import Button from "@material-ui/core/Button"
+import logo from "../landing/logo.png";
+import Typography from '@material-ui/core/Typography';
+import  CustomTextField from "../CustomTextField"
 
 const Signup = () => {
-  const initialFormData = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [errors, setFormErrors] = useState(initialFormData);
 
-  const [signupForm, setSignupForm] = useState(initialFormData);
+  const initialFValues= {
+    id: 0,
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+}
+  
   const authenticationState = useSelector((state) => state.authentication);
+  const [values, setValues] = useState(initialFValues);
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  
+const handleSubmit = e => {
+  e.preventDefault()
+  if (validate()){
+      const { id, name, email, password } = values;
+      dispatch(signup({ name, email, password }));
+      //resetForm()
+  }
+}
 
-  useEffect(() => {
-    const checkFormErrors = () => {
-      for (const [key, value] of Object.entries(signupForm)) {
-        if (value.length === 0) {
-          return true;
-        }
-      }
-      for (const [key, value] of Object.entries(errors)) {
-        if (value.length > 0) {
-          return true;
-        }
-      }
-      return false;
-    };
+const handleInputChange = e => {
+  const { name, value } = e.target
+  setValues({
+      ...values,
+      [name]: value
+  })
+  //if (validateOnChange)
+      validate({ [name]: value })
+}
 
-    setIsDisabled(checkFormErrors());
-  }, [errors, signupForm]);
+const resetForm = () => {
+  setValues(initialFValues);
+  setErrors({})
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { name, email, password } = signupForm;
-    dispatch(signup({ name, email, password }));
-  };
+const validate = (fieldValues = values) => {
+  let temp = { ...errors }
+  if ('name' in fieldValues)
+      temp.name = fieldValues.name.length < 4 ? "At least 4 characters required" : ""
+  if ('email' in fieldValues)
+      temp.email = (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/).test(fieldValues.email) ? "" : "Email address is invalid."
+  if ('password' in fieldValues)
+      temp.password = fieldValues.password.length < 6 ? "At least 6 characters required" : ""
+  if ('confirmPassword' in fieldValues)
+  temp.confirmPassword = fieldValues.confirmPassword !== values.password ? "Passwords do not match!" : ""
 
-  const onFormChange = (e) => {
-    const regExp = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
-    e.preventDefault();
-    const { name, value } = e.target;
-    let errorsList = { ...errors };
+  setErrors({
+      ...temp
+  })
 
-    switch (name) {
-      case "name":
-        errorsList.name =
-          value.length < 4 ? "At least 4 characters required" : "";
-        break;
-      case "email":
-        errorsList.email = regExp.test(value) ? "" : "Email address is invalid";
-        break;
-      case "password":
-        errorsList.password =
-          value.length < 6 ? "At least 6 characters required" : "";
-        break;
-      case "confirmPassword":
-        errorsList.confirmPassword =
-          value !== signupForm.password ? "Passwords do not match!" : "";
-        break;
-      default:
-        break;
-    }
-    setSignupForm({ ...signupForm, [name]: value });
-    setFormErrors(errorsList);
-  };
+  if (fieldValues === values)
+      return Object.values(temp).every(x => x === "")
+}
+
 
   // redirect to dashboard if the user is authenticated
   if (authenticationState.isLoaded && authenticationState.isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
   return (
-    <>
-      <h2>Sign up!</h2>
-      <form onSubmit={handleSubmit} noValidate>
-        <div className='form-group'>
-          <label>Name</label>
-          <input
-            type='text'
-            className={
-              errors.name.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='name'
-            onChange={onFormChange}
-          />
-          {errors.name.length > 0 && (
-            <span className='invalid-feedback'>{errors.name}</span>
-          )}
-        </div>
-
-        <div className='form-group'>
-          <label>Email</label>
-          <input
-            type='email'
-            className={
-              errors.email.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='email'
-            onChange={onFormChange}
-          />
-          {errors.email.length > 0 && (
-            <span className='invalid-feedback'>{errors.email}</span>
-          )}
-        </div>
-
-        <div className='form-group'>
-          <label>Password</label>
-          <input
-            type='password'
-            className={
-              errors.password.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='password'
-            onChange={onFormChange}
-          />
-          {errors.password.length > 0 && (
-            <span className='invalid-feedback'>{errors.password}</span>
-          )}
-        </div>
-
-        <div className='form-group'>
-          <label>Confirm Password</label>
-          <input
-            type='password'
-            className={
-              errors.confirmPassword.length > 0
-                ? "is-invalid form-control"
-                : "form-control"
-            }
-            name='confirmPassword'
-            onChange={onFormChange}
-          />
-          {errors.confirmPassword.length > 0 && (
-            <span className='invalid-feedback'>{errors.confirmPassword}</span>
-          )}
-        </div>
-
-        <button disabled={isDisabled} type='submit' className='btn btn-primary'>
-          Create User
-        </button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit}>
+            <div className="row">
+          <div className="middle-column2">
+          <img src={logo} className='App-logo' alt='logo' />
+          <Typography variant="h5" gutterBottom> Sign up for UltraCast </Typography>
+                    <CustomTextField
+                        name="name"
+                        label="Full Name"
+                        variant="outlined"
+                        
+                        value={values.name}
+                        onChange={handleInputChange}
+                        error={errors.name}
+                        //helperText={errors.name}
+                        
+                    /><p></p>
+                    <CustomTextField
+                        label="Email"
+                        name="email"
+                        variant="outlined"
+                        
+                        value={values.email}
+                        onChange={handleInputChange}
+                        error={errors.email}
+                    /><p></p>
+                    <CustomTextField
+                        label="Password"
+                        name="password"
+                        variant="outlined"
+                        
+                        value={values.password}
+                        onChange={handleInputChange}
+                        error={errors.password}
+                    /><p></p>
+                    <CustomTextField
+                        variant="outlined"
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        
+                        value={values.confirmPassword}
+                        onChange={handleInputChange}
+                        error={errors.confirmPassword}
+                    /><p></p>
+                    <Button variant="contained"
+                            type="submit">
+                                Submit</Button>
+                        <Button variant="contained"
+                            onClick={resetForm} > Reset</Button>
+                    </div>
+                    
+          </div>
+                    <div>            
+                    </div>
+        </form>
   );
 };
 
