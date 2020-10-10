@@ -9,3 +9,8 @@ I started setting up the project structure and worked on user registration BE an
 Week 3
 We had backlog refinement for the 2nd sprint. 
 I integrated Spotify API into the BE and worked on the search endpoint.
+
+Week 4
+- Integrated login endpoint in the FE (login works!)
+- Integrated an endpoint to check if the user's cookie is still valid
+on app reload
