@@ -1,5 +1,6 @@
 require("./auth/auth");
 const express = require("express");
+const checkAuth = require("./middleware/handleToken");
 const errorHandler = require("./middleware/errorHandler");
 const connectToMongoDB = require("./config/db");
 const app = express();
@@ -28,18 +29,20 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+
 // Protected Route, only logged in users can access this :p
 app.use(
   "/api/spotify",
-  passport.authenticate("jwt", { session: false }),
+  checkAuth,
   require("./routes/api/spotify")
 );
 
 app.use(
   "/api/secure",
-  passport.authenticate("jwt", { session: false }),
+  checkAuth,
   require("./routes/api/secure-routes")
 );
+
 // error handler
 app.use(errorHandler);
 
