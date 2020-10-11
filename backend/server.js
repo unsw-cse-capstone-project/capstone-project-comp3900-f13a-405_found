@@ -29,10 +29,11 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/authentication", require("./routes/api/authentication"));
+
 // Protected Route, only logged in users can access this :p
 app.use(
   "/api/spotify",
-  passport.authenticate("jwt", { session: false }),
+  checkAuth,
   require("./routes/api/spotify")
 );
 
