@@ -117,4 +117,15 @@ router.post("/login", async (req, res, next) => {
   })(req, res, next);
 });
 
+// @route   GET api/authentication/login
+// @desc    Logout an existing user
+// @access  Public
+router.get("/logout", async(req, res, next) => {
+  res.clearCookie("token", {httpOnly: true});
+  // At the moment this is not a secure logout. JWT token persists until its expiry.
+  // This only clears the token on the client side.
+  return res.status(200).json({success: true});
+});
+
+
 module.exports = router;

@@ -2,8 +2,12 @@ const { Errors } = require("../utils/errors");
 
 const errorHandler = (err, req, res, next) => {
   // remove the cookie if explicitly set
-  if (err.getShouldRemoveCookie()) {
-    res.clearCookie("token");
+  try {
+    if (err.getShouldRemoveCookie()) {
+      res.clearCookie("token");
+    }
+  } catch(err) {
+    // Do nothing. 
   }
   if (err instanceof Errors) {
     return res.status(err.code()).json({

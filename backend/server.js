@@ -1,5 +1,6 @@
 require("./auth/auth");
 const express = require("express");
+const checkAuth = require("./middleware/handleToken");
 const errorHandler = require("./middleware/errorHandler");
 const connectToMongoDB = require("./config/db");
 const app = express();
@@ -37,9 +38,10 @@ app.use(
 
 app.use(
   "/api/secure",
-  passport.authenticate("jwt", { session: false }),
+  checkAuth,
   require("./routes/api/secure-routes")
 );
+
 // error handler
 app.use(errorHandler);
 
