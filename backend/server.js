@@ -1,3 +1,4 @@
+require("./auth/auth");
 const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
 const connectToMongoDB = require("./config/db");

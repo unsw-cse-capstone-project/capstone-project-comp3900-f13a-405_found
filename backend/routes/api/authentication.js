@@ -1,4 +1,3 @@
-require("../../auth/auth");
 const express = require("express");
 const config = require("config");
 const jwt = require("jsonwebtoken");
