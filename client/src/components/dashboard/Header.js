@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Grid, InputBase, IconButton, makeStyles } from '@material-ui/core'
+import { AppBar, Toolbar, Grid, InputBase, IconButton, makeStyles, createMuiTheme } from '@material-ui/core'
 import axios from 'axios';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import Posts from './Posts';
 import Pagination from './Pagination';
+
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#ffd180',
+      },
+    }
+  })
 
 
 const useStyles = makeStyles(theme => ({
@@ -96,7 +104,7 @@ export default function Header() {
             <Grid><div className='container mt-5'>
         <Posts posts={currentPosts} loading={loading} />
         <Pagination
-         className={classes.pag}
+         className={theme.pag}
           postsPerPage={postsPerPage}
           totalPosts={posts.length}
           paginate={paginate}
