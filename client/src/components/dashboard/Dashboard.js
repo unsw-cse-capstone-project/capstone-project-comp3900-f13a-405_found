@@ -34,11 +34,7 @@ const Dashboard = () => {
         <ThemeProvider theme={theme}>
         <Sidebar />
         <div className={classes.appMain}>
-          <Header />
-          {/* <Podcasts /> */}
-          {/* <NewSearch/> */}
-          {/* <Pokedex/> */}
-         
+          <Header />       
         </div>
         <CssBaseline />
       </ThemeProvider>

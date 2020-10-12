@@ -31,9 +31,6 @@ const useStyles = makeStyles(theme => ({
             marginRight: theme.spacing(1)
         }
     },
-    pag: {
-        color: "black",
-    }
 }));
 
 export default function Header() {
