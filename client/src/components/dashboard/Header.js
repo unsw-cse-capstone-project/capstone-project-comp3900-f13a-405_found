@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Grid, InputBase, IconButton, makeStyles, createMuiThem
 import axios from 'axios';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
-import Posts from './Posts';
+import Podcasts from './Podcasts';
 import Pagination from './Pagination';
 
 const theme = createMuiTheme({
@@ -37,41 +37,41 @@ export default function Header() {
 
     const classes = useStyles();
 
-    const [posts, setPosts] = useState([]);
+    const [podcasts, setPodcasts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  const [podcastsPerPage] = useState(5);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPodcasts = async () => {
       setLoading(true);
       const res = await axios.get(`/api/spotify/search/a`);
-      setPosts(res.data.shows.items);
+      setPodcasts(res.data.shows.items);
       setLoading(false);
     };
 
-    fetchPosts();
+    fetchPodcasts();
   }, []);
 
   const handleSearchChange = (e) => {
-    const fetchPosts = async () => {
+    const fetchPodcasts = async () => {
       setLoading(true);
       const res = await axios.get(`/api/spotify/search/${e.target.value}`);
       var size = Object.keys(res.data.shows.items).length;
 
       console.log(size)
       
-      setPosts(res.data.shows.items);
+      setPodcasts(res.data.shows.items);
       setLoading(false);
     };
 
-    fetchPosts();
+    fetchPodcasts();
   }
 
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  // Get current podcasts
+  const indexOfLastPodcast = currentPage * podcastsPerPage;
+  const indexOfFirstPodcast = indexOfLastPodcast - podcastsPerPage;
+  const currentPodcasts = podcasts.slice(indexOfFirstPodcast, indexOfLastPodcast);
 
   // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
@@ -99,11 +99,11 @@ export default function Header() {
                 
             </Toolbar>
             <Grid><div className='container mt-5'>
-        <Posts posts={currentPosts} loading={loading} />
+        <Podcasts podcasts={currentPodcasts} loading={loading} />
         <Pagination
          className={theme.pag}
-          postsPerPage={postsPerPage}
-          totalPosts={posts.length}
+          podcastsPerPage={podcastsPerPage}
+          totalPodcasts={podcasts.length}
           paginate={paginate}
         />
       </div></Grid>
