@@ -13,7 +13,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
   useEffect(() => {
     dispatch(checkUserStillVerified());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Route
