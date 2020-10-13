@@ -6,8 +6,11 @@ import Signup from "./components/authentication/Signup";
 import LoginComp from "./components/landing/Landing";
 import Alert from "./components/alert/Alert";
 import Container from "react-bootstrap/Container";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
+
+const thisShouldBePrivate = () => <div>PRIVATEEEEE</div>;
 
 const App = () => {
   useEffect(() => {
@@ -20,6 +23,11 @@ const App = () => {
           <Alert />
           <Route exact path='/' component={LoginComp} />
           <Route exact path='/signup' component={Signup} />
+          <PrivateRoute
+            exact
+            path='/dashboard'
+            component={thisShouldBePrivate}
+          />
         </Container>
       </Router>
     </Provider>
