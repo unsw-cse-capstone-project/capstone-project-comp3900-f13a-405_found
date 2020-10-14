@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomTextField from "../CustomTextField";
 import { Link, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const LoginComp = () => {
   const initialFValues = {
@@ -74,6 +75,19 @@ const LoginComp = () => {
   if (authenticationState.isLoaded && authenticationState.isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
+  if (!authenticationState.isLoaded)
+    return (
+      <CircularProgress
+        size={200}
+        thickness={6}
+        style={{
+          margin: "0 auto",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+        }}
+      />
+    );
   return (
     <div className='App'>
       <header className='App-header'>
