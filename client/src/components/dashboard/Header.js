@@ -53,7 +53,12 @@ export default function Header() {
   }, []);
 
   const handleSearchChange = (e) => {
-    fetchPodcasts(e.target.value);
+    if(e.target.value === ""){
+      fetchPodcasts("a");
+    } else {
+      fetchPodcasts(e.target.value);
+    }
+    
   }
 
   // Get current podcasts
