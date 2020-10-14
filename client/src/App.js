@@ -29,7 +29,6 @@ const App = () => {
           <Alert />
           <Route exact path='/' component={LoginComp} />
           <Route exact path='/signup' component={Signup} />
-          <Route exact path='/dashboard' component={Dashboard} />
           <PrivateRoute
             exact
             path='/dashboard'
