@@ -3,6 +3,8 @@ import {
   SIGNUP_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from "./types";
 import axios from "axios";
 import { displayAlert, removeAllAlerts } from "./alert";
@@ -77,6 +79,24 @@ export const checkUserStillVerified = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
+    });
+  }
+};
+
+// logout the user
+export const logout = () => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    await axios.get("api/authentication/logout", config);
+    dispatch({
+      type: LOGOUT_SUCCESS,
+    });
+    dispatch(removeAllAlerts());
+  } catch (err) {
+    dispatch({
+      type: LOGOUT_FAIL,
     });
   }
 };

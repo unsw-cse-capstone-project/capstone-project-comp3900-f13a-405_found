@@ -9,8 +9,13 @@ import Container from "react-bootstrap/Container";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
+import LogoutButton from "./components/LogoutButton";
 
-const thisShouldBePrivate = () => <div>PRIVATEEEEE</div>;
+const thisShouldBePrivate = () => (
+  <div>
+    PRIVATEEEEE <LogoutButton />
+  </div>
+);
 
 const App = () => {
   useEffect(() => {

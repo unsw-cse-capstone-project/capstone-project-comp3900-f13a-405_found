@@ -112,6 +112,7 @@ const LoginComp = () => {
                 <CustomTextField
                   label='Password'
                   name='password'
+                  type='password'
                   variant='outlined'
                   value={values.password}
                   onChange={handleInputChange}
