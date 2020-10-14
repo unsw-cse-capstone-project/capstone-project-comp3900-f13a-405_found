@@ -22,7 +22,24 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    default: "Pending",
+  },
+  verfication_token: {
+    type: String,
+  },
+  permalink: {
+    type: String, 
+  },
 });
+
+// Secret code connected to the user's email
+// const secretCode = new mongoose.Schema({
+//   email
+// });
+
+
 
 UserSchema.pre("save", async function (next) {
   // prehook function to hash the password before being stored in the db

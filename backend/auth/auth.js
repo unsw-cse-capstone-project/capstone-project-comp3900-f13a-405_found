@@ -33,14 +33,31 @@ passport.use(
             d: "mm",
           }),
           password: password,
+          verification_token = randomstring.generate({
+            length: 64
+          }),
+          // permalink =  need to generate this somehow
         });
-        await user.save();
-        return done(null, user);
-      } catch (err) {
-        console.error(err.message);
-        done(err);
+        //await user.save();
+        try {
+          user.save(function (err) {
+            if (err) {
+              throw err;
+            } else {
+              VerifyEmail.sendverification(emaiil, verification_token, permalink);
+              return done(null, user);
+            }
+          });
+        } catch (err) {
+          console.error(err.message);
+          done(err);
+        }
+        //return done(null, user);
+     // } catch (err) {
+        //console.error(err.message);
+       // done(err);
       }
-    }
+    } // ???
   )
 );
 
