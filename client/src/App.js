@@ -6,6 +6,7 @@ import Signup from "./components/authentication/Signup";
 import LoginComp from "./components/landing/Landing";
 import Alert from "./components/alert/Alert";
 import Container from "react-bootstrap/Container";
+import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
@@ -31,7 +32,7 @@ const App = () => {
           <PrivateRoute
             exact
             path='/dashboard'
-            component={thisShouldBePrivate}
+            component={Dashboard}
           />
         </Container>
       </Router>
