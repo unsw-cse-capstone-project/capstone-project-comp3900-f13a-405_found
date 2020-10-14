@@ -12,8 +12,7 @@ const theme = createMuiTheme({
         main: '#ffd180',
       },
     }
-  })
-
+  });
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -42,30 +41,19 @@ export default function Header() {
   const [currentPage, setCurrentPage] = useState(1);
   const [podcastsPerPage] = useState(5);
 
-  useEffect(() => {
-    const fetchPodcasts = async () => {
-      setLoading(true);
-      const res = await axios.get(`/api/spotify/search/a`);
-      setPodcasts(res.data.shows.items);
-      setLoading(false);
-    };
+  const fetchPodcasts = async (term) => {
+    setLoading(true);
+    const res = await axios.get(`/api/spotify/search/${term}`);
+    setPodcasts(res.data.shows.items);
+    setLoading(false);
+  };
 
-    fetchPodcasts();
+  useEffect(() => {
+    fetchPodcasts("a");
   }, []);
 
   const handleSearchChange = (e) => {
-    const fetchPodcasts = async () => {
-      setLoading(true);
-      const res = await axios.get(`/api/spotify/search/${e.target.value}`);
-      var size = Object.keys(res.data.shows.items).length;
-
-      console.log(size)
-      
-      setPodcasts(res.data.shows.items);
-      setLoading(false);
-    };
-
-    fetchPodcasts();
+    fetchPodcasts(e.target.value);
   }
 
   // Get current podcasts
