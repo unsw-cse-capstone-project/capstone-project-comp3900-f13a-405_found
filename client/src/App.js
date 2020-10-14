@@ -7,8 +7,16 @@ import LoginComp from "./components/landing/Landing";
 import Alert from "./components/alert/Alert";
 import Container from "react-bootstrap/Container";
 import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
+import LogoutButton from "./components/LogoutButton";
+
+const thisShouldBePrivate = () => (
+  <div>
+    PRIVATEEEEE <LogoutButton />
+  </div>
+);
 
 const App = () => {
   useEffect(() => {
@@ -22,6 +30,11 @@ const App = () => {
           <Route exact path='/' component={LoginComp} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/dashboard' component={Dashboard} />
+          <PrivateRoute
+            exact
+            path='/dashboard'
+            component={Dashboard}
+          />
         </Container>
       </Router>
     </Provider>
