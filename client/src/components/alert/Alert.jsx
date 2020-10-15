@@ -1,40 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./Alert.scss";
-import { removeAlert } from "../../actions/alert";
-import AlertBootstrap from "react-bootstrap/Alert";
+import { message } from "antd";
+
 const Alert = () => {
   const alertState = useSelector((state) => state.alert);
-  const dispatch = useDispatch();
-  return (
-    alertState !== null &&
+
+  useEffect(() => {
     alertState.length > 0 &&
-    alertState.map((alert) => (
-      <AlertBootstrap
-        variant={alert.alertType}
-        onClose={() => {
-          dispatch(removeAlert(alert.id));
-        }}
-        dismissible
-      >
-        <AlertBootstrap.Heading>
-          Oh snap! You got an error!
-        </AlertBootstrap.Heading>
-        <p>{alert.msg}</p>
-      </AlertBootstrap>
-    ))
-  );
+      alertState.map((a) =>
+        message.error({ content: a.msg, key: a.id, duration: 4.5 })
+      );
+  }, [alertState]);
+  return null;
 };
 
 export default Alert;
-/* <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-        {alert.msg}
-        <div
-          className='cross-button'
-          onClick={() => {
-            dispatch(removeAlert(alert.id));
-          }}
-        >
-          X
-        </div>
-</div> */

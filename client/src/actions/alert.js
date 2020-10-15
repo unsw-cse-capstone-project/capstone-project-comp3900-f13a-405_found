@@ -1,33 +1,24 @@
 import { DISPLAY_ALERT, REMOVE_ALERT, REMOVE_ALL_ALERTS } from "./types";
 import { v4 as uuid } from "uuid";
+import { message } from "antd";
 
-export const displayAlert = (msg, alertType, timeout = 5000) => (dispatch) => {
+export const displayAlert = (msg) => (dispatch) => {
   const id = uuid();
 
   dispatch({
     type: DISPLAY_ALERT,
     payload: {
       msg,
-      alertType,
       id,
     },
   });
 
-  setTimeout(
-    () =>
-      dispatch({
-        type: REMOVE_ALERT,
-        payload: id,
-      }),
-    timeout
-  );
-};
-
-export const removeAlert = (id) => (dispatch) => {
-  dispatch({
-    type: REMOVE_ALERT,
-    payload: id,
-  });
+  setTimeout(() => {
+    dispatch({
+      type: REMOVE_ALL_ALERTS,
+      payload: id,
+    });
+  }, 5000);
 };
 
 export const removeAllAlerts = () => (dispatch) => {

@@ -9,6 +9,7 @@ import logo from "../landing/logo.png";
 import Typography from "@material-ui/core/Typography";
 import CustomTextField from "../CustomTextField";
 import { makeStyles } from "@material-ui/core";
+import { useCallback } from "react";
 
 const Signup = () => {
   const useStyles = makeStyles((theme) => ({
@@ -30,36 +31,6 @@ const Signup = () => {
   const [values, setValues] = useState(initialFValues);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (values.password.length > 0 && values.confirmPassword.length > 0)
-      validate();
-  }, [values]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      const { id, name, email, password } = values;
-      dispatch(signup({ name, email, password }));
-      //resetForm()
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-    //if (validateOnChange)
-    validate({ [name]: value });
-  };
-
-  const resetForm = () => {
-    setValues(initialFValues);
-    setErrors({});
-  };
-
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     if ("name" in fieldValues)
@@ -86,6 +57,30 @@ const Signup = () => {
 
     if (fieldValues === values)
       return Object.values(temp).every((x) => x === "");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      const { id, name, email, password } = values;
+      dispatch(signup({ name, email, password }));
+      //resetForm()
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+    //if (validateOnChange)
+    validate({ [name]: value });
+  };
+
+  const resetForm = () => {
+    setValues(initialFValues);
+    setErrors({});
   };
 
   // redirect to dashboard if the user is authenticated
