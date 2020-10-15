@@ -1,0 +1,9 @@
+@import '~antd/dist/antd.css';
+.cross-button {
+  font-weight: bold;
+  display: inline;
+  float: right;
+  &:hover {
+    cursor: pointer;
+  }
+}

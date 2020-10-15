@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 20vmin;
+  padding-bottom: 10px;
+}
+
+.middle-column {
+  width: 28%;
+  height: 100vh;
+  margin: auto;
+  padding-top: 8%;
+  background-color: #cfd7dc;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.loginForm {
+  &-buttons {
+    padding-top: 25px;
+    a {
+      color: rgba(0, 0, 0, 0.87);
+    }
+  }
+}

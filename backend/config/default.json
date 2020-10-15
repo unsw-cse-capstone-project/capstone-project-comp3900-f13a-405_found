@@ -1,4 +1,7 @@
 {
   "mongoURI": "mongodb+srv://devaccount:H80MySLuHPocrTj0@ultracast.lqoc1.mongodb.net/ultraCastDB?retryWrites=true&w=majority",
-  "jwtSecret": "superSECr3t!!:p"
+  "jwtSecret": "superSECr3t!!:p",
+  "jwtExpirationTime": 3600,
+  "spotifyClientId": "05442626b8a84afb967b52c4f33ca837",
+  "spotifyClientSecret": "c4a54e089a5f4d7e815289b4fbb9cbbe"
 }
