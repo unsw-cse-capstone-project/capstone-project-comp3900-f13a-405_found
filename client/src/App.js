@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import "./App.css";
 import Signup from "./components/authentication/Signup";
 import LoginComp from "./components/landing/Landing";
@@ -11,12 +16,9 @@ import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
 import LogoutButton from "./components/LogoutButton";
+import notfoundmeme from "./404.png";
 
-const thisShouldBePrivate = () => (
-  <div>
-    PRIVATEEEEE <LogoutButton />
-  </div>
-);
+const NotFound = () => <img style={{ width: "100%" }} src={notfoundmeme} />;
 
 const App = () => {
   useEffect(() => {
@@ -25,16 +27,17 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Container>
-          <Alert />
-          <Route exact path='/' component={LoginComp} />
-          <Route exact path='/signup' component={Signup} />
-          <PrivateRoute
-            exact
-            path='/dashboard'
-            component={Dashboard}
-          />
-        </Container>
+        <>
+          <Container>
+            <Alert />
+            <Switch>
+              <Route exact path='/' component={LoginComp} />
+              <Route exact path='/signup' component={Signup} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <Route component={NotFound} />
+            </Switch>
+          </Container>
+        </>
       </Router>
     </Provider>
   );

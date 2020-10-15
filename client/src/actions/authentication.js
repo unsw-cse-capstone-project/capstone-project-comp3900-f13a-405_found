@@ -27,9 +27,7 @@ export const signup = ({ name, email, password }) => async (dispatch) => {
   } catch (err) {
     const errorsList = err.response.data.errors;
     if (errorsList) {
-      errorsList.forEach((error) =>
-        dispatch(displayAlert(error.msg, "danger"))
-      );
+      errorsList.forEach((error) => dispatch(displayAlert(error.msg)));
     }
     dispatch({
       type: SIGNUP_FAIL,
@@ -55,9 +53,7 @@ export const login = ({ email, password }) => async (dispatch) => {
   } catch (err) {
     const errorsList = err.response.data.errors;
     if (errorsList) {
-      errorsList.forEach((error) =>
-        dispatch(displayAlert(error.msg, "danger"))
-      );
+      errorsList.forEach((error) => dispatch(displayAlert(error.msg)));
     }
     dispatch({
       type: LOGIN_FAIL,
