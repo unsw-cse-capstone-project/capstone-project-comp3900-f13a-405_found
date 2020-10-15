@@ -131,6 +131,7 @@ const LoginComp = () => {
                 <Link style={{ textDecoration: "none" }} to='/signup'>
                   <Button
                     className={classes.root}
+                    color='primary'
                     size='large'
                     variant='contained'
                   >

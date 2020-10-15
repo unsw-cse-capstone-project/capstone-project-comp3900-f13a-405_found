@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -8,8 +8,16 @@ import Button from "@material-ui/core/Button";
 import logo from "../landing/logo.png";
 import Typography from "@material-ui/core/Typography";
 import CustomTextField from "../CustomTextField";
+import { makeStyles } from "@material-ui/core";
 
 const Signup = () => {
+  const useStyles = makeStyles((theme) => ({
+    MR: {
+      marginRight: "30px",
+    },
+  }));
+  const classes = useStyles();
+
   const initialFValues = {
     id: 0,
     name: "",
@@ -23,6 +31,11 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (values.password.length > 0 && values.confirmPassword.length > 0)
+      validate();
+  }, [values]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
@@ -34,7 +47,6 @@ const Signup = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(values);
     setValues({
       ...values,
       [name]: value,
@@ -121,16 +133,23 @@ const Signup = () => {
           <CustomTextField
             variant='outlined'
             label='Confirm Password'
+            type='password'
             name='confirmPassword'
             value={values.confirmPassword}
             onChange={handleInputChange}
             error={errors.confirmPassword}
           />
           <p></p>
-          <Button variant='contained' type='submit'>
+          <Button
+            size='large'
+            variant='contained'
+            color='primary'
+            type='submit'
+            className={classes.MR}
+          >
             Submit
           </Button>
-          <Button variant='contained' onClick={resetForm}>
+          <Button size='large' variant='contained' onClick={resetForm}>
             {" "}
             Reset
           </Button>

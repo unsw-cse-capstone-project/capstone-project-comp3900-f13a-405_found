@@ -8,8 +8,18 @@ import FormControl from "@material-ui/core/FormControl";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    width: "25ch",
+  },
+}));
 
 export default function CustomTextField(props) {
+  const classes = useStyles();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -38,6 +48,7 @@ export default function CustomTextField(props) {
       name={name}
       value={value}
       onChange={onChange}
+      className={classes.textField}
       autoComplete='off'
       {...(error && { error: true, helperText: error })}
     />
@@ -45,6 +56,7 @@ export default function CustomTextField(props) {
     <FormControl
       variant='outlined'
       error={error && error.length > 0 ? true : false}
+      className={classes.textField}
     >
       <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
       <OutlinedInput
