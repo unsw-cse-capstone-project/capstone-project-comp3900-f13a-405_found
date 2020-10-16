@@ -8,12 +8,6 @@ const gravatar = require("gravatar");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 
-// mailgun email app
-const mailgun = require("mailgun-js");
-const DOMAIN = 'sandbox280956bc09434c06a149245f4866d022.mailgun.org';
-const mg = mailgun({apiKey: '5e4432559b816f10156fb0617ab6522b-2fbe671d-e66e83d1', domain: DOMAIN});
-
-
 passport.use(
   "signup",
   new localStrategy(
@@ -30,21 +24,6 @@ passport.use(
         if (user) {
           return done(null, false, { message: "User Exists" });
         }
-
-        const data = {
-          from: 'noreply@test.com',
-          to: email,
-          subject: 'Hello',
-          text: 'Testing some Mailgun awesomness!'
-        };
-        mg.messages().send(data, function (error, body) {
-          console.log(body);
-        });
-
-        
-
-
-
         user = new UserModel({
           name: req.body.name,
           email,
@@ -54,14 +33,31 @@ passport.use(
             d: "mm",
           }),
           password: password,
+          verification_token = randomstring.generate({
+            length: 64
+          }),
+          // permalink =  need to generate this somehow
         });
-        await user.save();
-        return done(null, user);
-      } catch (err) {
-        console.error(err.message);
-        done(err);
+        //await user.save();
+        try {
+          user.save(function (err) {
+            if (err) {
+              throw err;
+            } else {
+              VerifyEmail.sendverification(emaiil, verification_token, permalink);
+              return done(null, user);
+            }
+          });
+        } catch (err) {
+          console.error(err.message);
+          done(err);
+        }
+        //return done(null, user);
+     // } catch (err) {
+        //console.error(err.message);
+       // done(err);
       }
-    }
+    } // ???
   )
 );
 
@@ -116,4 +112,3 @@ passport.use(
     }
   )
 );
-

@@ -20,6 +20,7 @@
     "gravatar": "^1.8.1",
     "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
+    "mailgun-js": "^0.22.0",
     "mongoose": "^5.10.7",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
