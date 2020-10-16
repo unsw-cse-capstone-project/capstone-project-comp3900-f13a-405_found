@@ -4,6 +4,7 @@ import {
   UNSUBSCRIBE_SUCCESS,
   GET_SUBSCRIPTIONS,
   GET_SHOWS_BY_IDS,
+  UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
 } from "./types";
 import { displayAlert, removeAllAlerts } from "./alert";
 
@@ -75,6 +76,25 @@ export const getShowsDetailsByListOfIds = (ids) => async (dispatch) => {
     const res = await axios.get(`api/spotify/bulkshows/${ids}`, config);
     dispatch({
       type: GET_SHOWS_BY_IDS,
+      payload: res.data,
+    });
+    dispatch(removeAllAlerts());
+  } catch (err) {
+    displayAlert("An Error occurred :(");
+  }
+};
+
+// GET list of shows by list of ids
+// comma seperated ids
+export const getSubscribedShowsSubsCount = (ids) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const res = await axios.get(`api/subscription/count/${ids}`, config);
+    dispatch({
+      type: UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
       payload: res.data,
     });
     dispatch(removeAllAlerts());

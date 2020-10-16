@@ -3,12 +3,15 @@ import {
   UNSUBSCRIBE_SUCCESS,
   GET_SUBSCRIPTIONS,
   GET_SHOWS_BY_IDS,
+  UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
 } from "../actions/types";
 
 const initialState = {
   isLoaded: false,
+  showsLoaded: false,
   subscriptions: [],
   detailedSubscriptions: [],
+  subscribedShowSubCounts: [],
 };
 
 export default function (state = initialState, action) {
@@ -37,7 +40,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoaded: true,
+        showsLoaded: true,
         detailedSubscriptions: action.payload.shows,
+      };
+    case UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT:
+      return {
+        ...state,
+        isLoaded: true,
+        subscribedShowSubCounts: action.payload,
       };
     default:
       return state;

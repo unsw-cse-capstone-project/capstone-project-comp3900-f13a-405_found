@@ -39,6 +39,30 @@ router.post("/unsubscribe/:showId", async (req, res) => {
   }
 });
 
+// @route   GET api/subscription/count/:ids
+// @desc    Get sub count on the system based on a list of ids, ids
+//          is a comma separated values of show ids
+// @access  Private
+router.get("/count/:ids", async (req, res) => {
+  try {
+    const listOfIds = req.params.ids.split(",").filter((id) => id.length > 0);
+    const subsResults = [];
+    console.log("here");
+    for (let i = 0; i < listOfIds.length; i++) {
+      console.log("yo");
+      const subscriptions = await Subscription.find({
+        showId: listOfIds[i],
+      });
+      console.log(subscriptions);
+      subsResults.push({ id: listOfIds[i], count: subscriptions.length });
+    }
+    return res.status(200).json(subsResults);
+  } catch (err) {
+    console.error(err.message);
+    next(new BadRequest([{ msg: "Bad Request!!" }]));
+  }
+});
+
 // @route   POST api/subscription/subscribe/:showId
 // @desc    Subscribe to a show
 // @access  Private
