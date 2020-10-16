@@ -20,6 +20,25 @@ router.get("/", async (req, res) => {
   }
 });
 
+// @route   POST api/subscription/unsubscribe/:showId
+// @desc    Get User's subscriptions
+// @access  Private
+router.post("/unsubscribe/:showId", async (req, res) => {
+  try {
+    const subscriptions = await Subscription.deleteOne({
+      user: req.user.id,
+      showId: req.params.showId,
+    });
+    if (subscriptions.deletedCount <= 0) {
+      return res.status(400).json({ Success: false });
+    }
+    return res.status(200).json({ Success: true });
+  } catch (err) {
+    console.error(err.message);
+    next(new BadRequest([{ msg: "Bad Request!!" }]));
+  }
+});
+
 // @route   POST api/subscription/subscribe/:showId
 // @desc    Subscribe to a show
 // @access  Private
