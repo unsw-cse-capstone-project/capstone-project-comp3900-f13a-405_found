@@ -43,14 +43,11 @@ app.use(
   require("./routes/api/secure-routes")
 );
 
-// Unprotected right now for testing - once done will be changed to protected version below:
-app.use("/api/user-history", require("./routes/api/user-history"));
-
-//app.use(
-//  "/api/user-history",
-//  checkAuth,
-//  require("./routes/api/user-history.js")
-//);
+app.use(
+  "/api/user-history",
+  checkAuth,
+  require("./routes/api/user-history.js")
+);
 
 // error handler
 app.use(errorHandler);

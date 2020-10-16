@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { collection } = require("./UserModel");
 
 const HistorySchema = new mongoose.Schema({
-    u_name: {
+    user_id: {
         type: String,
         required: true,
     },
-    p_name: {
+    podcast_id: {
         type: String,
         required: true,
     },
@@ -16,5 +16,5 @@ const HistorySchema = new mongoose.Schema({
     },
 });
 
-const HistoryModel = mongoose.model("user_history", HistorySchema, "user_histories");
+const HistoryModel = mongoose.model("user_history", HistorySchema);
 module.exports = HistoryModel;

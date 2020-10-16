@@ -6,59 +6,50 @@ const { NotFound } = require("../../utils/errors");
 const router = express.Router();
 
 
-// @route  GET api/user-history/:u_name
+// @route  GET api/user-history
 // @desc   returns a user's history for a given username.
 // @access Public
 
-
 router.get (
-    '/:u_name', (req, res, next) => {
-        HistoryModel.find({u_name: `${req.params.u_name}`}).
-        exec((err, user_history) => {
-            if (err) {
-                console.error(err.message);
-                next(new NotFound([{msg:"No user-history for user:" + req.params.u_name}]));
-            }
-            user_history.forEach(entry => {
-                console.log(JSON.stringify(entry))
-            });
-            return res.send(JSON.stringify(user_history));
+    '/', (req, res, next) => {
+        const query = HistoryModel.find({user_id: `${req.user.id}`});
+        query.exec()
+        .then(user_history => {
+            const json_user_history = JSON.stringify(user_history);
+            return res.status(200).json(json_user_history);
+        })
+        .catch(err => {
+            console.error(err.message);
+            next(new notfound([{msg: "unable to find user history for user:" + req.user.id}]));
         });
     }
+)
 
-);
-
-// @route  POST api/user-history/:u_name
-// @desc   creates/updates a user-history entry in MongoDB for a given podcast and person - returns new/updated entry. 
+// @route  POST api/user-history/:podcast_id
+// @desc   creates/updates an entry for a user's history - :id spotify API id reference. 
 // @access Public
 
 router.post (
-    '/:u_name', (req, res, next) => {
-        var u_name = req.params.u_name;
-        var p_name = req.body.p_name;
-        
-        if (!u_name || !p_name) {
-            next (new NotFound([{msg: "Missing values for username or podcast"}]));
-        }
-
-        const filter = {u_name: `${u_name}`, p_name: `${p_name}`};
+    '/:p_id', (req, res, next) => {
+        const filter = {user_id: `${req.user.id}`, podcast_id: `${req.params.p_id}`};
         const update = {last_played: `${Date.now()}`};
-        HistoryModel.findOneAndUpdate(filter, update, {
+
+        const query = HistoryModel.findOneAndUpdate(filter, update, {
             new: true,
             upsert: true
-        }).
-        lean().
-        exec((err, upd_podcast) => {
-            if (err) {
-                console.error(err.message);
-                next (new NotFound([{msg: `Unable to record to user history`}]));
-            }
-            return res.send(JSON.stringify(upd_podcast)); 
+        }).lean();
+
+        query.exec()
+        .then(upd_podcast => {
+            const json_upd_podcast = JSON.stringify(upd_podcast);
+            return res.status(200).json(json_upd_podcast);
+        })
+        .catch(err => {
+            console.error(err.message);
+            next(new NotFound([{msg: "Could not update history for podcast: " + req.params.p_id + "for user: " + req.user.u_id}]));
         });
     }
-
-);
-
+)
 
 module.exports = router;
 
