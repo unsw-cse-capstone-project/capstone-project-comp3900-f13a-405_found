@@ -4,6 +4,22 @@ const { BadRequest } = require("../../utils/errors");
 const router = express.Router();
 const Subscription = require("../../models/SubscriptionModel");
 
+// @route   GET api/subscription/
+// @desc    Get User's subscriptions
+// @access  Private
+router.get("/", async (req, res) => {
+  try {
+    const subscriptions = await Subscription.find({ user: req.user.id }).select(
+      "-__v"
+    );
+
+    return res.status(200).json(subscriptions);
+  } catch (err) {
+    console.error(err.message);
+    next(new BadRequest([{ msg: "Bad Request!!" }]));
+  }
+});
+
 // @route   POST api/subscription/subscribe/:showId
 // @desc    Subscribe to a show
 // @access  Private
