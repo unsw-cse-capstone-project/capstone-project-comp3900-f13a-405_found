@@ -13,8 +13,6 @@ const Podcasts = ({ podcasts, loading }) => {
             {podcasts.name}{" "}
           </div>
           <div style={{ textAlign: "right", color: "black" }}>
-            {" "}
-            Subscriber count: {Math.floor(Math.random() * 115) + 1}k{" "}
             <img height='60px' width='60px' src={podcasts.images[0].url} />
           </div>
           <SubscribeButton id={podcasts.id} />
