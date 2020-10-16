@@ -2,11 +2,13 @@ import {
   SUBSCRIBE_SUCCESS,
   UNSUBSCRIBE_SUCCESS,
   GET_SUBSCRIPTIONS,
+  GET_SHOWS_BY_IDS,
 } from "../actions/types";
 
 const initialState = {
   isLoaded: false,
   subscriptions: [],
+  detailedSubscriptions: [],
 };
 
 export default function (state = initialState, action) {
@@ -14,7 +16,7 @@ export default function (state = initialState, action) {
     case SUBSCRIBE_SUCCESS:
       return {
         ...state,
-        subscriptions: state.subscriptions.push(action.payload),
+        subscriptions: state.subscriptions.concat([action.payload]),
         isLoaded: true,
       };
     case UNSUBSCRIBE_SUCCESS:
@@ -30,6 +32,12 @@ export default function (state = initialState, action) {
         ...state,
         isLoaded: true,
         subscriptions: action.payload.map((result) => result.showId),
+      };
+    case GET_SHOWS_BY_IDS:
+      return {
+        ...state,
+        isLoaded: true,
+        detailedSubscriptions: action.payload.shows,
       };
     default:
       return state;

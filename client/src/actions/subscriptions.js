@@ -3,10 +3,12 @@ import {
   SUBSCRIBE_SUCCESS,
   UNSUBSCRIBE_SUCCESS,
   GET_SUBSCRIPTIONS,
+  GET_SHOWS_BY_IDS,
 } from "./types";
+import { displayAlert, removeAllAlerts } from "./alert";
 
 // Subscribe to a show by the id
-export const subscribeToShow = ({ id }) => async (dispatch) => {
+export const subscribeToShow = (id) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -14,7 +16,7 @@ export const subscribeToShow = ({ id }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post(`subscription/subscribe/${id}`, {}, config);
+    await axios.post(`api/subscription/subscribe/${id}`, {}, config);
     dispatch({
       type: SUBSCRIBE_SUCCESS,
       payload: id,
@@ -26,7 +28,7 @@ export const subscribeToShow = ({ id }) => async (dispatch) => {
 };
 
 // Unsubscribe to a show by the id
-export const unsubscribeFromShow = ({ id }) => async (dispatch) => {
+export const unsubscribeFromShow = (id) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -34,7 +36,7 @@ export const unsubscribeFromShow = ({ id }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post(`subscription/unsubscribe/${id}`, {}, config);
+    await axios.post(`api/subscription/unsubscribe/${id}`, {}, config);
     dispatch({
       type: UNSUBSCRIBE_SUCCESS,
       payload: id,
@@ -46,14 +48,33 @@ export const unsubscribeFromShow = ({ id }) => async (dispatch) => {
 };
 
 // GET user's subscriptions
-export const getSubscriptions = ({ id }) => async (dispatch) => {
+export const getSubscriptions = () => async (dispatch) => {
   try {
     const config = {
       withCredentials: true,
     };
-    const res = await axios.get(`subscription/unsubscribe/${id}`, config);
+    const res = await axios.get(`api/subscription/`, config);
     dispatch({
       type: GET_SUBSCRIPTIONS,
+      payload: res.data,
+    });
+    dispatch(removeAllAlerts());
+  } catch (err) {
+    displayAlert("An Error occurred :(");
+  }
+};
+
+// GET list of shows by list of ids
+// comma seperated ids
+export const getShowsDetailsByListOfIds = (ids) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const res = await axios.get(`api/spotify/bulkshows/${ids}`, config);
+    dispatch({
+      type: GET_SHOWS_BY_IDS,
       payload: res.data,
     });
     dispatch(removeAllAlerts());
