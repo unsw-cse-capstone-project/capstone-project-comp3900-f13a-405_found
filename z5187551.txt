@@ -17,3 +17,4 @@ on app reload
 
 Week 5
 - created Private Route for FE
+- I did backend and frontend for subscriptions, notification still not included tho
