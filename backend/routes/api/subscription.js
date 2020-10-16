@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 });
 
 // @route   POST api/subscription/unsubscribe/:showId
-// @desc    Get User's subscriptions
+// @desc    Unsubscribe based on showId
 // @access  Private
 router.post("/unsubscribe/:showId", async (req, res) => {
   try {
