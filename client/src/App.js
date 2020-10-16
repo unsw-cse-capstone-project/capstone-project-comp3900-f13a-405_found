@@ -1,34 +1,43 @@
-import React, { Fragment } from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import store from "./store";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import logo from "./logo.svg";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import "./App.css";
+import Signup from "./components/authentication/Signup";
+import LoginComp from "./components/landing/Landing";
+import Alert from "./components/alert/Alert";
+import Container from "react-bootstrap/Container";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import store from "./store";
+import { checkUserStillVerified } from "./actions/authentication";
+import LogoutButton from "./components/LogoutButton";
+import notfoundmeme from "./404.png";
 
-const testToSeeIfItWorks = () => (
-  <div className='App'>
-    <header className='App-header'>
-      <img src={logo} className='App-logo' alt='logo' />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className='App-link'
-        href='https://reactjs.org'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
-);
+const NotFound = () => <img style={{ width: "100%" }} src={notfoundmeme} />;
 
 const App = () => {
+  useEffect(() => {
+    store.dispatch(checkUserStillVerified());
+  }, []);
   return (
     <Provider store={store}>
       <Router>
-        <Route exact path='/' component={testToSeeIfItWorks} />
+        <>
+          <Container>
+            <Alert />
+            <Switch>
+              <Route exact path='/' component={LoginComp} />
+              <Route exact path='/signup' component={Signup} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <Route component={NotFound} />
+            </Switch>
+          </Container>
+        </>
       </Router>
     </Provider>
   );
