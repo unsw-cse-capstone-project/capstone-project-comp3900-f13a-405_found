@@ -7,6 +7,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
+import Player from "../player/player"
 
 const theme = createMuiTheme({
   palette: {
@@ -36,13 +37,16 @@ const Dashboard = () => {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={theme}>
+
+      <ThemeProvider theme={theme}>
+      <Player/>
       <Sidebar />
       <div className={classes.appMain}>
         <Header />
       </div>
       <CssBaseline />
     </ThemeProvider>
+    
   );
 };
 
