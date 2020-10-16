@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
         ...state,
         isLoaded: true,
         subscriptions: state.subscriptions.filter(
-          (subs) => subs != action.payload
+          (subs) => subs !== action.payload
         ),
       };
     case GET_SUBSCRIPTIONS:
