@@ -19,7 +19,9 @@ export default function (state = initialState, action) {
     case SUBSCRIBE_SUCCESS:
       return {
         ...state,
-        subscriptions: state.subscriptions.concat([action.payload]),
+        subscriptions: !state.subscriptions.includes(action.payload)
+          ? state.subscriptions.concat([action.payload])
+          : state.subscriptions,
         isLoaded: true,
       };
     case UNSUBSCRIBE_SUCCESS:
