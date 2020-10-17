@@ -28,20 +28,25 @@ const Trending = () => {
     return item[0].images[0].url;
   };
   useEffect(() => {
-    dispatch(getTrendingShows());
-    dispatch(
-      getShowsDetailsByListOfIds(
-        subscriptionState.trendingShows.map((i) => i.showId).join(","),
-        "Trending"
-      )
-    );
-  }, [subscriptionState.subscriptions]);
+    if (!subscriptionState.trendingShowsLoaded) {
+      dispatch(getTrendingShows());
+    }
+    if (subscriptionState.trendingShowsLoaded) {
+      dispatch(
+        getShowsDetailsByListOfIds(
+          subscriptionState.trendingShows.map((i) => i.showId).join(","),
+          "Trending"
+        )
+      );
+    }
+  }, [subscriptionState.trendingShowsLoaded]);
 
   return (
     <>
-      <h1>Top Podcasts!</h1>
+      <h1>Top Shows!</h1>
       <ul className='list-group mb-4'>
-        {!subscriptionState.isLoaded || !subscriptionState.showsLoaded ? (
+        {!subscriptionState.isLoaded ||
+        !subscriptionState.trendingShowsDetailsLoaded ? (
           <CircularProgress size={200} thickness={6} color='secondary' />
         ) : subscriptionState.trendingShows.length > 0 ? (
           subscriptionState.trendingShows.map((trending, index) => (
