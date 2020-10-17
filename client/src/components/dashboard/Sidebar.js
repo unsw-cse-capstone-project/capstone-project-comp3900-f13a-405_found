@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import LogoutButton from "../LogoutButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +7,8 @@ import {
   getSubscribedShowsSubsCount,
 } from "../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 const style = {
   sidebar: {
@@ -46,14 +48,23 @@ const Sidebar = (props) => {
     dispatch(
       getSubscribedShowsSubsCount(subscriptionState.subscriptions.join(","))
     );
-  }, [subscriptionState.subscriptions]);
+  }, [subscriptionState.subscriptions, dispatch]);
 
   const { classes } = props;
   return (
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <LogoutButton />
-
+        <Link style={{ textDecoration: "none" }} to='/dashboard/trending'>
+          <Button color='primary' size='large' variant='contained'>
+            Trending Shows
+          </Button>{" "}
+        </Link>
+        <Link style={{ textDecoration: "none" }} to='/dashboard'>
+          <Button size='large' variant='contained'>
+            Dashboard
+          </Button>{" "}
+        </Link>
         <div className={classes.myText}>Subscriptions</div>
         <ul className='list-group mb-4'>
           {!subscriptionState.isLoaded || !subscriptionState.showsLoaded ? (
@@ -67,7 +78,12 @@ const Sidebar = (props) => {
                 <div style={{ textAlign: "right", color: "black" }}>
                   {" "}
                   Subscriber count: {getSubCount(subs.id)}
-                  <img height='60px' width='60px' src={subs.images[0].url} />
+                  <img
+                    height='60px'
+                    width='60px'
+                    src={subs.images[0].url}
+                    alt='trending'
+                  />
                 </div>
               </li>
             ))

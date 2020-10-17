@@ -4,6 +4,8 @@ import {
   GET_SUBSCRIPTIONS,
   GET_SHOWS_BY_IDS,
   UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
+  GET_TRENDING_SHOWS,
+  GET_SHOWS_BY_IDS_FOR_TRENDING,
 } from "../actions/types";
 
 const initialState = {
@@ -12,6 +14,10 @@ const initialState = {
   subscriptions: [],
   detailedSubscriptions: [],
   subscribedShowSubCounts: [],
+  trendingShows: [],
+  detailedTrending: [],
+  trendingShowsLoaded: false,
+  trendingShowsDetailsLoaded: false,
 };
 
 export default function (state = initialState, action) {
@@ -50,6 +56,27 @@ export default function (state = initialState, action) {
         ...state,
         isLoaded: true,
         subscribedShowSubCounts: action.payload,
+      };
+    case GET_TRENDING_SHOWS:
+      return {
+        ...state,
+        isLoaded: true,
+        trendingShowsLoaded: true,
+        trendingShows: action.payload
+          .map((item) => ({
+            showId: item.data[0].showId,
+            count: item.count,
+          }))
+          .sort(
+            (a, b) => b.count - a.count || a.showId.localeCompare(b.showId)
+          ),
+      };
+    case GET_SHOWS_BY_IDS_FOR_TRENDING:
+      return {
+        ...state,
+        isLoaded: true,
+        detailedTrending: action.payload.shows,
+        trendingShowsDetailsLoaded: true,
       };
     default:
       return state;
