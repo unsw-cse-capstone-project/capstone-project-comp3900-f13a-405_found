@@ -31,17 +31,11 @@ app.get("/", (req, res) => {
 app.use("/api/authentication", require("./routes/api/authentication"));
 
 // Protected Route, only logged in users can access this :p
-app.use(
-  "/api/spotify",
-  checkAuth,
-  require("./routes/api/spotify")
-);
+app.use("/api/spotify", checkAuth, require("./routes/api/spotify"));
 
-app.use(
-  "/api/secure",
-  checkAuth,
-  require("./routes/api/secure-routes")
-);
+app.use("/api/secure", checkAuth, require("./routes/api/secure-routes"));
+
+app.use("/api/subscription", checkAuth, require("./routes/api/subscription"));
 
 // error handler
 app.use(errorHandler);

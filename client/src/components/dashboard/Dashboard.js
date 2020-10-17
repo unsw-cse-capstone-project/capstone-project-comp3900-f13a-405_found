@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import {
   makeStyles,
@@ -7,6 +7,8 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
+import { getSubscriptions } from "../../actions/subscriptions";
+import { useDispatch } from "react-redux";
 
 const theme = createMuiTheme({
   palette: {
@@ -33,8 +35,11 @@ const useStyles = makeStyles({
 });
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-
+  useEffect(() => {
+    dispatch(getSubscriptions());
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Sidebar />
