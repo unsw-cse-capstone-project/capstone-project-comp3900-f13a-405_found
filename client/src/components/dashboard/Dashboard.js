@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
+import Trending from "./Trending";
+
 import {
   makeStyles,
   CssBaseline,
@@ -8,6 +10,9 @@ import {
 } from "@material-ui/core";
 import Header from "./Header";
 import Player from "../player/player"
+import { getSubscriptions } from "../../actions/subscriptions";
+import { useDispatch } from "react-redux";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 
 const theme = createMuiTheme({
   palette: {
@@ -34,15 +39,33 @@ const useStyles = makeStyles({
 });
 
 const Dashboard = () => {
+  let match = useRouteMatch();
+  const dispatch = useDispatch();
   const classes = useStyles();
-
+  useEffect(() => {
+    dispatch(getSubscriptions());
+  }, [dispatch]);
   return (
 
       <ThemeProvider theme={theme}>
       <Player/>
       <Sidebar />
       <div className={classes.appMain}>
-        <Header />
+        <Switch>
+          <Route exact path={match.path} component={Header} />
+          <Route exact path={`${match.path}/trending`} component={Trending} />
+          {/* this is just to redirect to 404 */}
+          <Route
+            render={({ location }) => (
+              <Redirect
+                to={{
+                  pathname: "/404",
+                  state: { originalUrl: location.pathname },
+                }}
+              />
+            )}
+          />
+        </Switch>
       </div>
       <CssBaseline />
     </ThemeProvider>

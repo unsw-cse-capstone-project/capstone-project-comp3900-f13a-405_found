@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -9,7 +9,6 @@ import logo from "../landing/logo.png";
 import Typography from "@material-ui/core/Typography";
 import CustomTextField from "../CustomTextField";
 import { makeStyles } from "@material-ui/core";
-import { useCallback } from "react";
 
 const Signup = () => {
   const useStyles = makeStyles((theme) => ({
@@ -62,7 +61,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const { id, name, email, password } = values;
+      const { name, email, password } = values;
       dispatch(signup({ name, email, password }));
       //resetForm()
     }
