@@ -4,9 +4,6 @@ import {
   SET_IMAGE,
   SET_ARTIST,
   SET_TITLE,
-  SET_SEEKING,
-  SET_PLAYED,
-  SET_DURATION,
 } from "../actions/types";
 
 const initial_state = {
@@ -15,9 +12,6 @@ const initial_state = {
   title: null,
   artist: null,
   image: null,
-  played: 0,
-  seeking: false,
-  duration: 0,
 };
 
 export default function player(state = initial_state, action) {
@@ -46,21 +40,6 @@ export default function player(state = initial_state, action) {
       return {
         ...state,
         title: action.title,
-      };
-    case SET_SEEKING:
-      return {
-        ...state,
-        seeking: action.seeking,
-      };
-    case SET_PLAYED:
-      return {
-        ...state,
-        played: action.played,
-      };
-    case SET_DURATION:
-      return {
-        ...state,
-        duration: action.duration,
       };
     default:
       return state;
