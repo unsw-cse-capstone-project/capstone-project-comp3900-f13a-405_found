@@ -17,7 +17,7 @@ export const subscribeToShow = (id) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post(`api/subscription/subscribe/${id}`, {}, config);
+    await axios.post(`/api/subscription/subscribe/${id}`, {}, config);
     dispatch({
       type: SUBSCRIBE_SUCCESS,
       payload: id,
@@ -37,7 +37,7 @@ export const unsubscribeFromShow = (id) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post(`api/subscription/unsubscribe/${id}`, {}, config);
+    await axios.post(`/api/subscription/unsubscribe/${id}`, {}, config);
     dispatch({
       type: UNSUBSCRIBE_SUCCESS,
       payload: id,
@@ -54,7 +54,7 @@ export const getSubscriptions = () => async (dispatch) => {
     const config = {
       withCredentials: true,
     };
-    const res = await axios.get(`api/subscription/`, config);
+    const res = await axios.get(`/api/subscription/`, config);
     dispatch({
       type: GET_SUBSCRIPTIONS,
       payload: res.data,
@@ -73,7 +73,7 @@ export const getShowsDetailsByListOfIds = (ids) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const res = await axios.get(`api/spotify/bulkshows/${ids}`, config);
+    const res = await axios.get(`/api/spotify/bulkshows/${ids}`, config);
     dispatch({
       type: GET_SHOWS_BY_IDS,
       payload: res.data,
@@ -92,7 +92,7 @@ export const getSubscribedShowsSubsCount = (ids) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const res = await axios.get(`api/subscription/count/${ids}`, config);
+    const res = await axios.get(`/api/subscription/count/${ids}`, config);
     dispatch({
       type: UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
       payload: res.data,
