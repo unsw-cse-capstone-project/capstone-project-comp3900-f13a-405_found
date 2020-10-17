@@ -19,7 +19,7 @@ export const signup = ({ name, email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post("/api/authentication/signup", body, config);
+    await axios.post("api/authentication/signup", body, config);
     dispatch({
       type: SIGNUP_SUCCESS,
     });
@@ -45,7 +45,7 @@ export const login = ({ email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post("/api/authentication/login", body, config);
+    await axios.post("api/authentication/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
     });
@@ -67,7 +67,7 @@ export const checkUserStillVerified = () => async (dispatch) => {
     const config = {
       withCredentials: true,
     };
-    await axios.get("/api/secure/", config);
+    await axios.get("api/secure/", config);
     dispatch({
       type: LOGIN_SUCCESS,
     });
@@ -85,7 +85,7 @@ export const logout = () => async (dispatch) => {
     const config = {
       withCredentials: true,
     };
-    await axios.get("/api/authentication/logout", config);
+    await axios.get("api/authentication/logout", config);
     dispatch({
       type: LOGOUT_SUCCESS,
     });
