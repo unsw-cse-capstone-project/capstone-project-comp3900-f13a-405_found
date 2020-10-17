@@ -13,9 +13,10 @@ import { SET_URL, SET_PLAYING, SET_IMAGE, SET_ARTIST, SET_TITLE, SET_SEEKING, SE
 
 const Player = () => {
     const dispatch = useDispatch();
+    const [player, setPlayer] = useState({});
 
-    const ref = player => {
-        this.player = player
+    const ref = (player) => {
+        setPlayer(player);
     }
 
     const playingState = useSelector(state => state.playing);
@@ -61,7 +62,7 @@ const Player = () => {
     
     const handleSeekMouseUp = e => {
         dispatch({type: SET_SEEKING, seeking: false})
-        this.player.seekTo(parseFloat(e.target.value))
+        player.seekTo(parseFloat(e.target.value))
     }
 
     const handleProgress = state => {
@@ -106,7 +107,7 @@ const Player = () => {
     // const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state;
     const iconStyle = {color: 'white', cursor: 'pointer', height: '50px', width: '50px'}
    
-    const player = (
+    return (
         <div style={{width: '100%', height: '120px', display: 'flex', justifyContent: 'space-between', backgroundColor: '#041a33', padding: '0', position: 'absolute', bottom: '0px', left: '0px', zIndex: '2', borderTop: '2px solid #ff8800'}}>
             <ReactPlayer
                 ref={ref}
@@ -166,8 +167,6 @@ const Player = () => {
             </div>
         </div>
     )
-
-    return player;
 }
 
 export default Player;
