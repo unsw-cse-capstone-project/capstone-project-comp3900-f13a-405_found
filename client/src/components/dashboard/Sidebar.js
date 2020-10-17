@@ -7,6 +7,8 @@ import {
   getSubscribedShowsSubsCount,
 } from "../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 const style = {
   sidebar: {
@@ -53,7 +55,11 @@ const Sidebar = (props) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <LogoutButton />
-
+        <Link style={{ textDecoration: "none" }} to='/dashboard/trending'>
+          <Button color='primary' size='large' variant='contained'>
+            Trending Shows
+          </Button>{" "}
+        </Link>
         <div className={classes.myText}>Subscriptions</div>
         <ul className='list-group mb-4'>
           {!subscriptionState.isLoaded || !subscriptionState.showsLoaded ? (

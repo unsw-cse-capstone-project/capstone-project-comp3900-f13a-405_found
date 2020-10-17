@@ -101,4 +101,26 @@ router.post("/subscribe/:showId", async (req, res, next) => {
   }
 });
 
+// @route   GET api/subscription/trending
+// @desc    Get User's subscriptions
+// @access  Private
+router.get("/trending", async (req, res) => {
+  try {
+    const subscriptions = await Subscription.aggregate([
+      {
+        $group: {
+          _id: "$showId",
+          data: { $push: "$$ROOT" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return res.status(200).json(subscriptions);
+  } catch (err) {
+    console.error(err.message);
+    next(new BadRequest([{ msg: "Bad Request!!" }]));
+  }
+});
+
 module.exports = router;

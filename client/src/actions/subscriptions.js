@@ -5,6 +5,8 @@ import {
   GET_SUBSCRIPTIONS,
   GET_SHOWS_BY_IDS,
   UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
+  GET_TRENDING_SHOWS,
+  GET_SHOWS_BY_IDS_FOR_TRENDING,
 } from "./types";
 import { displayAlert, removeAllAlerts } from "./alert";
 
@@ -67,17 +69,28 @@ export const getSubscriptions = () => async (dispatch) => {
 
 // GET list of shows by list of ids
 // comma seperated ids
-export const getShowsDetailsByListOfIds = (ids) => async (dispatch) => {
+export const getShowsDetailsByListOfIds = (
+  ids,
+  forWhichComponent = "Sidebar"
+) => async (dispatch) => {
   try {
     const config = {
       withCredentials: true,
     };
 
     const res = await axios.get(`/api/spotify/bulkshows/${ids}`, config);
-    dispatch({
-      type: GET_SHOWS_BY_IDS,
-      payload: res.data,
-    });
+    if (forWhichComponent === "Trending") {
+      dispatch({
+        type: GET_SHOWS_BY_IDS_FOR_TRENDING,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: GET_SHOWS_BY_IDS,
+        payload: res.data,
+      });
+    }
+
     dispatch(removeAllAlerts());
   } catch (err) {
     displayAlert("An Error occurred :(");
@@ -95,6 +108,24 @@ export const getSubscribedShowsSubsCount = (ids) => async (dispatch) => {
     const res = await axios.get(`/api/subscription/count/${ids}`, config);
     dispatch({
       type: UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
+      payload: res.data,
+    });
+    dispatch(removeAllAlerts());
+  } catch (err) {
+    displayAlert("An Error occurred :(");
+  }
+};
+
+// GET Trending Shows
+export const getTrendingShows = () => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const res = await axios.get(`/api/subscription/trending`, config);
+    dispatch({
+      type: GET_TRENDING_SHOWS,
       payload: res.data,
     });
     dispatch(removeAllAlerts());
