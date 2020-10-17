@@ -26,22 +26,17 @@ const Trending = () => {
     return item[0].images[0].url;
   };
   useEffect(() => {
-    if (!subscriptionState.trendingShowsLoaded) {
-      dispatch(getTrendingShows());
-    }
-    if (subscriptionState.trendingShowsLoaded) {
-      dispatch(
-        getShowsDetailsByListOfIds(
-          subscriptionState.trendingShows.map((i) => i.showId).join(","),
-          "Trending"
-        )
-      );
-    }
-  }, [
-    subscriptionState.trendingShowsLoaded,
-    subscriptionState.trendingShows,
-    dispatch,
-  ]);
+    dispatch(
+      getShowsDetailsByListOfIds(
+        subscriptionState.trendingShows.map((i) => i.showId).join(","),
+        "Trending"
+      )
+    );
+  }, [dispatch, subscriptionState.trendingShows]);
+
+  useEffect(() => {
+    dispatch(getTrendingShows());
+  }, [dispatch]);
 
   return (
     <>
