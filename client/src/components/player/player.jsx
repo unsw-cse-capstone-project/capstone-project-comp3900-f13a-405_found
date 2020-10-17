@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPlayer from "react-player";
 import Duration from "./duration";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledWhiteIcon from "@material-ui/icons/PauseCircleFilled";
-import { useState } from "react";
 import {
   SET_URL,
   SET_PLAYING,
@@ -14,6 +13,7 @@ import {
   SET_SEEKING,
   SET_PLAYED,
   SET_DURATION,
+  SET_LOADED,
 } from "../../actions/types";
 
 // Package reference:       https://www.npmjs.com/package/react-player
@@ -22,10 +22,15 @@ import {
 const Player = () => {
   const dispatch = useDispatch();
   const [player, setPlayer] = useState({});
+  const [played, setPlayed] = useState(0);
+  const [loaded, setLoaded] = useState(0);
+  const [seeking, setSeeking] = useState(false);
+  const [duration, setDuration] = useState(0);
 
   const ref = (player) => {
     setPlayer(player);
   };
+
   const playerState = useSelector((state) => state.player);
 
   const {
@@ -34,9 +39,6 @@ const Player = () => {
     image,
     title,
     artist,
-    played,
-    seeking,
-    duration,
   } = playerState;
 
   const handlePlay = () => {
@@ -58,29 +60,35 @@ const Player = () => {
   };
 
   const handleStop = () => {
-    this.setState({ url: null, playing: false });
+    //this.setState({ url: null, playing: false });
     dispatch({ type: SET_URL, url: null });
     dispatch({ type: SET_PLAYING, playing: false });
   };
 
   const handleSeekMouseDown = (e) => {
-    dispatch({ type: SET_SEEKING, seeking: true });
+    // dispatch({ type: SET_SEEKING, seeking: true });
+    setSeeking(true);
   };
 
   const handleSeekChange = (e) => {
-    dispatch({ type: SET_PLAYED, played: parseFloat(e.target.value) });
+    // dispatch({ type: SET_PLAYED, played: parseFloat(e.target.value) });
+    setPlayed(parseFloat(e.target.value));
   };
 
   const handleSeekMouseUp = (e) => {
-    dispatch({ type: SET_SEEKING, seeking: false });
+    // dispatch({ type: SET_SEEKING, seeking: false });
+    setSeeking(false);
     player.seekTo(parseFloat(e.target.value));
   };
 
   const handleProgress = (state) => {
-    console.log("onProgress", state);
+    console.log("onProgress", played, duration);
     // We only want to update time slider if we are not currently seeking
     if (!seeking) {
-      // this.setState(state)
+      // dispatch({type: SET_PLAYED, played: state.played})
+      // dispatch({type: SET_LOADED, loaded: state.loaded})
+      setPlayed(state.played);
+      setLoaded(state.loaded);
     }
   };
 
@@ -93,7 +101,8 @@ const Player = () => {
   const handleDuration = (duration) => {
     console.log("onDuration", duration);
     // this.setState({ duration })
-    dispatch({ type: SET_DURATION, duration: duration });
+    // dispatch({ type: SET_DURATION, duration: duration });
+    setDuration(duration);
   };
 
   // const handleVolumeChange = e => {
@@ -112,10 +121,12 @@ const Player = () => {
     //   pip: false
     // })
     dispatch({ type: SET_URL, url: url });
-    dispatch({ type: SET_PLAYED, played: 0 });
+    // dispatch({ type: SET_PLAYED, played: 0 });
+    // dispatch({ type: SET_LOADED, loaded: 0 });
+    setPlayed(0);
+    setLoaded(0);
   };
 
-  // const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state;
   const iconStyle = {
     color: "white",
     cursor: "pointer",
@@ -196,7 +207,7 @@ const Player = () => {
           min={0}
           max={0.999999}
           step='any'
-          value={0}
+          value={played}
           onMouseDown={handleSeekMouseDown}
           onChange={handleSeekChange}
           onMouseUp={handleSeekMouseUp}
