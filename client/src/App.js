@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Signup from "./components/authentication/Signup";
 import LoginComp from "./components/landing/Landing";
@@ -15,10 +10,11 @@ import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
-import LogoutButton from "./components/LogoutButton";
 import notfoundmeme from "./404.png";
 
-const NotFound = () => <img style={{ width: "100%" }} src={notfoundmeme} />;
+const NotFound = () => (
+  <img style={{ width: "100%" }} src={notfoundmeme} alt='notFound' />
+);
 
 const App = () => {
   useEffect(() => {

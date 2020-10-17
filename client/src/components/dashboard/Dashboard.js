@@ -43,7 +43,7 @@ const Dashboard = () => {
   const classes = useStyles();
   useEffect(() => {
     dispatch(getSubscriptions());
-  }, []);
+  }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
       <Sidebar />

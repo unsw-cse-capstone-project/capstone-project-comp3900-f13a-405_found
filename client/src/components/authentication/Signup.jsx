@@ -61,7 +61,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const { id, name, email, password } = values;
+      const { name, email, password } = values;
       dispatch(signup({ name, email, password }));
       //resetForm()
     }

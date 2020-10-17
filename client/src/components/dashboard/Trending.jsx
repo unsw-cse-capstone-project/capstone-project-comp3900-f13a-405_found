@@ -37,7 +37,11 @@ const Trending = () => {
         )
       );
     }
-  }, [subscriptionState.trendingShowsLoaded]);
+  }, [
+    subscriptionState.trendingShowsLoaded,
+    subscriptionState.trendingShows,
+    dispatch,
+  ]);
 
   return (
     <>
@@ -60,6 +64,7 @@ const Trending = () => {
                   height='60px'
                   width='60px'
                   src={getShowImage(trending.showId)}
+                  alt='trending'
                 />
               </div>
             </li>

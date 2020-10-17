@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import LogoutButton from "../LogoutButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -48,7 +48,7 @@ const Sidebar = (props) => {
     dispatch(
       getSubscribedShowsSubsCount(subscriptionState.subscriptions.join(","))
     );
-  }, [subscriptionState.subscriptions]);
+  }, [subscriptionState.subscriptions, dispatch]);
 
   const { classes } = props;
   return (
@@ -78,7 +78,12 @@ const Sidebar = (props) => {
                 <div style={{ textAlign: "right", color: "black" }}>
                   {" "}
                   Subscriber count: {getSubCount(subs.id)}
-                  <img height='60px' width='60px' src={subs.images[0].url} />
+                  <img
+                    height='60px'
+                    width='60px'
+                    src={subs.images[0].url}
+                    alt='trending'
+                  />
                 </div>
               </li>
             ))
