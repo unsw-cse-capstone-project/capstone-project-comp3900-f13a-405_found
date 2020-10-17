@@ -12,7 +12,6 @@ const Trending = () => {
   const dispatch = useDispatch();
 
   const getShowName = (showId) => {
-    console.log(showId);
     const item = subscriptionState.detailedTrending.filter(
       (i) => i.id === showId
     );
@@ -20,7 +19,6 @@ const Trending = () => {
     return item[0].name;
   };
   const getShowImage = (showId) => {
-    console.log(showId);
     const item = subscriptionState.detailedTrending.filter(
       (i) => i.id === showId
     );
