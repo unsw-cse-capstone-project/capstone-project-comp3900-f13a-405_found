@@ -37,6 +37,9 @@ export default function (state = initialState, action) {
         subscriptions: state.subscriptions.filter(
           (subs) => subs !== action.payload
         ),
+        detailedSubscriptions: state.detailedSubscriptions.filter(
+          (subs) => subs.id !== action.payload
+        ),
       };
     case GET_SUBSCRIPTIONS:
       return {

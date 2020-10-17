@@ -67,7 +67,7 @@ const Sidebar = (props) => {
         </Link>
         <div className={classes.myText}>Subscriptions</div>
         <ul className='list-group mb-4'>
-          {!subscriptionState.isLoaded || !subscriptionState.showsLoaded ? (
+          {!subscriptionState.isLoaded ? (
             <CircularProgress size={200} thickness={6} color='secondary' />
           ) : subscriptionState.detailedSubscriptions.length > 0 ? (
             subscriptionState.detailedSubscriptions.map((subs) => (
