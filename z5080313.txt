@@ -1,0 +1,12 @@
+Week 1
+We had our first meeting where we introduced ourselves and decided that Theon would be the scrum master. 
+
+
+Week 2
+First sprint started:
+I made rough sketches of the user interface diagrams and got feedback from the group.
+Created the designs digitally on Figma for the proposal/to reference during the project.
+
+Week 3
+Had a meeting to discuss how the first sprint went. Allocated tasks for next sprint.
+I worked on the front end for the log in and registration page.

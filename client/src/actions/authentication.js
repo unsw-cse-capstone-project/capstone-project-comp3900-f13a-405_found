@@ -3,6 +3,8 @@ import {
   SIGNUP_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from "./types";
 import axios from "axios";
 import { displayAlert, removeAllAlerts } from "./alert";
@@ -17,7 +19,7 @@ export const signup = ({ name, email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post("api/authentication/signup", body, config);
+    await axios.post("/api/authentication/signup", body, config);
     dispatch({
       type: SIGNUP_SUCCESS,
     });
@@ -25,9 +27,7 @@ export const signup = ({ name, email, password }) => async (dispatch) => {
   } catch (err) {
     const errorsList = err.response.data.errors;
     if (errorsList) {
-      errorsList.forEach((error) =>
-        dispatch(displayAlert(error.msg, "danger"))
-      );
+      errorsList.forEach((error) => dispatch(displayAlert(error.msg)));
     }
     dispatch({
       type: SIGNUP_FAIL,
@@ -45,7 +45,7 @@ export const login = ({ email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post("api/authentication/login", body, config);
+    await axios.post("/api/authentication/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
     });
@@ -53,9 +53,7 @@ export const login = ({ email, password }) => async (dispatch) => {
   } catch (err) {
     const errorsList = err.response.data.errors;
     if (errorsList) {
-      errorsList.forEach((error) =>
-        dispatch(displayAlert(error.msg, "danger"))
-      );
+      errorsList.forEach((error) => dispatch(displayAlert(error.msg)));
     }
     dispatch({
       type: LOGIN_FAIL,
@@ -69,7 +67,7 @@ export const checkUserStillVerified = () => async (dispatch) => {
     const config = {
       withCredentials: true,
     };
-    await axios.get("api/secure/", config);
+    await axios.get("/api/secure/", config);
     dispatch({
       type: LOGIN_SUCCESS,
     });
@@ -77,6 +75,24 @@ export const checkUserStillVerified = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
+    });
+  }
+};
+
+// logout the user
+export const logout = () => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    await axios.get("/api/authentication/logout", config);
+    dispatch({
+      type: LOGOUT_SUCCESS,
+    });
+    dispatch(removeAllAlerts());
+  } catch (err) {
+    dispatch({
+      type: LOGOUT_FAIL,
     });
   }
 };

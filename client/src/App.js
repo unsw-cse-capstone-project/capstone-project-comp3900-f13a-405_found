@@ -6,8 +6,15 @@ import Signup from "./components/authentication/Signup";
 import LoginComp from "./components/landing/Landing";
 import Alert from "./components/alert/Alert";
 import Container from "react-bootstrap/Container";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
+import notfoundmeme from "./404.png";
+
+const NotFound = () => (
+  <img style={{ width: "100%" }} src={notfoundmeme} alt='notFound' />
+);
 
 const App = () => {
   useEffect(() => {
@@ -16,11 +23,17 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Container>
-          <Alert />
-          <Route exact path='/' component={LoginComp} />
-          <Route exact path='/signup' component={Signup} />
-        </Container>
+        <>
+          <Container>
+            <Alert />
+            <Switch>
+              <Route exact path='/' component={LoginComp} />
+              <Route exact path='/signup' component={Signup} />
+              <PrivateRoute path='/dashboard' component={Dashboard} />
+              <Route component={NotFound} />
+            </Switch>
+          </Container>
+        </>
       </Router>
     </Provider>
   );
