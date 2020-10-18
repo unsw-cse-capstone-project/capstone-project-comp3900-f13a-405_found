@@ -25,23 +25,69 @@ passport.use(
       algorithms: ["HS256"],
     },
     async (req, email, password, done) => {
-      try {
+      //try {
         let user = await UserModel.findOne({ email: email });
 
         if (user) {
           return done(null, false, { message: "User Exists" });
         }
 
+        const token = jwt.sign({name, email, password}, 'jsontokenactivate', {expiresIn: '20m'});
+
         const data = {
-          from: 'noreply@test.com',
+          from: 'noreply@ultracast.com',
           to: email,
-          subject: 'Hello',
-          text: 'Testing some Mailgun awesomness!'
+          subject: 'Account Activation Link',
+          html: `
+            <h2>Please click on given link to activate account</h2>
+            <p>http://localhost:3000/authentication/activate/${token}</p>
+          `
         };
         mg.messages().send(data, function (error, body) {
-          console.log(body);
+          if (error) {
+            return res.json ({
+              error: err.messagee
+            })
+          }
+          return res.json({message: 'Email has been sent, activate your account'})
         });
 
+        // user = new UserModel({
+        //   name: req.body.name,
+        //   email,
+        //   avatar: gravatar.url(email, {
+        //     s: "300",
+        //     r: "pg",
+        //     d: "mm",
+        //   }),
+        //   password: password,
+        // });
+      //   await user.save();
+      //   return done(null, user);
+      // } catch (err) {
+      //   console.error(err.message);
+      //   done(err);
+      // }
+    }
+  )
+);
+
+// Verify token and create user account
+exports.activateAccount = (req, res) => {
+  const {token} = req.body;
+  if (token) {
+    jwt.verify(token, 'jsontokenactivate', function(err, decodedToken) {
+      if (err) {
+        return res.status(400).json({error: 'Incorrect or expired link.'})
+      }
+      const {name, email, password} = decodedToken;
+      
+      // Create user account
+      try {
+        let user = await UserModel.findOne({ email: email });
+        if (user) {
+          return done(null, false, { message: "User Exists" });
+        }
         user = new UserModel({
           name: req.body.name,
           email,
@@ -52,15 +98,16 @@ passport.use(
           }),
           password: password,
         });
-        await user.save();
-        return done(null, user);
       } catch (err) {
-        console.error(err.message);
-        done(err);
-      }
-    }
-  )
-);
+          console.error("Error in signup while account activation: ", err);
+          return res.status(400), json({error: "Error activating account"})
+          done(err);
+        }
+    })
+  } else {
+    return res.json({error: "Something went wrong!!"})
+  }
+}
 
 passport.use(
   "login",

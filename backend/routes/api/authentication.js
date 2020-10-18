@@ -6,6 +6,10 @@ const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 const { Errors, BadRequest } = require("../../utils/errors");
 
+// email verification 
+const{activateAccount} = require("../../auth/auth.js");
+router.post('email-activate', activateAccount);
+
 // @route   POST api/authentication/signup
 // @desc    Register a new user
 // @access  Public
