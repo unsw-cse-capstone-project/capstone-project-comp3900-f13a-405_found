@@ -1,4 +1,5 @@
-// passport js auth middleware
+// 
+// passport js auth middleware 
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
@@ -40,10 +41,6 @@ passport.use(
         mg.messages().send(data, function (error, body) {
           console.log(body);
         });
-
-        
-
-
 
         user = new UserModel({
           name: req.body.name,
