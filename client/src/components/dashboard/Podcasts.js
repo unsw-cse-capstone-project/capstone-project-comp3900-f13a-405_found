@@ -7,6 +7,8 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
+import Episodes from './Episodes';
 
 const styles = (theme) => ({
   root: {
@@ -48,8 +50,7 @@ const Podcasts = ({ podcasts, loading }) => {
 
   const handleClickOpen = (pod) => {
     setPodcast(pod);
-    setOpen(!open);
-
+    setOpen(!open);    
   };
   const handleClose = () => {
     setOpen(!open);
@@ -85,10 +86,11 @@ const Podcasts = ({ podcasts, loading }) => {
           <Typography gutterBottom>
             {podcast.description}
           </Typography>
+          <SubscribeButton id={podcast.id} />
           <Typography gutterBottom>
+          <Episodes episodes={podcast} />
           </Typography>
           <Typography gutterBottom>
-          <SubscribeButton id={podcast.id} />
           </Typography>
         </DialogContent>       
       </Dialog>
