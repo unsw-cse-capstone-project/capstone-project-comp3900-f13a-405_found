@@ -1,4 +1,3 @@
-const { QueryBuilderRounded } = require("@material-ui/icons");
 const express = require("express");
 const HistoryModel = require("../../models/HistoryModel");
 const { BadRequest } = require("../../utils/errors");
