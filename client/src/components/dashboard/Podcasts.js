@@ -47,10 +47,13 @@ const Podcasts = ({ podcasts, loading }) => {
 
   const [open, setOpen] = useState(false);
   const [podcast, setPodcast] = useState({});
+  const [img, setImg] = useState();
+  
 
   const handleClickOpen = (pod) => {
     setPodcast(pod);
-    setOpen(!open);    
+    setImg(pod.images[0].url);
+    setOpen(!open);
   };
   const handleClose = () => {
     setOpen(!open);
@@ -87,6 +90,12 @@ const Podcasts = ({ podcasts, loading }) => {
             {podcast.description}
           </Typography>
           <SubscribeButton id={podcast.id} />
+          <img
+              height='60px'
+              width='60px'
+              src={img}
+              alt='podcastimage'
+            />
           <Typography gutterBottom>
           <Episodes episodes={podcast} />
           </Typography>
