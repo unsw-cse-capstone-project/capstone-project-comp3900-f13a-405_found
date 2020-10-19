@@ -25,6 +25,29 @@ router.get (
     }
 )
 
+// @route GET api/user-history/:p_id
+// @desc returns a user-history entry for a given podcast if it's been viewed
+// @access Public
+router.get (
+    '/:p_id', (req, res, next) => {
+        const query = HistoyModel.findOne({
+            user_id: `${req.user.id}`,
+            podcast_id: `${req.params.p_id}`
+        }).lean();
+
+        query.exec().then(hist_entry => {
+            return res.status(200).json(JSON.stringify(hist_entry));
+            
+        })
+        .catch(err => {
+            console.error(err.message);
+            next (new NotFound([{msg: "Unable to find history entry for user: " + req.user.id}]));
+        });       
+    }
+
+)
+
+
 // @route  POST api/user-history/:podcast_id
 // @desc   creates/updates an entry for a user's history - :id spotify API id reference. 
 // @access Public
