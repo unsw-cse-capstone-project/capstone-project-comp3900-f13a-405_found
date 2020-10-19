@@ -63,7 +63,6 @@ router.post (
 
         query.exec()
         .then(upd_podcast => {
-           // const json_upd_podcast = JSON.stringify(upd_podcast);
             return res.status(200).json(upd_podcast);
         })
         .catch(err => {
