@@ -39,7 +39,7 @@ export default function Header() {
     const [podcasts, setPodcasts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [podcastsPerPage] = useState(5);
+  const [podcastsPerPage] = useState(4);
 
   const fetchPodcasts = async (term) => {
     setLoading(true);

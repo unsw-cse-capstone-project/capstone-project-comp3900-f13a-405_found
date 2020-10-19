@@ -17,8 +17,9 @@ const style = {
     position: "absolute",
     left: "0px",
     width: "280px",
-    height: "100%",
+    height: "800px",
     backgroundColor: "#253055",
+    overflowY: "scroll",
   },
   myText: {
     color: "white",
