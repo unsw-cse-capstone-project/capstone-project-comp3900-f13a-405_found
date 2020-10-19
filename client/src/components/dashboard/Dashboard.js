@@ -5,7 +5,7 @@ import Trending from "./Trending";
 import {
   makeStyles,
   CssBaseline,
-  createMuiTheme,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
