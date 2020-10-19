@@ -9,6 +9,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
+import Player from "../player/player"
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
@@ -45,7 +46,9 @@ const Dashboard = () => {
     dispatch(getSubscriptions());
   }, [dispatch]);
   return (
-    <ThemeProvider theme={theme}>
+
+      <ThemeProvider theme={theme}>
+      <Player/>
       <Sidebar />
       <div className={classes.appMain}>
         <Switch>
@@ -66,6 +69,7 @@ const Dashboard = () => {
       </div>
       <CssBaseline />
     </ThemeProvider>
+    
   );
 };
 
