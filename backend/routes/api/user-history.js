@@ -1,56 +1,54 @@
-const { ContactlessOutlined } = require("@material-ui/icons");
-const { query } = require("express");
+const { QueryBuilderRounded } = require("@material-ui/icons");
 const express = require("express");
 const HistoryModel = require("../../models/HistoryModel");
-const { NotFound } = require("../../utils/errors");
+const { BadRequest } = require("../../utils/errors");
 const router = express.Router();
 
 
 // @route  GET api/user-history
-// @desc   returns a user's history for a given username.
-// @access Public
+// @desc   Gets podcast history for user currently logged in.
+// @access Private 
 
 router.get (
     '/', (req, res, next) => {
-        const query = HistoryModel.find({user_id: `${req.user.id}`});
-        query.exec()
-        .then(user_history => {
-            const json_user_history = JSON.stringify(user_history);
-            return res.status(200).json(json_user_history);
+        const query = HistoryModel.find({user_id: `${req.user.id}`}).select("-__v");
+        
+        query.exec().then(user_history => {
+          //  const json_user_history = JSON.stringify(user_history);
+            return res.status(200).json(user_history);
         })
         .catch(err => {
             console.error(err.message);
-            next(new notfound([{msg: "unable to find user history for user:" + req.user.id}]));
+            next(new BadRequest([{msg: "User History: Bad Request."}]));
         });
     }
 )
 
 // @route GET api/user-history/:p_id
-// @desc returns a user-history entry for a given podcast if it's been viewed
-// @access Public
+// @desc Gets bool value of if podcast 'p_id' has been viewed by a user.
+// @access Private 
 router.get (
     '/:p_id', (req, res, next) => {
-        const query = HistoyModel.findOne({
-            user_id: `${req.user.id}`,
-            podcast_id: `${req.params.p_id}`
-        }).lean();
-
+        const query = HistoryModel.findOne({user_id: `${req.user.id}`, podcast_id: `${req.params.p_id}`}).lean();
         query.exec().then(hist_entry => {
-            return res.status(200).json(JSON.stringify(hist_entry));
+            if (hist_entry != null)
+                return res.status(200).json({ Viewed: true});
+            else
+                return res.status(200).json({ Viewed: false});
             
         })
         .catch(err => {
             console.error(err.message);
-            next (new NotFound([{msg: "Unable to find history entry for user: " + req.user.id}]));
+            next (new BadRequest([{msg: "User History: Bad Request."}]));
         });       
     }
 
 )
 
 
-// @route  POST api/user-history/:podcast_id
-// @desc   creates/updates an entry for a user's history - :id spotify API id reference. 
-// @access Public
+// @route  POST api/user-history/:p_id
+// @desc   creates/updates user history entry for a user when given podcast id 'p_id' 
+// @access Private 
 
 router.post (
     '/:p_id', (req, res, next) => {
@@ -60,16 +58,17 @@ router.post (
         const query = HistoryModel.findOneAndUpdate(filter, update, {
             new: true,
             upsert: true
-        }).lean();
+        }).lean()
+        .select("-__v");
 
         query.exec()
         .then(upd_podcast => {
-            const json_upd_podcast = JSON.stringify(upd_podcast);
-            return res.status(200).json(json_upd_podcast);
+           // const json_upd_podcast = JSON.stringify(upd_podcast);
+            return res.status(200).json(upd_podcast);
         })
         .catch(err => {
             console.error(err.message);
-            next(new NotFound([{msg: "Could not update history for podcast: " + req.params.p_id + "for user: " + req.user.u_id}]));
+            next(new BadRequest([{msg: "User History: Bad Request."}]));
         });
     }
 )
