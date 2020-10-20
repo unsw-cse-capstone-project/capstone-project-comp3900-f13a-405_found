@@ -19,3 +19,6 @@ Week 5
 - created Private Route for FE
 - I did backend and frontend for subscriptions, notification still not included tho
 - I worked on trending shows
+Week 6
+- I did some PR reviews
+- Integrated the player with the episodes
