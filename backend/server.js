@@ -37,6 +37,8 @@ app.use("/api/secure", checkAuth, require("./routes/api/secure-routes"));
 
 app.use("/api/subscription", checkAuth, require("./routes/api/subscription"));
 
+app.use("/api/notifications", checkAuth, require("./routes/api/notifications"));
+
 // error handler
 app.use(errorHandler);
 
