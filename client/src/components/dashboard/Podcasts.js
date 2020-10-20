@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import SubscribeButton from "../SubscribeButton";
-import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
-import Episodes from './Episodes';
+import { withStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Typography from "@material-ui/core/Typography";
+import axios from "axios";
+import Episodes from "./Episodes";
 
 const styles = (theme) => ({
   root: {
@@ -16,7 +16,7 @@ const styles = (theme) => ({
     padding: theme.spacing(2),
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],
@@ -27,9 +27,13 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
+      <Typography variant='h6'>{children}</Typography>
       {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+        <IconButton
+          aria-label='close'
+          className={classes.closeButton}
+          onClick={onClose}
+        >
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -44,11 +48,9 @@ const DialogContent = withStyles((theme) => ({
 }))(MuiDialogContent);
 
 const Podcasts = ({ podcasts, loading }) => {
-
   const [open, setOpen] = useState(false);
   const [podcast, setPodcast] = useState({});
   const [img, setImg] = useState();
-  
 
   const handleClickOpen = (pod) => {
     setPodcast(pod);
@@ -64,9 +66,13 @@ const Podcasts = ({ podcasts, loading }) => {
   }
 
   return (
-    <ul  className='list-group mb-4'>
+    <ul className='list-group mb-4'>
       {podcasts.map((podcasts) => (
-        <li onClick={handleClickOpen.bind(this, podcasts)} key={podcasts.id} className='list-group-item'>
+        <li
+          onClick={handleClickOpen.bind(this, podcasts)}
+          key={podcasts.id}
+          className='list-group-item'
+        >
           <div style={{ textAlign: "left", color: "black" }}>
             {podcasts.name}
           </div>
@@ -81,27 +87,23 @@ const Podcasts = ({ podcasts, loading }) => {
         </li>
       ))}
 
-       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} >
-        <DialogTitle id="customized-dialog-title"onClose={handleClose} >
-        {podcast.name}
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby='customized-dialog-title'
+        open={open}
+      >
+        <DialogTitle id='customized-dialog-title' onClose={handleClose}>
+          {podcast.name}
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            {podcast.description}
-          </Typography>
+          <Typography gutterBottom>{podcast.description}</Typography>
           <SubscribeButton id={podcast.id} />
-          <img
-              height='60px'
-              width='60px'
-              src={img}
-              alt='podcastimage'
-            />
+          <img height='60px' width='60px' src={img} alt='podcastimage' />
           <Typography gutterBottom>
-          <Episodes episodes={podcast} />
+            <Episodes podcastName={podcast.name} podcastEpisodes={podcast} />
           </Typography>
-          <Typography gutterBottom>
-          </Typography>
-        </DialogContent>       
+          <Typography gutterBottom></Typography>
+        </DialogContent>
       </Dialog>
     </ul>
   );
