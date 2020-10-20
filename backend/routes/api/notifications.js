@@ -57,11 +57,12 @@ router.get("/:userid", async (req, res, next) => {
         const episodeDelta = getEpisodeDelta(currentEpisodes, newEpisodeIds);
 
         // Now get the episode objects correponding to the difference
-        const filteredEpisodes = newEpisodes.filter(episode => episodeDelta.includes(episode.id))
+        const filteredEpisodes = newEpisodes.filter(episode => episodeDelta.includes(episode.id));
         // Create a notification object for this subscription
         if (filteredEpisodes.length > 0) {
           notifications.push({
             'podcastId': podcastId,
+            'subscriptionId': subscription.id,
             'newEpisodes': filteredEpisodes,
           });
         }

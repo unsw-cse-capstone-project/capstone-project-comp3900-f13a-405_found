@@ -123,4 +123,26 @@ router.get("/trending", async (req, res) => {
   }
 });
 
+// @route   PUT api/subscription/:subscriptionid
+// @desc    Updates a user's subscriptions with the latest episodes
+// @access  Private
+// @accepts Array containing list of new episode Ids which the user has acknowledged.
+router.put("/subscription/:subscriptionId", async (req, res, next) => {
+  try {
+    // Array of acknowledged episode Ids
+    const newEpisodeIds = req.body.acknowledgedEpisodeIds;
+    const subscription = await Subscription.findById(req.params.subscriptionId, function(err, subscription) {
+      for (const episodeId of newEpisodeIds) {
+        subscription.showEpisodesIds.push(episodeId)
+      }
+      await subscription.save(function(err) {
+        if (err) 
+          throw Exception();
+      }); 
+    });
+  } catch(err) {
+    console.log(err)
+    return next(new BadRequest([{ msg: "Bad Request!!" }]));
+  }
+});
 module.exports = router;
