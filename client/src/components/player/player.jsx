@@ -33,13 +33,7 @@ const Player = () => {
 
   const playerState = useSelector((state) => state.player);
 
-  const {
-    playing,
-    url,
-    image,
-    title,
-    artist,
-  } = playerState;
+  const { playing, url, image, title, artist } = playerState;
 
   const handlePlay = () => {
     console.log("onPlay");
@@ -184,12 +178,14 @@ const Player = () => {
         ) : null}
         <div
           style={{
-            margin: "44px 0 auto 0 ",
+            margin: "18px 0 auto 0 ",
             color: "white",
             paddingLeft: "10px",
           }}
         >
-          <p style={{ fontWeight: "bold", margin: "0" }}>{title}</p>
+          <p style={{ width: "295px", fontWeight: "bold", margin: "0" }}>
+            {title}
+          </p>
           <p style={{ margin: "0" }}>{artist}</p>
         </div>
       </div>

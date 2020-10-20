@@ -3,6 +3,7 @@ import {
   SET_PLAYING,
   SET_IMAGE,
   SET_ARTIST,
+  SET_STATE_FROM_EPISODES,
   SET_TITLE,
 } from "../actions/types";
 
@@ -12,6 +13,7 @@ const initial_state = {
   title: null,
   artist: null,
   image: null,
+  episode_id: null,
 };
 
 export default function player(state = initial_state, action) {
@@ -41,6 +43,8 @@ export default function player(state = initial_state, action) {
         ...state,
         title: action.title,
       };
+    case SET_STATE_FROM_EPISODES:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
