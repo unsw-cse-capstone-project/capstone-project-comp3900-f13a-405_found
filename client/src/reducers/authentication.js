@@ -5,12 +5,15 @@ import {
   LOGIN_FAIL,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  EMAIL_VERIFIED,
 } from "../actions/types";
 
 const initialState = {
   isLoaded: false,
   isAuthenticated: false,
   user: null,
+  emailVerified: false,
+  verifyError: false,
 };
 
 export default function (state = initialState, action) {
@@ -30,6 +33,13 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: false,
         isLoaded: true,
+      };
+    case EMAIL_VERIFIED:
+      return {
+        ...state,
+        isAuthenticated: false,
+        emailVerified: action.payload,
+        verifyError: action.verifyError,
       };
     default:
       return state;

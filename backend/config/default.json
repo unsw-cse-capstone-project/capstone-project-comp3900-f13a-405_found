@@ -3,5 +3,7 @@
   "jwtSecret": "superSECr3t!!:p",
   "jwtExpirationTime": 3600,
   "spotifyClientId": "05442626b8a84afb967b52c4f33ca837",
-  "spotifyClientSecret": "c4a54e089a5f4d7e815289b4fbb9cbbe"
+  "spotifyClientSecret": "c4a54e089a5f4d7e815289b4fbb9cbbe",
+  "email_account": "comp3900405foundlol@gmail.com",
+  "email_password": "Adm1N123!"
 }
