@@ -131,7 +131,7 @@ router.put("/subscription/:subscriptionId", async (req, res, next) => {
   try {
     // Array of acknowledged episode Ids
     const newEpisodeIds = req.body.acknowledgedEpisodeIds;
-    const subscription = await Subscription.findById(req.params.subscriptionId, function(err, subscription) {
+    const subscription = await Subscription.findById(req.params.subscriptionId, async function(err, subscription) {
       for (const episodeId of newEpisodeIds) {
         subscription.showEpisodesIds.push(episodeId)
       }
