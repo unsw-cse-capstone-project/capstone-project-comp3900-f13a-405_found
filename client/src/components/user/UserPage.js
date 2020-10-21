@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import Sidebar from "./Sidebar";
-import Trending from "./Trending";
+import Sidebar from "../dashboard/Sidebar";
 import User from "./User"
 
 import {
@@ -9,7 +8,6 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core";
-import Header from "./Header";
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
@@ -38,7 +36,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Dashboard = () => {
+const UserPage = () => {
   let match = useRouteMatch();
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -56,4 +54,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default UserPage;
