@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
-import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -34,10 +34,14 @@ const useStyles = makeStyles({
     width: "100%",
     paddingTop: "10px",
   },
+  center: {
+    margin: "0 auto",
+    position: "relative",
+    left: "280px",
+  },
 });
 
 const UserPage = () => {
-  let match = useRouteMatch();
   const dispatch = useDispatch();
   const classes = useStyles();
   useEffect(() => {
@@ -46,8 +50,8 @@ const UserPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <Sidebar />
-      <div className={classes.appMain}>
-        <User></User>
+      <div className={classes.center}>
+        <User/>
       </div>
       <CssBaseline />
     </ThemeProvider>

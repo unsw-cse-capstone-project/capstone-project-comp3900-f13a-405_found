@@ -75,7 +75,7 @@ const Episodes = ({ podcastEpisodes }) => {
   }, []);
 
   if (isLoading) {
-    return <Typography>Loading episodefs...</Typography>;
+    return <Typography>Loading episodes...</Typography>;
   }
 
   return (

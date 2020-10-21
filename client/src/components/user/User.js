@@ -1,45 +1,42 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+import History from "./History"
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 5,
-    height: "100%",
+    padding: '10px', 
+    paddingBottom: "80px",
+    '& > *': {
+      width: theme.spacing(100),
+      height: theme.spacing(40),
+      paddingTop: "10px",
+      paddingBottom: "40px",
+      paddingLeft: "20px",
+    },
   },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  }
+  myText: {
+    color: "black",
+    fontSize: "1.6rem",
+  },
+  
 }));
 
 const User = () => {
   const classes = useStyles();
 
-  function FormRow() {
-    return (
-      <React.Fragment>
-        <Grid direction="column"
-                style={{height: "400%" }}item xs={12}>
-          <Paper className={classes.paper}>item</Paper>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
-        </Grid>
-      </Grid>
+      <Paper variant="outlined"> 
+      <div className={classes.myText}>Recommended for you</div>
+      </Paper>
+      <Paper variant="outlined">
+      <div className={classes.myText}>Your Episode History</div>
+      <History/>
+      </Paper>
     </div>
+    
   );
 };
 
