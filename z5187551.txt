@@ -22,3 +22,4 @@ Week 5
 Week 6
 - I did some PR reviews
 - Integrated the player with the episodes
+- I did email verification for user registration.
