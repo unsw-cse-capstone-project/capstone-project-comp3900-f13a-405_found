@@ -9,8 +9,10 @@ import logo from "../landing/logo.png";
 import Typography from "@material-ui/core/Typography";
 import CustomTextField from "../CustomTextField";
 import { makeStyles } from "@material-ui/core";
+import { v4 as uuid } from "uuid";
+import { message } from "antd";
 
-const Signup = () => {
+const Signup = ({ history }) => {
   const useStyles = makeStyles((theme) => ({
     MR: {
       marginRight: "30px",
@@ -62,7 +64,10 @@ const Signup = () => {
     e.preventDefault();
     if (validate()) {
       const { name, email, password } = values;
-      dispatch(signup({ name, email, password }));
+      const id = uuid();
+      message.loading({ content: "Loading...", key: id });
+
+      dispatch(signup({ name, email, password, id }, history));
       //resetForm()
     }
   };

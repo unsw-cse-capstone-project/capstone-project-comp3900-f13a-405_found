@@ -7,6 +7,7 @@ const UserModel = require("../models/UserModel");
 const gravatar = require("gravatar");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const mailer = require("nodemailer");
 
 passport.use(
   "signup",
@@ -24,18 +25,57 @@ passport.use(
         if (user) {
           return done(null, false, { message: "User Exists" });
         }
-        user = new UserModel({
-          name: req.body.name,
-          email,
-          avatar: gravatar.url(email, {
-            s: "300",
-            r: "pg",
-            d: "mm",
-          }),
-          password: password,
-        });
-        await user.save();
-        return done(null, user);
+        const jwtPayload = {
+          user: {
+            email: email,
+            name: req.body.name,
+            password: req.body.password,
+          },
+        };
+        jwt.sign(
+          jwtPayload,
+          config.get("jwtSecret"),
+          {
+            expiresIn: config.get("jwtExpirationTime"),
+            algorithm: "HS256",
+          },
+          (err, token) => {
+            if (err) throw new Errors([{ msg: "JWT error" }], true);
+            let b64token = Buffer.from(token).toString("base64");
+            let body = {
+              from: `ultraCast <${config.get("email_account")}>`,
+              to: email,
+              subject: "Activate your account!",
+              html: `<h2>Please click the link below to activate your acccount</h2><br>
+                  <a href="http://localhost:3000/activate-email/${b64token}">Click this link </a>`,
+            };
+
+            const transporter = mailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: config.get("email_account"),
+                pass: config.get("email_password"),
+              },
+            });
+            transporter.verify(function (error, success) {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log("Server is ready to take our messages");
+              }
+            });
+
+            transporter.sendMail(body, (err, result) => {
+              if (err) {
+                console.log(err);
+                return done(null, null, { msg: "something went wrong" });
+              }
+              console.log(result);
+              console.log("email sent");
+              return done(null, {});
+            });
+          }
+        );
       } catch (err) {
         console.error(err.message);
         done(err);
