@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
+import NotificationBox from "../notifications/notificationBox";
 
 import {
   makeStyles,
@@ -46,7 +47,8 @@ const Dashboard = () => {
   }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
-      <Sidebar />
+      <NotificationBox/>
+      <Sidebar/>
       <div className={classes.appMain}>
         <Switch>
           <Route exact path={match.path} component={Header} />

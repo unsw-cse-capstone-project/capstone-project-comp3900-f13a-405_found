@@ -8,6 +8,9 @@ const SubscriptionSchema = new mongoose.Schema({
   showId: {
     type: String,
   },
+  showTitle: {
+    type: String,
+  },
   showEpisodesIds: [String],
 });
 const SubscriptionModel = mongoose.model("subscription", SubscriptionSchema);

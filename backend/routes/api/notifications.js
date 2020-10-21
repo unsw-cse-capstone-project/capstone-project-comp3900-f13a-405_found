@@ -62,6 +62,7 @@ router.get("/:userid", async (req, res, next) => {
         if (filteredEpisodes.length > 0) {
           notifications.push({
             'podcastId': podcastId,
+            'podcastTitle': subscription.showTitle,
             'subscriptionId': subscription.id,
             'newEpisodes': filteredEpisodes,
           });

@@ -66,25 +66,34 @@ router.get("/count/:ids", async (req, res) => {
 router.post("/subscribe/:showId", async (req, res, next) => {
   try {
     // fetching this first will ensure that the provided showId is legit
-    const uri = encodeURI(
+    let uri = encodeURI(
       `https://api.spotify.com/v1/shows/${req.params.showId}/episodes?market=AU`
     );
-    const headers = {
+    let headers = {
       "user-agent": "node.js",
       Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
     };
-    const spotifyResponse = await axios.get(uri, { headers });
+    let spotifyResponse = await axios.get(uri, { headers });
 
     const showEpisodesId = spotifyResponse.data.items.map(
       (episode) => episode.id
     );
+
+    // Make another request to fetch the podcast name
+    uri = encodeURI(
+      `https://api.spotify.com/v1/shows/${req.params.showId}?market=AU`
+    );
+    spotifyResponse = await axios.get(uri, { headers });
+    
+    const title = spotifyResponse.data.name;
 
     let subscribe = await Subscription.findOneAndUpdate(
       {
         user: req.user.id,
         showId: req.params.showId,
       },
-      { showId: req.params.showId },
+      { showId: req.params.showId,
+        showTitle: title },
       {
         new: true,
         upsert: true,
