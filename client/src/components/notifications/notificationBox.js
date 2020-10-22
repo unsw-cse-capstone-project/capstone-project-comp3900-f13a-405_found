@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useSelector } from "react";
 import NotificationCard from './notificationCard';
+const axios = require("axios");
 
 // Write some function to pull the information from endpoint 
 // Mock the data for now
@@ -7,7 +8,7 @@ import NotificationCard from './notificationCard';
 const data = [
     {
     'podcastId': 'somefakeId',
-    'podcastTitle': 'Some fake title lol',
+    'podcastTitle': 'The Quickly News Update',
     'subscriptionId': 'this aint useful either',
     'newEpisodes': [
         {
@@ -92,6 +93,15 @@ const data = [
     }
 ]
 const NotificationBox = () => {
+   // const authstate = useSelector(state => state.authentication)
+
+   // useEffect(() => {
+   //    async function fetchData() {
+   //       const uri =  encodeURI(`/api/notifications/${authstate.userId}`) 
+   //       const data = await axios(uri);
+   //    }
+   // })
+
     return (
         <div>
             {   data.length == 0 ? 

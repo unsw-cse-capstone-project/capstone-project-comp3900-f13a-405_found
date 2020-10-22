@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
-import NotificationBox from "../notifications/notificationBox";
+import Notifications from "../notifications/notifications";
 
 import {
   makeStyles,
@@ -47,7 +47,7 @@ const Dashboard = () => {
   }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
-      <NotificationBox/>
+      <Notifications/>
       <Sidebar/>
       <div className={classes.appMain}>
         <Switch>
