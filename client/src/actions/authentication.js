@@ -6,6 +6,7 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   EMAIL_VERIFIED,
+  COOKIE_VALID,
 } from "./types";
 import axios from "axios";
 import { displayAlert, removeAllAlerts } from "./alert";
@@ -66,9 +67,10 @@ export const login = ({ email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post("/api/authentication/login", body, config);
+    const res = await axios.post("/api/authentication/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
+      payload: res.data,
     });
     dispatch(removeAllAlerts());
   } catch (err) {
@@ -90,7 +92,7 @@ export const checkUserStillVerified = () => async (dispatch) => {
     };
     await axios.get("/api/secure/", config);
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: COOKIE_VALID,
     });
     dispatch(removeAllAlerts());
   } catch (err) {

@@ -6,6 +6,7 @@ import {
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
   EMAIL_VERIFIED,
+  COOKIE_VALID,
 } from "../actions/types";
 
 const initialState = {
@@ -19,6 +20,13 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoaded: true,
+        user: action.payload.user,
+      };
+    case COOKIE_VALID:
     case SIGNUP_SUCCESS:
       return {
         ...state,
