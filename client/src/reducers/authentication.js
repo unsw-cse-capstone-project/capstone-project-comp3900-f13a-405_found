@@ -5,17 +5,28 @@ import {
   LOGIN_FAIL,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  EMAIL_VERIFIED,
+  COOKIE_VALID,
 } from "../actions/types";
 
 const initialState = {
   isLoaded: false,
   isAuthenticated: false,
   user: null,
+  emailVerified: false,
+  verifyError: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoaded: true,
+        user: action.payload.user,
+      };
+    case COOKIE_VALID:
     case SIGNUP_SUCCESS:
       return {
         ...state,
@@ -30,6 +41,13 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: false,
         isLoaded: true,
+      };
+    case EMAIL_VERIFIED:
+      return {
+        ...state,
+        isAuthenticated: false,
+        emailVerified: action.payload,
+        verifyError: action.verifyError,
       };
     default:
       return state;

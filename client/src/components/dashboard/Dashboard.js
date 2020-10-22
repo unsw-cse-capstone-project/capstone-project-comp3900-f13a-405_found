@@ -6,10 +6,11 @@ import Notifications from "../notifications/notifications";
 import {
   makeStyles,
   CssBaseline,
-  createMuiTheme,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
+import Player from "../player/player"
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
@@ -46,9 +47,10 @@ const Dashboard = () => {
     dispatch(getSubscriptions());
   }, [dispatch]);
   return (
-    <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+      <Player/>
       <Notifications/>
-      <Sidebar/>
+      <Sidebar />
       <div className={classes.appMain}>
         <Switch>
           <Route exact path={match.path} component={Header} />
@@ -68,6 +70,7 @@ const Dashboard = () => {
       </div>
       <CssBaseline />
     </ThemeProvider>
+    
   );
 };
 

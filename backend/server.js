@@ -39,6 +39,8 @@ app.use("/api/subscription", checkAuth, require("./routes/api/subscription"));
 
 app.use("/api/notifications", checkAuth, require("./routes/api/notifications"));
 
+app.use("/api/user-history", checkAuth, require("./routes/api/user-history.js"));
+
 // error handler
 app.use(errorHandler);
 
