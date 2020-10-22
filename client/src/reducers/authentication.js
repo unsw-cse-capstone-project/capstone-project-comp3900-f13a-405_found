@@ -19,6 +19,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case COOKIE_VALID:
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -26,7 +27,6 @@ export default function (state = initialState, action) {
         isLoaded: true,
         user: action.payload.user,
       };
-    case COOKIE_VALID:
     case SIGNUP_SUCCESS:
       return {
         ...state,

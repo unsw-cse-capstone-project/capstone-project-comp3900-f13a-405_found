@@ -9,9 +9,9 @@ const Subscription = require("../../models/SubscriptionModel");
 // @access  Private
 router.get("/", async (req, res) => {
   try {
-    const subscriptions = await Subscription.find({ user: req.user.id }).select(
-      "-__v"
-    );
+    const subscriptions = await Subscription.find({
+      user: req.user._id,
+    }).select("-__v");
 
     return res.status(200).json(subscriptions);
   } catch (err) {
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 router.post("/unsubscribe/:showId", async (req, res) => {
   try {
     const subscriptions = await Subscription.deleteOne({
-      user: req.user.id,
+      user: req.user._id,
       showId: req.params.showId,
     });
     if (subscriptions.deletedCount <= 0) {
@@ -84,16 +84,15 @@ router.post("/subscribe/:showId", async (req, res, next) => {
       `https://api.spotify.com/v1/shows/${req.params.showId}?market=AU`
     );
     spotifyResponse = await axios.get(uri, { headers });
-    
+
     const title = spotifyResponse.data.name;
 
     let subscribe = await Subscription.findOneAndUpdate(
       {
-        user: req.user.id,
+        user: req.user._id,
         showId: req.params.showId,
       },
-      { showId: req.params.showId,
-        showTitle: title },
+      { showId: req.params.showId, showTitle: title },
       {
         new: true,
         upsert: true,
@@ -140,17 +139,19 @@ router.put("/subscription/:subscriptionId", async (req, res, next) => {
   try {
     // Array of acknowledged episode Ids
     const newEpisodeIds = req.body.acknowledgedEpisodeIds;
-    const subscription = await Subscription.findById(req.params.subscriptionId, async function(err, subscription) {
-      for (const episodeId of newEpisodeIds) {
-        subscription.showEpisodesIds.push(episodeId)
+    const subscription = await Subscription.findById(
+      req.params.subscriptionId,
+      async function (err, subscription) {
+        for (const episodeId of newEpisodeIds) {
+          subscription.showEpisodesIds.push(episodeId);
+        }
+        await subscription.save(function (err) {
+          if (err) throw Exception();
+        });
       }
-      await subscription.save(function(err) {
-        if (err) 
-          throw Exception();
-      }); 
-    });
-  } catch(err) {
-    console.log(err)
+    );
+  } catch (err) {
+    console.log(err);
     return next(new BadRequest([{ msg: "Bad Request!!" }]));
   }
 });
