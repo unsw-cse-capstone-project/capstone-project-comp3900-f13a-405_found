@@ -8,7 +8,7 @@ import {
 } from "../actions/types";
 
 const initial_state = {
-  url: "https://www.youtube.com/watch?v=rI6igzB6cXE",
+  url: null,
   playing: false,
   title: null,
   artist: null,

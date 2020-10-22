@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, AccordionSummary, AccordionDetails, Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import axios from "axios";
 
 const NotificationCard = (props) => {
-    const cardStyle = {
-        width: '100%',
-        backgroundColor: 'white'
+    const [notificationList, setNotificationList] = useState(props.newEpisodes);
+
+    const handleAcknowledge = (episodeId) => {
+        console.log(`yeah you wanna delete ${episodeId}`)
+
+        // axios.put(`/api/subscription/${props.subscriptionId}`, { acknowledgedEpisodeIds: [episodeId] }).then(res => {
+        //     console.log('deleted successfully. changing the state now')
+            // const filtered = notificationList.filter(notification => notification.id != episodeId)
+            // setNotificationList(filtered);
+        //     
+        // })
+        const filtered = notificationList.filter(notification => notification.id != episodeId)
+        setNotificationList(filtered);
     }
-    
+
     return (
+        notificationList.length > 0 ? 
         <Accordion> 
             <AccordionSummary  
                 expandIcon={<ExpandMoreIcon />}
@@ -19,18 +31,19 @@ const NotificationCard = (props) => {
             >
                 <Typography> {props.podcastTitle} </Typography>
             </AccordionSummary>
-            {
-                    props.newEpisodes.map(episode => {
+            {       
+                    notificationList.map( (episode,i) => {
                         return (
-                            <AccordionDetails>
+                            <AccordionDetails key={i}>
                                 <Typography>{episode.name}</Typography>
-                                <ClearIcon style={{color: 'red', cursor: 'pointer'}}/>
+                                <ClearIcon onClick={() => handleAcknowledge(episode.id)} style={{color: 'red', cursor: 'pointer'}}/>
                             </AccordionDetails>
                         )
                     })
 
                 }
         </Accordion>
+        : null
     )
 }
 

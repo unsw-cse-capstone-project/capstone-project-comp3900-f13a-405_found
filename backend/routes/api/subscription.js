@@ -135,10 +135,11 @@ router.get("/trending", async (req, res) => {
 // @desc    Updates a user's subscriptions with the latest episodes
 // @access  Private
 // @accepts Array containing list of new episode Ids which the user has acknowledged.
-router.put("/subscription/:subscriptionId", async (req, res, next) => {
+router.put("/:subscriptionId", async (req, res, next) => {
   try {
     // Array of acknowledged episode Ids
     const newEpisodeIds = req.body.acknowledgedEpisodeIds;
+    console.log(newEpisodeIds);
     const subscription = await Subscription.findById(
       req.params.subscriptionId,
       async function (err, subscription) {
@@ -147,6 +148,7 @@ router.put("/subscription/:subscriptionId", async (req, res, next) => {
         }
         await subscription.save(function (err) {
           if (err) throw Exception();
+          return res.status(200).json("Success");
         });
       }
     );
