@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core";
 import LogoutButton from "../LogoutButton";
+import PlaylistButton from "../PlaylistButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getShowsDetailsByListOfIds,
@@ -64,6 +65,11 @@ const Sidebar = (props) => {
         <Link style={{ textDecoration: "none" }} to='/dashboard'>
           <Button size='large' variant='contained'>
             Dashboard
+          </Button>{" "}
+        </Link>
+        <Link style={{ textDecoration: "none"}} to='/playlist'>
+          <Button size='large' variant='contained'>
+            Playlist
           </Button>{" "}
         </Link>
         <div className={classes.myText}>Subscriptions</div>

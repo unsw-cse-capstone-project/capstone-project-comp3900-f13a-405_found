@@ -22,7 +22,8 @@ router.post("/playlistAdd/:episodeId", async (req, res, next) => {
     try {    
         let playlist = await Playlist.findOneAndUpdate(
             { 
-                user: req.user.id, 
+                user: req.user.id,
+                episodeId: req.params.showId,
             },
             { 
                 episodeId: req.params.episodeId
@@ -47,7 +48,7 @@ router.post("/playlistDelete/:episodeId", async(req, res) => {
     try {
         const playlist = await Playlist.deleteOne({
             user: req.user.id,
-            showId: req.params.showId,
+            showId: req.params.episodeId,
         });
         if (playlist.deletedCount <= 0) {
             return res.status(400).json({ Success: false });
