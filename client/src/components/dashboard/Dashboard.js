@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
+import Notifications from "../notifications/notifications";
 
 import {
   makeStyles,
@@ -46,9 +47,9 @@ const Dashboard = () => {
     dispatch(getSubscriptions());
   }, [dispatch]);
   return (
-
       <ThemeProvider theme={theme}>
       <Player/>
+      <Notifications/>
       <Sidebar />
       <div className={classes.appMain}>
         <Switch>

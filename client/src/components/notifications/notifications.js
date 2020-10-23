@@ -1,0 +1,78 @@
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import NotificationBox from "./notificationBox";
+import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Badge from '@material-ui/core/Badge';
+import { SET_NOTIFICATIONS } from '../../actions/types'
+
+const countNotifications = (notifications) => {
+  let counter = 0;
+  notifications.forEach(notification => {
+    counter += notification.newEpisodes.length;
+  })
+  return counter;
+}
+
+export const Notifications = () => {
+  const dispatch = useDispatch();
+  const authstate = useSelector((state) => state.authentication);
+  const [expanded, setExpanded] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // API call to populate the notifications state in the store
+    axios.get(`/api/notifications/${authstate.user._id}`).then((res) => {
+      if (res.data != null) {
+        dispatch({type: SET_NOTIFICATIONS, notifications: res.data});
+      } else {
+        dispatch({type: SET_NOTIFICATIONS, notifications: []});
+        console.log('ERROR: There was a problem with loading notifications');
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
+
+  // Fetch notifications from the store
+  const notificationsState = useSelector(state => state.notifications);
+  const notifications = notificationsState.notifications;
+
+  return (
+    <div style={{ position: "absolute", right: "0", top: "0" }}>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <>
+        <Badge color="secondary" badgeContent={countNotifications(notifications)}
+          style={{
+            cursor: "pointer",
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "10px",
+            marginTop: "10px"
+          }}>
+          <NotificationsIcon
+            onClick={toggleExpanded}
+            style={{
+              cursor: "pointer",
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "0px",
+            }}
+          />
+        </Badge>
+        <NotificationBox notifications={notifications} expanded={expanded}/>
+        </>
+      )
+      }
+    </div>
+  );
+};
+
+export default Notifications;

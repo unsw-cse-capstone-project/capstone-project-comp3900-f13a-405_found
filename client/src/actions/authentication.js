@@ -90,9 +90,10 @@ export const checkUserStillVerified = () => async (dispatch) => {
     const config = {
       withCredentials: true,
     };
-    await axios.get("/api/secure/", config);
+    const res = await axios.get("/api/secure/", config);
     dispatch({
       type: COOKIE_VALID,
+      payload: res.data,
     });
     dispatch(removeAllAlerts());
   } catch (err) {
