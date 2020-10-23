@@ -3,8 +3,9 @@ import authentication from "./authentication";
 import alert from "./alert";
 import player from "./player";
 import subscriptions from "./subscriptions";
+import notifications from "./notifications";
 
-const appReducer = combineReducers({ authentication, alert, subscriptions, player });
+const appReducer = combineReducers({ authentication, alert, subscriptions, player, notifications });
 
 const rootReducer = (state, action) => {
   if (action.type === "LOGOUT_SUCCESS") {

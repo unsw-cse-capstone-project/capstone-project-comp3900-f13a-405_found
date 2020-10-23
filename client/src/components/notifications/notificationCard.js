@@ -11,12 +11,14 @@ const NotificationCard = (props) => {
     const handleAcknowledge = (episodeId) => {
         console.log(`yeah you wanna delete ${episodeId}`)
 
-        axios.put(`/api/subscription/${props.subscriptionId}`, { acknowledgedEpisodeIds: [episodeId] }).then(res => {
-            console.log('deleted successfully. changing the state now')
-            const filtered = notificationList.filter(notification => notification.id != episodeId);
-            setNotificationList(filtered);
+        // axios.put(`/api/subscription/${props.subscriptionId}`, { acknowledgedEpisodeIds: [episodeId] }).then(res => {
+        //     console.log('deleted successfully. changing the state now')
+        //     const filtered = notificationList.filter(notification => notification.id != episodeId);
+        //     setNotificationList(filtered);
             
-        })
+        // })
+             const filtered = notificationList.filter(notification => notification.id != episodeId);
+            setNotificationList(filtered);
     }
 
     return (
