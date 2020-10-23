@@ -26,4 +26,10 @@ conduct much dev work myself this sprint.
 
 Week 5
 Our team is preparing for demo A. I organised a team meeting to prepare for the demo and drafted up a document to conduct the
- retrospective after the demo. I completed a logout endpoint as part of the login story and refactored some existing code.
+ retrospective after the demo. I completed a logout endpoint as part of the login story and refactored some existing code. 
+
+Week 6
+I spent a large amount of time on writing the front end for the player component which was responsible for playing podcasts. 
+My remaining time was spent on implementing the notifications backend and frontend. I learnt a lot about redux from my frontend
+teammates and from looking at documentation. Application was a good teacher and having teammates to ask when things go wrong helped
+me to write front end code for some stories where I thought I was not capable. 
