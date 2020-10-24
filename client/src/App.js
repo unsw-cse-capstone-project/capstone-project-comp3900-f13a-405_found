@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Signup from "./components/authentication/Signup";
 import ActivateEmail from "./components/authentication/ActivateEmail";
+import PleaseClickEmail from "./components/authentication/PleaseClickEmail";
 import LoginComp from "./components/landing/Landing";
 import Alert from "./components/alert/Alert";
 import Container from "react-bootstrap/Container";
@@ -17,9 +18,7 @@ import notfoundmeme from "./404.png";
 const NotFound = () => (
   <img style={{ width: "100%" }} src={notfoundmeme} alt='notFound' />
 );
-const PleaseClickEmail = () => (
-  <div>Email has been sent to your acc, check and click please!</div>
-);
+
 const App = () => {
   useEffect(() => {
     store.dispatch(checkUserStillVerified());

@@ -30,6 +30,7 @@ passport.use(
             email: email,
             name: req.body.name,
             password: req.body.password,
+            optInEmail: req.body.optInEmail,
           },
         };
         jwt.sign(

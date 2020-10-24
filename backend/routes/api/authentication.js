@@ -125,6 +125,7 @@ router.post("/activate/:token", async (req, res, next) => {
         d: "mm",
       }),
       password: userfromtoken.password,
+      optInEmail: userfromtoken.optInEmail,
     });
     await user.save();
     return res.status(200).json({ success: true });
