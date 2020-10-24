@@ -11,7 +11,6 @@ const PleaseClickEmail = () => {
   const handleResent = () => {
     const id = uuid();
     message.loading({ content: "Loading...", key: id });
-    console.log({ ...authState.userResentEmail, id });
     dispatch(signup({ ...authState.userResentEmail, id }));
   };
   return (
