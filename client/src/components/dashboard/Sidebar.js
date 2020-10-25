@@ -46,7 +46,6 @@ const Sidebar = (props) => {
     const item = subscriptionState.subscribedEpisodes.filter(
       (i) => i.id === id
     );
-    console.log(item);
     if (item.length > 0) {
       return item[0].episodes;
     } else {

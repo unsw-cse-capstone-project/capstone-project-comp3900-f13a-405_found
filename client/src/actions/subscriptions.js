@@ -144,19 +144,24 @@ export const getSubscribedShowsNewEpisodes = (ids) => async (dispatch) => {
     };
     const date = new Date();
     const today = date.getDate();
+    const thisMonth = date.getMonth() + 1; // + 1 because i think it starts from 0 or something weird like that
     const daysInWeek = 7;
     const daysInMonth = 31;
     const episodeList = [];
     for (const id of ids) {
-      const res = await axios.get(`/api/spotify/shows/${id}/episodes`, config);
-      const filtered = res.data.filter(episode => {
-        const day = episode.release_date.split('-')[2];
-        if (today > day) {
-          return today - day <= daysInWeek;
+        const res = await axios.get(`/api/spotify/shows/${id}/episodes`, config);
+        const filtered = res.data.filter(episode => {
+        const releaseDate = episode.release_date.split('-');
+        const day = releaseDate[2];
+        const month = releaseDate[1]
+       
+        if (today >= day && month == thisMonth) {
+          return today - parseInt(day) <= daysInWeek;
+        } else if ( today < day && parseInt(month) == (thisMonth - 1) ){
+          return parseInt(day) + daysInMonth - today <= daysInWeek;
         } else {
-          return day + daysInMonth - today <= daysInWeek;
+          return false;
         }
-        return today - day <= daysInWeek;
       });
       episodeList.push({id: id, episodes: filtered});
     }
