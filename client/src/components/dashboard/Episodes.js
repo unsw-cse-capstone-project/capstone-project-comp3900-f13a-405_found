@@ -10,6 +10,8 @@ import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledWhiteIcon from "@material-ui/icons/PauseCircleFilled";
 import { SET_STATE_FROM_EPISODES } from "../../actions/types";
 import { useDispatch, useSelector } from "react-redux";
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: "33.33%",
+    flexBasis: "100%",
     flexShrink: 0,
   },
   duration_ms: {
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const Episodes = ({ podcastEpisodes }) => {
   const [isLoading, setLoading] = useState(true);
   const [podcastDetails, setPodcastDetails] = useState([]);
+  const [beenPlayed, setPlayed] = useState({});
   const dispatch = useDispatch();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -56,6 +59,16 @@ const Episodes = ({ podcastEpisodes }) => {
         artist: podcastEpisodes.name,
       },
     });
+
+    axios.post(`/api/user-history/${episode.id}`)
+    .then(function (response) {
+      console.log(response.data);
+      beenPlayed[`${episode.id}`] = true;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
   };
 
   const handlePause = () => {
@@ -70,8 +83,21 @@ const Episodes = ({ podcastEpisodes }) => {
   useEffect(() => {
     axios.get(`/api/spotify/shows/${podcastEpisodes.id}`).then((res) => {
       setPodcastDetails(res.data.episodes.items);
-      setLoading(false);
+      res.data.episodes.items.forEach(function(element) {
+        axios.get(`api/user-history/${element.id}`)
+      .then(function (response) {
+      
+      beenPlayed[`${element.id}`] = response.data.Viewed;
+      //console.log(beenPlayed[`${element.id}`]);
+    })
+    .catch(function (error) {
+      console.log(error);
+      });
     });
+
+      setLoading(false);
+  });
+
   }, []);
 
   if (isLoading) {
@@ -91,10 +117,10 @@ const Episodes = ({ podcastEpisodes }) => {
             aria-controls='panel1bh-content'
             id='panel1bh-header'
           >
-            <Typography className={classes.name}>{episode.name}</Typography>
-            <Typography className={classes.duration_ms}>
-              {/* {episode.duration_ms} */}
-            </Typography>
+            <Typography className={classes.name}> 
+            {!beenPlayed[`${episode.id}`] ? <RadioButtonCheckedIcon fontSize='small'/> : <RadioButtonUncheckedIcon fontSize='small'/>}
+            {episode.name}</Typography>
+            
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
