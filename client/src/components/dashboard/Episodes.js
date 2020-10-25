@@ -63,10 +63,14 @@ const Episodes = ({ podcastEpisodes }) => {
     axios.post(`/api/user-history/${episode.id}`)
     .then(function (response) {
       console.log(response.data);
-      beenPlayed[`${episode.id}`] = true;
     })
     .catch(function (error) {
       console.log(error);
+    }).then(() => {
+      axios.get(`api/user-history/${episode.id}`)
+      .then(function (response) {
+      console.log(response.data.Viewed);
+    })
     });
     
   };
@@ -80,24 +84,27 @@ const Episodes = ({ podcastEpisodes }) => {
     });
   };
 
+  
+  
   useEffect(() => {
+    const myObj = {}
     axios.get(`/api/spotify/shows/${podcastEpisodes.id}`).then((res) => {
       setPodcastDetails(res.data.episodes.items);
       res.data.episodes.items.forEach(function(element) {
-        axios.get(`api/user-history/${element.id}`)
+      axios.get(`api/user-history/${element.id}`)
       .then(function (response) {
-      
-      beenPlayed[`${element.id}`] = response.data.Viewed;
-      //console.log(beenPlayed[`${element.id}`]);
+      console.log(response.data.Viewed);
+      myObj[`${element.id}`] = response.data.Viewed;
     })
     .catch(function (error) {
       console.log(error);
       });
     });
-
-      setLoading(false);
+      
+  }).then(() => {
+    setPlayed(myObj);
+    setLoading(false);
   });
-
   }, []);
 
   if (isLoading) {
@@ -119,6 +126,7 @@ const Episodes = ({ podcastEpisodes }) => {
           >
             <Typography className={classes.name}> 
             {!beenPlayed[`${episode.id}`] ? <RadioButtonCheckedIcon fontSize='small'/> : <RadioButtonUncheckedIcon fontSize='small'/>}
+            {console.log(beenPlayed)}
             {episode.name}</Typography>
             
           </AccordionSummary>
