@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import History from "./History"
+import Recommendations from "./Recommendations"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -10,10 +11,10 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "80px",
     '& > *': {
       width: theme.spacing(100),
-      height: theme.spacing(40),
+      height: theme.spacing(50),
       paddingTop: "10px",
       paddingBottom: "40px",
-      paddingLeft: "20px",
+      paddingLeft: "15px",
     },
   },
   myText: {
@@ -30,6 +31,7 @@ const User = () => {
     <div className={classes.root}>
       <Paper variant="outlined"> 
       <div className={classes.myText}>Recommended for you</div>
+      <Recommendations/>
       </Paper>
       <Paper variant="outlined">
       <div className={classes.myText}>Your Episode History</div>
