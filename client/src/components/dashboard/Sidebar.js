@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { withStyles } from "@material-ui/core";
+import { withStyles, Accordion, AccordionSummary, AccordionDetails, Button, Typography } from "@material-ui/core";
 import LogoutButton from "../LogoutButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getShowsDetailsByListOfIds,
   getSubscribedShowsSubsCount,
+  getSubscribedShowsNewEpisodes
 } from "../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
 const style = {
@@ -42,12 +42,26 @@ const Sidebar = (props) => {
     if (item.length <= 0) return 0;
     return item[0].count;
   };
+  const getNewEpisodes = (id) => {
+    const item = subscriptionState.subscribedEpisodes.filter(
+      (i) => i.id === id
+    );
+    console.log(item);
+    if (item.length > 0) {
+      return item[0].episodes;
+    } else {
+      return [];
+    }
+  };
   useEffect(() => {
     dispatch(
       getShowsDetailsByListOfIds(subscriptionState.subscriptions.join(","))
     );
     dispatch(
       getSubscribedShowsSubsCount(subscriptionState.subscriptions.join(","))
+    );
+    dispatch(
+      getSubscribedShowsNewEpisodes(subscriptionState.subscriptions)
     );
   }, [subscriptionState.subscriptions, dispatch]);
 
@@ -73,19 +87,35 @@ const Sidebar = (props) => {
           ) : subscriptionState.detailedSubscriptions.length > 0 ? (
             subscriptionState.detailedSubscriptions.map((subs) => (
               <li key={subs.id} className='list-group-item'>
-                <div style={{ textAlign: "left", color: "black" }}>
+                <div style={{color: "black", display: "flex", justifyContent: 'space-between' }}>
                   {subs.name}{" "}
-                </div>
-                <div style={{ textAlign: "right", color: "black" }}>
-                  {" "}
-                  Subscriber count: {getSubCount(subs.id)}
                   <img
                     height='60px'
                     width='60px'
                     src={subs.images[0].url}
                     alt='trending'
                   />
+                  {/* Mah div goes here */} 
                 </div>
+                <div>
+                    {subscriptionState.subscribedEpisodesLoaded ? 
+                      getNewEpisodes(subs.id).length > 0 ? 
+                        <Accordion>
+                          <AccordionSummary>Latest Episodes</AccordionSummary>
+                          {getNewEpisodes(subs.id).map( (episode,i) => {
+                            return (
+                                <AccordionDetails key={i}>
+                                    <div style={{fontSize: '12px', fontWeight: 'bold', display: 'block'}}>
+                                      {episode.name}
+                                    </div>
+                                </AccordionDetails>
+                            )
+                          })
+                        }
+                        </Accordion> 
+                        : null
+                      : null }
+                    </div>
               </li>
             ))
           ) : (

@@ -7,6 +7,7 @@ import {
   UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
   GET_TRENDING_SHOWS,
   GET_SHOWS_BY_IDS_FOR_TRENDING,
+  GET_SUBSCRIBED_EPISODES_BY_IDS
 } from "./types";
 import { displayAlert, removeAllAlerts } from "./alert";
 
@@ -133,3 +134,35 @@ export const getTrendingShows = () => async (dispatch) => {
     displayAlert("An Error occurred :(");
   }
 };
+
+// GET list of all new episodes
+export const getSubscribedShowsNewEpisodes = (ids) => async (dispatch) => {
+  
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    const date = new Date();
+    const today = date.getDate();
+    const daysInWeek = 7;
+    const daysInMonth = 31;
+    const episodeList = [];
+    for (const id of ids) {
+      const res = await axios.get(`/api/spotify/shows/${id}/episodes`, config);
+      const filtered = res.data.filter(episode => {
+        const day = episode.release_date.split('-')[2];
+        if (today > day) {
+          return today - day <= daysInWeek;
+        } else {
+          return day + daysInMonth - today <= daysInWeek;
+        }
+        return today - day <= daysInWeek;
+      });
+      episodeList.push({id: id, episodes: filtered});
+    }
+    dispatch({type: GET_SUBSCRIBED_EPISODES_BY_IDS, payload: episodeList } );
+  } catch(err) {
+    console.log(err);
+    displayAlert("An Error occurred when grabbing subscribed shows new episodes:(");
+  }
+}
