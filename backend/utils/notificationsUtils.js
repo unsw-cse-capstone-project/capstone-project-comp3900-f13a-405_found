@@ -1,5 +1,6 @@
 const axios = require("axios");
 const Subscription = require("../models/SubscriptionModel");
+const User = require("../models/UserModel");
 
 const getNewEpisodes = async function (podcastId) {
   // Async function which fetches list of all episodes given a podcast Id
@@ -74,8 +75,27 @@ const getUserNotification = async (userId) => {
   }
 };
 
+// // UNTESTED ##############
+const sendEmailForNotifications = async () => {
+  const user = await User.find({ optInEmail: true });
+  for (const userDocument of user) {
+    const userNotifications = await getUserNotification(userDocument.id);
+    let emailBody = "";
+    // for(const )
+  }
+};
+
+const checkAndSendEmailEveryOneHour = () => {
+  // FOR DEMO PURPOSE ONLY, SEND EMAIL ON START UP
+  // sendEmailForNotifications();
+
+  setInterval(sendEmailForNotifications, 60 * 60 * 60);
+};
+// // UNTESTED ##############
+
 module.exports = {
   getNewEpisodes,
   getEpisodeDelta,
   getUserNotification,
+  checkAndSendEmailEveryOneHour,
 };
