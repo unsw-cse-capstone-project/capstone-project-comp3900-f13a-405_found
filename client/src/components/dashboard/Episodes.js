@@ -103,8 +103,11 @@ const Episodes = ({ podcastEpisodes }) => {
       
   }).then(() => {
     setPlayed(myObj);
-    setLoading(false);
+
+    
   });
+
+  setLoading(false);
   }, []);
 
   if (isLoading) {
