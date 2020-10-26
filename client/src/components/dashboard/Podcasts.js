@@ -9,6 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Episodes from "./Episodes";
+import PlaylistButton from "../PlaylistButton";
 
 const styles = (theme) => ({
   root: {
@@ -98,6 +99,7 @@ const Podcasts = ({ podcasts, loading }) => {
         <DialogContent dividers>
           <Typography gutterBottom>{podcast.description}</Typography>
           <SubscribeButton id={podcast.id} />
+          <PlaylistButton />
           <img height='60px' width='60px' src={img} alt='podcastimage' />
           <Typography gutterBottom>
             <Episodes podcastName={podcast.name} podcastEpisodes={podcast} />

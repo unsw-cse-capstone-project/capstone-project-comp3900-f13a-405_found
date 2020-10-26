@@ -1,9 +1,11 @@
 import axios from "axios";
-// import {
-    // 
-// }
+import {
+    ADD_TO_PLAYLIST_SUCCESS,
+    DEL_FROM_PLAYLIST_SUCCESS,
+    GET_PLAYLIST, 
+} from "./types";
 
-import { displayAlert, removeAlert } from "./alert";
+import { displayAlert, removeAllAlerts } from "./alert";
 
 // Add episode to playlist by episode id
 export const addToPlaylist = (id) => async (dispatch) => {
@@ -16,7 +18,7 @@ export const addToPlaylist = (id) => async (dispatch) => {
         };
         await axios.post(`/api/playlist/addPlaylist/${id}`, {}, config);
         dispatch({
-            type: PLAYLIST_ADD_SUCCESS,
+            type: ADD_TO_PLAYLIST_SUCCESS,
             payload: id,
         });
         dispatch(removeAllAlerts());
@@ -36,7 +38,7 @@ export const deleteFromPlaylist = (id) => async (dispatch) => {
         };
         await axios.post(`/api/subscription/unsubscribe/${id}`, {}, config);
         dispatch ({
-            type: PLAYLIST_DELETE_SUCCESS,
+            type: DEL_FROM_PLAYLIST_SUCCESS,
             payload: id,
         });
         dispatch(removeAllAlerts());
@@ -56,15 +58,10 @@ export const getPlaylist = () => async (dispatch) => {
             type: GET_PLAYLIST,
             payload: res.data,
         });
+        dispatch(removeAllAlerts());
     } catch (err) {
         displayAlert("An error occured fetching playlist");
     }
 };
-
-
-
-
-
-
 
 

@@ -5,35 +5,37 @@ import Button from "@material-ui/core/Button";
 
 const PlaylistButton = ({ id }) => {
     const dispatch = useDispatch();
-    const playlistState = userSelector((state) => state.subscriptions);
+  //  const playlistState = useSelector((state) => state.playlist); // is this right?
 
-    const handleLAddPlaylist = () => {
+    const handleAddPlaylist = () => {
         dispatch(addToPlaylist(id));
     };
 
-    const handleDeletePlaylsit = () => {
+    const handleDeletePlaylist = () => {
         dispatch(deleteFromPlaylist(id));
     };
 
-    return playlistState.isLoaded && playlistState.playlist.indexOf(id) !== -1 ? (
+    //return playlistState.isLoaded && playlistState.playlist.indexOf(id) !== -1 ? (
+    return (
         <Button
             size='large'
-            onClick={ handleLAddPlaylist }
+            onClick={handleAddPlaylist}
             variant='contained'
             type='submit'
         >
-            Add to Playlist
+            Add-to-Playlist
         </Button>
-    ) : (
-        <Button 
-            size='large'
-            onClick={ handleDeletePlaylist }
-            variant='contained'
-            type='submit'
-        >
-            Delete From Playlist 
-        </Button>
-    );
+    // ) ; (
+    //     <Button 
+    //         size='large'
+    //         onClick={handleDeletePlaylist}
+    //         variant='contained'
+    //         type='submit'
+    //     >
+    //         Delete-From-Playlist 
+    //     </Button>
+    // );
+    )
 };
 
 export default PlaylistButton;
