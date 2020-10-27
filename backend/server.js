@@ -37,7 +37,9 @@ app.use("/api/secure", checkAuth, require("./routes/api/secure-routes"));
 
 app.use("/api/subscription", checkAuth, require("./routes/api/subscription"));
 
-app.use("/api/user-history", checkAuth, require("./routes/api/user-history.js"));
+app.use("/api/user-history", checkAuth, require("./routes/api/user-history"));
+
+app.use("/api/playlist", checkAuth, require("./routes/api/playlist"))
 
 // error handler
 app.use(errorHandler);

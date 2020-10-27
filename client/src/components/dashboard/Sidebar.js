@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core";
 import LogoutButton from "../LogoutButton";
-import PlaylistButton from "../PlaylistButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getShowsDetailsByListOfIds,
@@ -67,7 +66,7 @@ const Sidebar = (props) => {
             Dashboard
           </Button>{" "}
         </Link>
-        <Link style={{ textDecoration: "none"}} to='/playlist'>
+        <Link style={{ textDecoration: "none"}} to='/dashboard/playlist'>
           <Button size='large' variant='contained'>
             Playlist
           </Button>{" "}
