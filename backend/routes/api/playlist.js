@@ -3,14 +3,15 @@ const axios = require("axios");
 const { BadRequest } = require("../../utils/errors");
 const router = express.Router();
 const Playlist = require("../../models/PlaylistModel");
+const Subscription = require("../../models/SubscriptionModel");
 
-// Get playlist on the homepage
+// Get user's playlist
 router.get("/", async(req, res) => {
     try {
-        const playlist = await Playlist.find({ user: req.user.id }).select(
+        const playlist = await Playlist.find({ user: req.user.id }).select(  // Change this later
             "-__v"
         );
-        return res.status(200).json(playlist);
+        return res.status(200).json(playlist);   
     } catch (err) {
         console.error(err.message);
         next(new BadRequest([{ msg: "Bad Request!"}]));
@@ -18,15 +19,27 @@ router.get("/", async(req, res) => {
 });
 
 // Add episode to playlist
-router.post("/playlistAdd/:episodeId", async (req, res, next) => {
-    try {    
+// @route POST api/subscription/subscribe/:showId 
+router.post("/playlistAdd/:showId", async (req, res, next) => {
+    try {   
+        const uri = encodeURI(
+            `https://api.spotify.com/v1/shows/${req.params.showId}/episodes?market=AU`
+        );
+        const headers = {
+            "user-agent": "node.js",
+            Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+        };
+        const spotifyResponse = await axios.get(uri, { headers });
+
+        const show
+
         let playlist = await Playlist.findOneAndUpdate(
             { 
                 user: req.user.id,
-                episodeId: req.params.showId,
+                showId: req.params.showId,
             },
             { 
-                episodeId: req.params.episodeId
+                showId: req.params.showId
             },
             { 
                 new: true,

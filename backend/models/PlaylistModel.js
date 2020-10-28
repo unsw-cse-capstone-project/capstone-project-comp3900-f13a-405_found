@@ -5,10 +5,10 @@ const PlaylistSchema = new mongoose.Schema({
        type: mongoose.Schema.Types.ObjectId,
        ref: "user", 
    }, 
-   episodeId: String,
+   showId: String,
 });
 
-const PlaylistModel = mongoose.model("playlist", SubscriptionSchema);
+const PlaylistModel = mongoose.model("playlist", PlaylistSchema);
 module.exports = PlaylistModel;
 
 

@@ -2,7 +2,8 @@ import axios from "axios";
 import {
     ADD_TO_PLAYLIST_SUCCESS,
     DEL_FROM_PLAYLIST_SUCCESS,
-    GET_PLAYLIST, 
+    GET_PLAYLIST,
+    GET_SUBSCRIPTIONS, 
 } from "./types";
 
 import { displayAlert, removeAllAlerts } from "./alert";
@@ -16,7 +17,7 @@ export const addToPlaylist = (id) => async (dispatch) => {
             },
             withCredentials: true,
         };
-        await axios.post(`/api/playlist/addPlaylist/${id}`, {}, config);
+        await axios.post(`/api/playlist/playlistAdd/${id}`, {}, config);
         dispatch({
             type: ADD_TO_PLAYLIST_SUCCESS,
             payload: id,
@@ -53,7 +54,7 @@ export const getPlaylist = () => async (dispatch) => {
         const config ={
             withCredentials: true,
         };
-        const res = await axios.get(`/api/playlist`, config);
+        const res = await axios.get(`/api/playlist/`, config);
         dispatch ({
             type: GET_PLAYLIST,
             payload: res.data,

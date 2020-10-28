@@ -99,7 +99,7 @@ const Podcasts = ({ podcasts, loading }) => {
         <DialogContent dividers>
           <Typography gutterBottom>{podcast.description}</Typography>
           <SubscribeButton id={podcast.id} />
-          <PlaylistButton />
+          <PlaylistButton id={podcast.id}/>
           <img height='60px' width='60px' src={img} alt='podcastimage' />
           <Typography gutterBottom>
             <Episodes podcastName={podcast.name} podcastEpisodes={podcast} />

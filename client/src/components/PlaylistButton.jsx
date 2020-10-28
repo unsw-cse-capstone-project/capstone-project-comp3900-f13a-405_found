@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 
 const PlaylistButton = ({ id }) => {
     const dispatch = useDispatch();
-  //  const playlistState = useSelector((state) => state.playlist); // is this right?
+    //const playlistState = useSelector((state) => state.playlist); 
 
     const handleAddPlaylist = () => {
         dispatch(addToPlaylist(id));
@@ -23,7 +23,7 @@ const PlaylistButton = ({ id }) => {
             variant='contained'
             type='submit'
         >
-            Add-to-Playlist
+            Add to Playlist
         </Button>
     // ) ; (
     //     <Button 
