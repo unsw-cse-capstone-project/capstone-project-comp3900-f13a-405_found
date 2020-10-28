@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const updateAccessTokenPeriodically = require("./utils/spotifyApiUtils");
-const checkAndSendEmailEveryOneHour = require("./utils/notificationsUtils");
+const { checkAndSendEmailEveryOneHour } = require("./utils/notificationsUtils");
 
 connectToMongoDB();
 updateAccessTokenPeriodically();

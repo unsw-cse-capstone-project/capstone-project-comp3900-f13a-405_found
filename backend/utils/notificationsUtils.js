@@ -1,6 +1,8 @@
 const axios = require("axios");
 const Subscription = require("../models/SubscriptionModel");
 const User = require("../models/UserModel");
+const mailer = require("nodemailer");
+const config = require("config");
 
 const getNewEpisodes = async function (podcastId) {
   // Async function which fetches list of all episodes given a podcast Id
@@ -75,18 +77,68 @@ const getUserNotification = async (userId) => {
   }
 };
 
-// // UNTESTED ##############
 const sendEmailForNotifications = async () => {
-  const user = await User.find({ optInEmail: true });
-  for (const userDocument of user) {
-    const userNotifications = await getUserNotification(userDocument.id);
-    let emailBody = "";
-    // for(const )
+  try {
+    const user = await User.find({ optInEmail: true });
+
+    for (const userDocument of user) {
+      const userNotifications = await getUserNotification(userDocument.id);
+      let emailBody = `Hi ${userDocument.name},`;
+      if (userNotifications.length <= 0) continue;
+
+      for (const item of userNotifications) {
+        emailBody += `<div> <div> New episodes in ${item.podcastTitle}: </div>`;
+
+        episodeNameList = item.newEpisodes.map((item) => item.name);
+        let formattedHtml = "<ul>";
+        for (const name of episodeNameList) {
+          formattedHtml += `<li>${name}</li>`;
+        }
+        formattedHtml += "</ul>";
+
+        emailBody += `<div> ${formattedHtml} </div> </div>`;
+      }
+
+      let body = {
+        from: `ultraCast <${config.get("email_account")}>`,
+        to: userDocument.email,
+        subject: "New episodes from your subscriptions!",
+        html: `${emailBody}`,
+      };
+      const transporter = mailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: config.get("email_account"),
+          pass: config.get("email_password"),
+        },
+      });
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Server is ready to take our messages");
+        }
+      });
+      transporter.sendMail(body, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+        console.log("email sent");
+      });
+    }
+  } catch (err) {
+    console.error(err);
   }
 };
 
 const checkAndSendEmailEveryOneHour = () => {
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // FOR DEMO PURPOSE ONLY, SEND EMAIL ON START UP
+  // ONLY UNCOMMENT IF YOU WANT TO TEST THE EMAIL
+  // IF NOT, EVERYTIME YOU SAVE, IT WILL SEND AN EMAIL
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   // sendEmailForNotifications();
 
   setInterval(sendEmailForNotifications, 60 * 60 * 60);
