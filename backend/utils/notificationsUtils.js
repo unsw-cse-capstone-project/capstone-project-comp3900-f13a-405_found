@@ -143,7 +143,6 @@ const checkAndSendEmailEveryOneHour = () => {
 
   setInterval(sendEmailForNotifications, 60 * 60 * 60);
 };
-// // UNTESTED ##############
 
 module.exports = {
   getNewEpisodes,
