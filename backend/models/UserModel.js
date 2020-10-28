@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  optInEmail: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 UserSchema.pre("save", async function (next) {
@@ -31,10 +35,10 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-UserSchema.methods.isValidPassword = async function(password) {
+UserSchema.methods.isValidPassword = async function (password) {
   const compare = await bcrypt.compare(password, this.password);
   return compare;
-}
+};
 
 const UserModel = mongoose.model("user", UserSchema);
 module.exports = UserModel;

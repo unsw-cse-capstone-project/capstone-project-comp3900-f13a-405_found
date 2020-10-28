@@ -5,31 +5,30 @@ import NotificationBox from "./notificationBox";
 import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Badge from '@material-ui/core/Badge';
-import { SET_NOTIFICATIONS } from '../../actions/types'
+import Badge from "@material-ui/core/Badge";
+import { SET_NOTIFICATIONS } from "../../actions/types";
 
 const countNotifications = (notifications) => {
   let counter = 0;
-  notifications.forEach(notification => {
+  notifications.forEach((notification) => {
     counter += notification.newEpisodes.length;
-  })
+  });
   return counter;
-}
+};
 
 export const Notifications = () => {
   const dispatch = useDispatch();
-  const authstate = useSelector((state) => state.authentication);
   const [expanded, setExpanded] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     // API call to populate the notifications state in the store
-    axios.get(`/api/notifications/${authstate.user._id}`).then((res) => {
+    axios.get(`/api/notifications/`).then((res) => {
       if (res.data != null) {
-        dispatch({type: SET_NOTIFICATIONS, notifications: res.data});
+        dispatch({ type: SET_NOTIFICATIONS, notifications: res.data });
       } else {
-        dispatch({type: SET_NOTIFICATIONS, notifications: []});
-        console.log('ERROR: There was a problem with loading notifications');
+        dispatch({ type: SET_NOTIFICATIONS, notifications: [] });
+        console.log("ERROR: There was a problem with loading notifications");
       }
       setLoading(false);
     });
@@ -40,7 +39,7 @@ export const Notifications = () => {
   };
 
   // Fetch notifications from the store
-  const notificationsState = useSelector(state => state.notifications);
+  const notificationsState = useSelector((state) => state.notifications);
   const notifications = notificationsState.notifications;
 
   return (
@@ -49,28 +48,30 @@ export const Notifications = () => {
         <CircularProgress />
       ) : (
         <>
-        <Badge color="secondary" badgeContent={countNotifications(notifications)}
-          style={{
-            cursor: "pointer",
-            display: "block",
-            marginLeft: "auto",
-            marginRight: "10px",
-            marginTop: "10px"
-          }}>
-          <NotificationsIcon
-            onClick={toggleExpanded}
+          <Badge
+            color='secondary'
+            badgeContent={countNotifications(notifications)}
             style={{
               cursor: "pointer",
               display: "block",
               marginLeft: "auto",
-              marginRight: "0px",
+              marginRight: "10px",
+              marginTop: "10px",
             }}
-          />
-        </Badge>
-        <NotificationBox notifications={notifications} expanded={expanded}/>
+          >
+            <NotificationsIcon
+              onClick={toggleExpanded}
+              style={{
+                cursor: "pointer",
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "0px",
+              }}
+            />
+          </Badge>
+          <NotificationBox notifications={notifications} expanded={expanded} />
         </>
-      )
-      }
+      )}
     </div>
   );
 };
