@@ -83,7 +83,7 @@ const sendEmailForNotifications = async () => {
 
     for (const userDocument of user) {
       const userNotifications = await getUserNotification(userDocument.id);
-      let emailBody = `Hi ${userDocument.name},`;
+      let emailBody = `Hi ${userDocument.name},<br>`;
       if (userNotifications.length <= 0) continue;
 
       for (const item of userNotifications) {
@@ -141,7 +141,7 @@ const checkAndSendEmailEveryOneHour = () => {
 
   // sendEmailForNotifications();
 
-  setInterval(sendEmailForNotifications, 60 * 60 * 60);
+  setInterval(sendEmailForNotifications, 60 * 60 * 1000);
 };
 
 module.exports = {
