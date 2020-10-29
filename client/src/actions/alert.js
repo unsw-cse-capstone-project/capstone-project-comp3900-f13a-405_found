@@ -1,6 +1,5 @@
-import { DISPLAY_ALERT, REMOVE_ALERT, REMOVE_ALL_ALERTS } from "./types";
+import { DISPLAY_ALERT, REMOVE_ALL_ALERTS } from "./types";
 import { v4 as uuid } from "uuid";
-import { message } from "antd";
 
 export const displayAlert = (msg) => (dispatch) => {
   const id = uuid();

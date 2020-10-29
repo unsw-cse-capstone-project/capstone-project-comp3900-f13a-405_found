@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Pagination = ({ podcastsPerPage, totalPodcasts, paginate }) => {
   const pageNumbers = [];
@@ -10,11 +10,11 @@ const Pagination = ({ podcastsPerPage, totalPodcasts, paginate }) => {
   return (
     <nav>
       <ul className='pagination'>
-        {pageNumbers.map(number => (
+        {pageNumbers.map((number) => (
           <li key={number} className='page-item'>
-            <a onClick={() => paginate(number)} className='page-link'>
+            <div onClick={() => paginate(number)} className='page-link'>
               {number}
-            </a>
+            </div>
           </li>
         ))}
       </ul>

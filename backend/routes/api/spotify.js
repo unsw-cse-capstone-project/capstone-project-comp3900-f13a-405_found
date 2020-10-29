@@ -5,7 +5,7 @@ const router = express.Router();
 
 // @route   GET api/spotify/search/:queryToBeSearched
 // @desc    Search for shows
-// @access  Public
+// @access  Private
 router.get(
   "/search/:queryToBeSearched",
 
@@ -32,11 +32,11 @@ router.get(
 
 // @route   GET api/spotify/shows/:id
 // @desc    Get detailed information about a show by id
-// @access  Public
+// @access  Private
 router.get(
   "/shows/:id",
 
-  async(req, res, next) => {
+  async (req, res, next) => {
     try {
       // https://developer.spotify.com/documentation/web-api/reference/shows/
       const uri = encodeURI(
@@ -47,22 +47,22 @@ router.get(
         Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
       };
       const spotifyResponse = await axios.get(uri, { headers });
-    
+
       return res.status(200).json(spotifyResponse.data);
     } catch (err) {
       console.error(err.message);
-      next(new NotFound([{msg: "No shows found with id: " + req.params.id}]));
+      next(new NotFound([{ msg: "No shows found with id: " + req.params.id }]));
     }
   }
 );
 
 // @route   GET api/spotify/episodes/:id
 // @desc    Get detailed information about an episode by id
-// @access  Public
+// @access  Private
 router.get(
   "/episodes/:id",
 
-  async(req, res, next) => {
+  async (req, res, next) => {
     try {
       // https://developer.spotify.com/documentation/web-api/reference/episodes/
       const uri = encodeURI(
@@ -73,13 +73,74 @@ router.get(
         Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
       };
       const spotifyResponse = await axios.get(uri, { headers });
-    
+
       return res.status(200).json(spotifyResponse.data);
     } catch (err) {
       console.error(err.message);
-      next(new NotFound([{msg: "No episode found with id: " + req.params.id}]));
+      next(
+        new NotFound([{ msg: "No episode found with id: " + req.params.id }])
+      );
     }
   }
 );
+
+// @route   GET api/spotify/bulkshows/:ids
+// @desc    Get spotify shows details by a list of ids
+// @access  Private
+router.get("/bulkshows/:ids", async (req, res, next) => {
+  try {
+    // sanity check to prevent ''
+    const listOfIds = req.params.ids
+      .split(",")
+      .filter((id) => id.length > 0)
+      .join(",");
+
+    // https://developer.spotify.com/console/get-several-shows/?ids=5CfCWKI5pZ28U0uOzXkDHe,5as3aKmN2k11yfDDDSrvaZ
+
+    const uri = encodeURI(
+      `https://api.spotify.com/v1/shows?ids=${listOfIds}&market=AU`
+    );
+    const headers = {
+      "user-agent": "node.js",
+      Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+    };
+    const spotifyResponse = await axios.get(uri, { headers });
+
+    return res.status(200).json(spotifyResponse.data);
+  } catch (err) {
+    console.error(err.message);
+    next(new NotFound([{ msg: "No shows found with ids: " + req.params.ids }]));
+  }
+});
+
+// @route   GET api/spotify/shows/:id/episodes
+// @desc    Get a list of a Spotify show's episodes by show id
+// @access  Private
+router.get("/shows/:id/episodes", async (req, res, next) => {
+  try {
+    // https://developer.spotify.com/documentation/web-api/reference/shows/
+    let episodeList = []; 
+    let counter = 0;
+    let stop = false;
+    const uri = encodeURI(
+      `https://api.spotify.com/v1/shows/${req.params.id}/episodes?market=AU`
+    );
+    const headers = {
+      "user-agent": "node.js",
+      Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+    };
+    // Iterate through the pages until there are no more pages
+    while(!stop) { 
+      let spotifyResponse = await axios.get(counter == 0 ? uri : spotifyResponse.next, { headers });
+      episodeList = episodeList.concat(spotifyResponse.data.items)
+      counter++;
+      stop = (spotifyResponse.next == null)
+    }
+    return res.status(200).json(episodeList);
+  } catch (err) {
+    console.error(err.message);
+    next(new NotFound([{ msg: "No episodes or shows with that id found" }]));
+  }
+});
 
 module.exports = router;

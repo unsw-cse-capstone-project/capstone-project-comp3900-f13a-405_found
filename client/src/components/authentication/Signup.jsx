@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { signup } from "../../actions/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -9,9 +9,11 @@ import logo from "../landing/logo.png";
 import Typography from "@material-ui/core/Typography";
 import CustomTextField from "../CustomTextField";
 import { makeStyles } from "@material-ui/core";
-import { useCallback } from "react";
+import { v4 as uuid } from "uuid";
+import { message } from "antd";
+import Checkbox from "@material-ui/core/Checkbox";
 
-const Signup = () => {
+const Signup = ({ history }) => {
   const useStyles = makeStyles((theme) => ({
     MR: {
       marginRight: "30px",
@@ -25,6 +27,7 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    optInEmail: false,
   };
 
   const authenticationState = useSelector((state) => state.authentication);
@@ -62,18 +65,28 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const { id, name, email, password } = values;
-      dispatch(signup({ name, email, password }));
+      const { name, email, password, optInEmail } = values;
+      const id = uuid();
+      message.loading({ content: "Loading...", key: id });
+
+      dispatch(signup({ name, email, password, id, optInEmail }, history));
       //resetForm()
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
+    if (name === "optInEmail") {
+      setValues({
+        ...values,
+        [name]: !(value === "true"),
+      });
+    } else {
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    }
     //if (validateOnChange)
     validate({ [name]: value });
   };
@@ -135,6 +148,26 @@ const Signup = () => {
             error={errors.confirmPassword}
           />
           <p></p>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              marginTop: "25px",
+              marginBottom: "25px",
+            }}
+          >
+            <Checkbox
+              name='optInEmail'
+              checked={values.optInEmail}
+              value={values.optInEmail}
+              onChange={handleInputChange}
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
+            <p style={{ textAlign: "left" }}>
+              I opt in for emails (we will email you new episodes based on your
+              subscription)
+            </p>
+          </div>
           <Button
             size='large'
             variant='contained'

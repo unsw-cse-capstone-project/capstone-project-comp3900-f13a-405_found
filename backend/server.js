@@ -10,9 +10,11 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const updateAccessTokenPeriodically = require("./utils/spotifyApiUtils");
+const { checkAndSendEmailEveryOneHour } = require("./utils/notificationsUtils");
 
 connectToMongoDB();
 updateAccessTokenPeriodically();
+checkAndSendEmailEveryOneHour();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -31,16 +33,18 @@ app.get("/", (req, res) => {
 app.use("/api/authentication", require("./routes/api/authentication"));
 
 // Protected Route, only logged in users can access this :p
-app.use(
-  "/api/spotify",
-  checkAuth,
-  require("./routes/api/spotify")
-);
+app.use("/api/spotify", checkAuth, require("./routes/api/spotify"));
+
+app.use("/api/secure", checkAuth, require("./routes/api/secure-routes"));
+
+app.use("/api/subscription", checkAuth, require("./routes/api/subscription"));
+
+app.use("/api/notifications", checkAuth, require("./routes/api/notifications"));
 
 app.use(
-  "/api/secure",
+  "/api/user-history",
   checkAuth,
-  require("./routes/api/secure-routes")
+  require("./routes/api/user-history.js")
 );
 
 // error handler
