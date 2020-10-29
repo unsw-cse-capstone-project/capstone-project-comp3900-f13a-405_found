@@ -1,67 +1,87 @@
 import axios from "axios";
 import {
-    ADD_TO_PLAYLIST_SUCCESS,
+    CREATE_PLAYLIST,
+    DELETE_PLAYLIST, 
+    ADD_TO_PLAYLIST_SUCCESS, 
     DEL_FROM_PLAYLIST_SUCCESS,
-    GET_PLAYLIST, 
+    GET_PLAYLISTS
 } from "./types";
-
 import { displayAlert, removeAllAlerts } from "./alert";
 
-// Add episode to playlist by episode id
-export const addToPlaylist = (id) => async (dispatch) => {
+// Create a new playlist
+export const createPlaylist = (name) => async (dispatch) => {
     try {
         const config = {
             headers: {
-                "Content-Type": "application/json",
+              "Content-Type": "application/json",
             },
             withCredentials: true,
-        };
-        await axios.post(`/api/playlist/addPlaylist/${id}`, {}, config);
+          };
+        const res = await axios.post(`/api/playlist/${name}`, config);
+        dispatch({
+            type: CREATE_PLAYLIST, 
+            payload: res.data
+        })
+    } catch(err) {
+        console.log(err)
+        displayAlert("Error occurred during playlist creation");
+    }
+}
+
+// Delete a playlist
+export const deletePlaylist = (id) => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          };
+        const res = await axios.delete(`/api/playlist/${id}`, config);
+        dispatch({
+            type: DELETE_PLAYLIST,
+            payload: id
+        })
+    } catch(err) {
+        console.log(err)
+        displayAlert("Error occurred during playlist deletion");
+    }
+}
+
+export const getPlaylists = () => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          };
+        const res = await axios.get(`/api/playlist/`, config);
+        dispatch({
+            type: GET_PLAYLISTS,
+            payload: res.data
+        })
+    } catch(err) {
+        console.log(err);
+        displayAlert("Error occurred while fetching playlists");
+    }
+}
+
+export const addToPlaylist = (playlistId, episodeId) => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          };
+        const res = await axios.post(`/api/playlist/${playlistId}/${episodeId}`, config);
         dispatch({
             type: ADD_TO_PLAYLIST_SUCCESS,
-            payload: id,
-        });
-        dispatch(removeAllAlerts());
-    } catch (err) {
-        displayAlert("An error occured trying to add episode to playlist");
+            payload: res.data
+        })
+    } catch(err) {
+        console.log(err);
+        displayAlert("Error occurred while fetching playlists");
     }
-};
-
-// Delete episode from playlist by id
-export const deleteFromPlaylist = (id) => async (dispatch) => {
-    try {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            withCredentials: true,
-        };
-        await axios.post(`/api/subscription/unsubscribe/${id}`, {}, config);
-        dispatch ({
-            type: DEL_FROM_PLAYLIST_SUCCESS,
-            payload: id,
-        });
-        dispatch(removeAllAlerts());
-    } catch (err) {
-        displayAlert("An Error Occurred");
-    }
-};
-
-// Get user's playlist
-export const getPlaylist = () => async (dispatch) => {
-    try {
-        const config ={
-            withCredentials: true,
-        };
-        const res = await axios.get(`/api/playlist`, config);
-        dispatch ({
-            type: GET_PLAYLIST,
-            payload: res.data,
-        });
-        dispatch(removeAllAlerts());
-    } catch (err) {
-        displayAlert("An error occured fetching playlist");
-    }
-};
-
-
+}

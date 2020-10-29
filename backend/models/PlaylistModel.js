@@ -6,7 +6,13 @@ const PlaylistSchema = new mongoose.Schema({
        ref: "user", 
     }, 
     playlistName: String,
-    playlistEpisodes: [String],
+    playlistEpisodes: [{
+        audio_preview_url: String,
+        description: String,
+        id: String,
+        name: String,
+        release_date: String,
+    }],
 });
 
 const PlaylistModel = mongoose.model("playlist", PlaylistSchema);

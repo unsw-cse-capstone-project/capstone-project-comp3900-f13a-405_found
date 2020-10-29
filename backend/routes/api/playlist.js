@@ -4,6 +4,33 @@ const { BadRequest } = require("../../utils/errors");
 const router = express.Router();
 const Playlist = require("../../models/PlaylistModel");
 
+const episodeExists = (playlist, episodeId) => {
+    playlist.playlistEpisodes.forEach(episode => {
+        if (episode.id == episodeId) {
+            return true;
+        }
+    })
+    return false;
+}
+
+const fetchEpisode = async (episodeId) => {
+    try {
+        const uri = encodeURI(
+            `https://api.spotify.com/v1/episodes/${episodeId}?market=AU`
+          );
+        const headers = {
+            "user-agent": "node.js",
+            Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+        };
+        const spotifyResponse = await axios.get(uri, { headers });  
+        return spotifyResponse.data;
+    } catch(err) {
+        console.log(err);
+        return null;
+    }
+    
+}
+
 // @route   GET api/playlist/:id
 // @desc    Get a user's playlist by id
 // @access  Private
@@ -35,7 +62,7 @@ router.get("/", async(req, res) => {
 });
 
 // @route   POST api/playlist/:name
-// @desc    Get a user's playlist by id
+// @desc    Create a new playlist by name
 // @access  Private
 router.post("/:name", async(req, res) => {
     try {
@@ -57,6 +84,23 @@ router.post("/:name", async(req, res) => {
     }
 });
 
+// @route   DELETE api/playlist/:id
+// @desc    Delete a new playlist by id
+// @access  Private
+router.delete("/:id", async(req, res) => {
+    try {
+        Playlist.findByIdAndDelete(req.params.id, (err, playlist) => {
+            if (err) {
+                throw 'Error: could not be deleted';
+            }
+            return res.status(204).json(playlist);
+        })
+    } catch(err) {
+        console.log(err);
+        next(new BadRequest([{ msg: "Bad Request!!" }]));
+    }
+});
+
 // @route   POST api/playlist/add/:playlistId/:episodeId
 // @desc    Add an episode to a playlist by Id
 // @access  Private
@@ -67,17 +111,32 @@ router.post("/:playlistId/:episodeId", async(req,res,next) => {
             async function(err, playlist) {
                 try { 
                      // Check if the episode is already in the playlist
-                    if (playlist.playlistEpisodes.includes(req.params.episodeId) ) {
+                    if (episodeExists(playlist, req.params.episodeId)) {
                         return res.status(400).json("Error: Episode already exists in this playlist");
                     }
-                    // Add to the episode to the playlist
-                    playlist.playlistEpisodes.push(req.params.episodeId);
+
+                    // Fetch the episode object
+                    const episode = await fetchEpisode(req.params.episodeId);
+                    
+                    if (episode == null) {
+                        throw 'Could not fetch episode';
+                    } 
+                    // Add the episode to the playlist
+                    playlist.playlistEpisodes.push(
+                        {
+                            audio_preview_url: episode.audio_preview_url,
+                            description: episode.description,
+                            id: episode.id,
+                            name: episode.name,
+                            release_date: episode.release_date,
+                        }
+                    );
                     await playlist.save(function(err) {
                         if (err) {
                             console.log(err)
                             throw "Error: Couldn't save episode to playlist";
                         }
-                        return res.status(200).json("Success");
+                        return res.status(200).json(playlist);
                     });
                 } catch(err) {
                     console.log(err)
@@ -104,13 +163,13 @@ router.delete("/:playlistId/:episodeId", async(req,res,next) => {
                         return res.status(404).json("Error: Episode does not exist in this playlist");
                     }
                     // Remove episode from the playlist
-                    playlist.playlistEpisodes = playlist.playlistEpisodes.filter(episodeId => episodeId != req.params.episodeId);
+                    playlist.playlistEpisodes = playlist.playlistEpisodes.filter(episode => episode._id != req.params.episodeId);
                     await playlist.save(function(err) {
                         if (err) {
                             console.log(err)
                             throw "Error: Couldn't update playlist";
                         }
-                        return res.status(200).json("Success");
+                        return res.status(200).json(playlist);
                     });
                 } catch(err) {
                     console.log(err)

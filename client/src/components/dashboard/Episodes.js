@@ -10,6 +10,7 @@ import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledWhiteIcon from "@material-ui/icons/PauseCircleFilled";
 import { SET_STATE_FROM_EPISODES } from "../../actions/types";
 import { useDispatch, useSelector } from "react-redux";
+import PlaylistSelector from "./PlaylistSelector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -118,6 +119,9 @@ const Episodes = ({ podcastEpisodes }) => {
                   className={classes.playButton}
                 />
               )}
+              <div style={{width: '50%', marginBottom: '5px'}}>
+                <PlaylistSelector episodeId={episode.id} style={{width: '30px'}}/>
+              </div>
               {episode.description}
             </Typography>
           </AccordionDetails>

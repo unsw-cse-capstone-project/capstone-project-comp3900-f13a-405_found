@@ -1,5 +1,5 @@
 import React from "react";
-import { addToPlaylist, deleteFromPlaylist } from "../actions/playlist";
+// import { addToPlaylist, deleteFromPlaylist } from "../actions/playlist";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 
@@ -8,11 +8,11 @@ const PlaylistButton = ({ id }) => {
   //  const playlistState = useSelector((state) => state.playlist); // is this right?
 
     const handleAddPlaylist = () => {
-        dispatch(addToPlaylist(id));
+        // dispatch(addToPlaylist(id));
     };
 
     const handleDeletePlaylist = () => {
-        dispatch(deleteFromPlaylist(id));
+        // dispatch(deleteFromPlaylist(id));
     };
 
     //return playlistState.isLoaded && playlistState.playlist.indexOf(id) !== -1 ? (
