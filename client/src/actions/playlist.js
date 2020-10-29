@@ -85,3 +85,22 @@ export const addToPlaylist = (playlistId, episodeId) => async (dispatch) => {
         displayAlert("Error occurred while fetching playlists");
     }
 }
+
+export const removeFromPlaylist = (playlistId, episodeId) => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          };
+        const res = await axios.delete(`/api/playlist/${playlistId}/${episodeId}`, config);
+        dispatch({
+            type: DEL_FROM_PLAYLIST_SUCCESS,
+            payload: res.data
+        })
+    } catch(err) {
+        console.log(err);
+        displayAlert("Error occurred while fetching playlists");
+    }
+}

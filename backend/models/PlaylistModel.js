@@ -7,11 +7,14 @@ const PlaylistSchema = new mongoose.Schema({
     }, 
     playlistName: String,
     playlistEpisodes: [{
+        podcast_name: String,
         audio_preview_url: String,
         description: String,
         id: String,
         name: String,
         release_date: String,
+        image_url: String,
+        podcast_artist: String
     }],
 });
 

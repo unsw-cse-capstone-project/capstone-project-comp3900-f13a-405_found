@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React ,{ useEffect } from "react";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -7,10 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import { useSelector, useDispatch } from "react-redux";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+
 import {
   getPlaylists,
-  addToPlaylist
+  addToPlaylist,
+  removeFromPlaylist
 } from "../../actions/playlist";
+
 
 const PlaylistSelector = (props) => {
   const playlistState = useSelector(state => state.playlist);
@@ -21,13 +24,12 @@ const PlaylistSelector = (props) => {
     dispatch(getPlaylists());  
   },[]);
 
-  const inPlaylist = (playlist, episodeId) => {
-    //console.log(playlist);
-    
-  }
-
   const handleAddPlaylist = (playlistId, episodeId) => {
     dispatch(addToPlaylist(playlistId, episodeId));
+  }
+
+  const handleRemovePlaylist = (playlistId, episodeId) => {
+    dispatch(removeFromPlaylist(playlistId, episodeId));
   }
 
   return (
@@ -45,12 +47,10 @@ const PlaylistSelector = (props) => {
                 <AccordionDetails>
                   <Typography>{playlist.playlistName}</Typography>
                   {
-                    // isLoaded ? (
                       playlist.playlistEpisodes.filter(episode => episode.id == props.episodeId).length == 1 ?
-                        <RemoveCircleIcon style={{color: 'red', cursor: 'pointer'}}/>
+                        <RemoveCircleIcon onClick={()=> handleRemovePlaylist(playlist._id, props.episodeId)} style={{color: 'red', cursor: 'pointer'}}/>
                         : <AddCircleIcon onClick={() => handleAddPlaylist(playlist._id, props.episodeId)} style={{color: 'green', cursor: 'pointer'}}/>
                   }
-
                 </AccordionDetails>
               )
             })

@@ -14,6 +14,7 @@ import {
   SET_PLAYED,
   SET_DURATION,
   SET_LOADED,
+  SET_STATE_FROM_EPISODES,
 } from "../../actions/types";
 
 // Package reference:       https://www.npmjs.com/package/react-player
@@ -33,7 +34,7 @@ const Player = () => {
 
   const playerState = useSelector((state) => state.player);
 
-  const { playing, url, image, title, artist } = playerState;
+  const { playing, url, image, title, artist, playlist, episode_id } = playerState;
 
   const handlePlay = () => {
     console.log("onPlay");
@@ -88,8 +89,24 @@ const Player = () => {
 
   const handleEnded = () => {
     console.log("onEnded");
-    // this.setState({ playing: this.state.loop })
+    if (playlist.length > 0) {
+      const current = playlist.map(episode => episode.id).indexOf(episode_id);
+      if (current == -1 || current == playlist.length - 1) {
+        dispatch({ type: SET_PLAYING, playing: false });
+        return;
+      }
+      dispatch({ type: SET_STATE_FROM_EPISODES, payload: {
+        url: playlist[current+1].audio_preview_url,
+        playing: true,
+        episode_id: playlist[current+1].id,
+        title: playlist[current+1].name,
+        image: playlist[current+1].image_url,
+        artist: playlist[current+1].podcast_artist
+      }});
+      return;
+    }
     dispatch({ type: SET_PLAYING, playing: false });
+    return;
   };
 
   const handleDuration = (duration) => {

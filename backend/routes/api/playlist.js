@@ -5,12 +5,15 @@ const router = express.Router();
 const Playlist = require("../../models/PlaylistModel");
 
 const episodeExists = (playlist, episodeId) => {
+    let retval = false;
+    console.log(playlist)
+    console.log(episodeId)
     playlist.playlistEpisodes.forEach(episode => {
-        if (episode.id == episodeId) {
-            return true;
+        if (episode.id.toString().trim() === episodeId.toString().trim()) {
+            retval = true;
         }
     })
-    return false;
+    return retval;
 }
 
 const fetchEpisode = async (episodeId) => {
@@ -129,8 +132,12 @@ router.post("/:playlistId/:episodeId", async(req,res,next) => {
                             id: episode.id,
                             name: episode.name,
                             release_date: episode.release_date,
+                            image_url: episode.images.length > 0 ? episode.images[0].url : null,
+                            podcast_name: episode.show.name,
+                            podcast_artist: episode.show.publisher
                         }
                     );
+                    console.log(playlist);
                     await playlist.save(function(err) {
                         if (err) {
                             console.log(err)
@@ -158,8 +165,9 @@ router.delete("/:playlistId/:episodeId", async(req,res,next) => {
             req.params.playlistId, 
             async function(err, playlist) {
                 try { 
+                    console.log(playlist);
                      // Check if the episode exists in the playlist
-                    if (!playlist.playlistEpisodes.includes(req.params.episodeId) ) {
+                    if (!episodeExists(playlist, req.params.episodeId) ) {
                         return res.status(404).json("Error: Episode does not exist in this playlist");
                     }
                     // Remove episode from the playlist

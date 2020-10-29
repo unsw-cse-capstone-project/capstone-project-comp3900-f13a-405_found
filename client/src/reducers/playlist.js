@@ -40,7 +40,12 @@ export default function playlist(state = initial_state, action) {
             return {
                 ...state,
                 isLoaded: true,
-                playlists: action.payload
+                playlists: state.playlists.map(playlist => {
+                    if (playlist._id == action.payload._id) {
+                        return action.payload;
+                    }
+                    return playlist
+                })
             };
         case GET_PLAYLISTS:
             return {
