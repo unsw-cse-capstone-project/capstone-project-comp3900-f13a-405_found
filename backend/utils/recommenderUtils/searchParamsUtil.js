@@ -1,0 +1,148 @@
+// utility functions for getting a list of Show ids from Subscriptions and lookup of episodes from user history.
+// Removes duplicates and concatenates the two seperate lists above.
+const axios = require("axios");
+const lodash = require("lodash");
+const { NotFound, BadRequest } = require("../errors");
+
+// @return: JSON OBJECT:
+//  {
+//      'name': 'show name'    
+//      'publisher': 'show publisher'
+//  }
+
+
+// method 1 to use in method 2 
+// (method 1) create a list of show ids from episode ids in history using spotify API
+// (method 2) create a list of names and publishers for a given show as a list using spotify API. showId as reference.  
+
+const findShowId = async (id, next) => {
+    try {
+        const uri = encodeURI(
+            `https://api.spotify.com/v1/episodes/${id}?market=AU`
+        );
+        const headers = {
+            "user-agent": "node.js",
+            Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`
+        };
+        const spotifyResponse = await axios.get(uri, { headers });
+        return spotifyResponse.show.id;
+
+    } catch (err) {
+        console.error(err.message);
+        next(new NotFound([{msg: "Recommender: Could not find show id for an episode"}]));
+    }
+};
+
+// Given user history JSON object, returns a JSON object of all show ids for episodes removing duplicates.
+const getShowIdsFromHist = async (history) => {
+    // history -> JSON HistoryModel Collection.
+    try {
+
+        // below gets an array of podcast ids from user history.
+        const result = lodash.map(history, (obj) => {
+            if (obj.fields.podcast_id != undefined) {
+                var results = {};
+                var eleName = obj.fields.podcast_id;
+                delete obj.fields.podcast_id;
+                results[eleName] = obj.fields;
+                return results;
+            }
+        });
+        const episode_ids = lodash.filter(result, Boolean);
+
+        // using episodes_id get all values from array, and lookup for show id from spotify:
+        var showIdsFromHist = [];
+        episode_ids.array.forEach(episode_id => {
+            const val = findShowId(episode_id.podcast_id);
+            showIdsFromHist.push(val);
+        });
+
+        return showIdsFromHist;
+
+    } catch (err) {
+        console.error(err.message);
+        next(new NotFound([{ msg: "Recommender: User History not found." }]));
+    }
+
+}
+
+// Concatenates Subscriptions show ids with episodes show ids.
+
+const getShowIdsFromSubs = async (subscriptions) => {
+    try {
+        const result = lodash.map(subscriptions, (obj) => {
+            var results = {};
+            var eleName = obj.fields.podcast_id;
+            delete obj.fields;
+            results[eleName] = obj.fields;
+            return results;
+        });
+        const show_ids = lodash.filter(result, Boolean);
+
+        var showIdsFromSubs = [];
+        show_ids.array.forEach(show_id => {
+            showIdsFromSubs.push(show_id.showId);
+        });
+
+        return showIdsFromSubs;
+
+    } catch (err) {
+        console.error(err.message);
+        next (new NotFound([{ msg: "Recommender: Subscriptions not found"}]));
+    }
+
+};
+
+const getShowIds = async (history, subscriptions, next) => {
+    try {
+        const showIdsFromHist = getShowIdsFromHist(history);
+        const showIdsFromSubs = getShowIdsFromSubs(subscriptions);
+        const showIds = lodash.union(showIdsFromHist, showIdsFromSubs);
+        return showIds;
+    } catch (err) {
+        console.error(err.message) 
+        next(new BadRequest([{ msg: "Recommender: Could not give showId list."}]));
+    }
+};
+
+const getShowData = async (show_id, next) => {
+    try {
+        const uri = encodeURI(
+           `https://api.spotify.com/v1/shows/${show_id}?market=AU`
+        );
+        const headers = {
+            "user-agent": "node.js",
+            Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+        };
+        const spotifyResponse = await axios.get(uri, { headers });
+        const data = 
+        {
+            title: `${spotifyResponse.name}`,
+            publisher: `${spotifyResponse.publisher}`,
+        };
+        return data;
+        
+
+    } catch (err) {
+        console.error(err.message);
+        next (new NotFound([{ msg: "No eshow found with id: " + show_id }]));
+    }
+}
+
+const getSearchParams = async (history, subscriptions, next) => {
+    try {
+        const showIds = getShowIds(history, subscriptions);
+        const shows = []; 
+        (await showIds).forEach(show_id => {
+            var showData = getShowData(show_id);
+            shows.push(showData);
+        });
+        return shows;
+
+    } catch (err) {
+        console.error(err.message);
+        next(new BadRequest([{ msg: "Recommender: Could not get list of shows."}]));
+    }
+};
+
+module.exports = getSearchParams;
