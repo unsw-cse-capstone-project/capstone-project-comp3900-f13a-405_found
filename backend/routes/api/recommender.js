@@ -7,7 +7,6 @@
 //const endpoint = "https://listen-api.listennotes.com/api/v2/";
 
 const express = require("express");
-const axios = require("axios");
 const {getUserHistory, getUserSubscription} = require("../../utils/recommenderUtils/userRecordUtil")(req);
 const getSearchParams = require("../../utils/recommenderUtils/searchParamsUtil")(history, subscriptions);
 const getListenNotesRecs = require("../../utils/recommenderUtils/listenNotesUtil")(shows_list);
