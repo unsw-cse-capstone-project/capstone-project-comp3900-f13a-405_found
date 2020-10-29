@@ -106,12 +106,12 @@ const Episodes = ({ podcastEpisodes }) => {
                   className={classes.playButton}
                 />
               ) : playerState.episode_id == episode.id ? (
-                <PauseCircleFilledWhiteIcon
+                <PauseCircleFilledWhiteIcon p_id={episode.id}
                   onClick={handlePause}
                   className={classes.playButton}
                 />
               ) : (
-                <PlayCircleFilledWhiteIcon
+                <PlayCircleFilledWhiteIcon p_id={episode.id}
                   onClick={() => {
                     handlePlay(episode);
                   }}

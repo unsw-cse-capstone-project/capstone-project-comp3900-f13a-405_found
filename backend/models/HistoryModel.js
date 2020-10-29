@@ -10,6 +10,10 @@ const HistorySchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    seconds_played: { 
+        type: Number,
+        default: 0, 
+    },
     last_played: {
         type: Date,
         default: Date.now,

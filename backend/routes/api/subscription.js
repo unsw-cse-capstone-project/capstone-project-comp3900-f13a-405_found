@@ -48,7 +48,7 @@ router.get("/count/:ids", async (req, res) => {
     const listOfIds = req.params.ids.split(",").filter((id) => id.length > 0);
     const subsResults = [];
     for (let i = 0; i < listOfIds.length; i++) {
-      const subscriptions = await Subscription.find({
+        const subscriptions = await Subscription.find({
         showId: listOfIds[i],
       });
       subsResults.push({ id: listOfIds[i], count: subscriptions.length });

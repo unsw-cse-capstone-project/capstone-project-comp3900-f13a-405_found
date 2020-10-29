@@ -15,11 +15,13 @@ import {
   SET_DURATION,
   SET_LOADED,
 } from "../../actions/types";
+import { displayAlert } from "../../actions/alert";
+import axios from "axios";
 
 // Package reference:       https://www.npmjs.com/package/react-player
 // Source code reference :  https://github.com/CookPete/react-player/blob/master/src/demo/App.js
 
-const Player = () => {
+const Player = ( { p_id }) => {
   const dispatch = useDispatch();
   const [player, setPlayer] = useState({});
   const [played, setPlayed] = useState(0);
@@ -35,14 +37,40 @@ const Player = () => {
 
   const { playing, url, image, title, artist } = playerState;
 
-  const handlePlay = () => {
+  // play podcast from last 'seconds_plyed.' Defaults to 0.
+  const handlePlay = async (dispatch) => {
     console.log("onPlay");
-    dispatch({ type: SET_PLAYING, playing: true });
+    try {
+      const config = {
+        withCredentials: true,
+      };
+      
+      const res = await axios.get(`/api/user-history/${p_id}`, config);
+      
+      const seconds_played = res.data.seconds; 
+      //dispatch({ type: SET_PLAYING, playing: true, seekTo: seconds_played});
+      
+    } catch (err) {
+      displayAlert("An error occurred handlePlay()");
+    }
+    
   };
-
-  const handlePause = () => {
+ // pause podcast and update DB with 'seconds_played'
+  const handlePause = async (dispatch) => {
     console.log("onPause");
     dispatch({ type: SET_PLAYING, playing: false });
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+      await axios.post(`/api/user-history/${p_id}/${played}`); 
+    } catch (err) {
+      displayAlert("An Error Occurred handlePlay()");
+    }
   };
 
   const handlePlayPause = () => {

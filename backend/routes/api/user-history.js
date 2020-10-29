@@ -35,8 +35,8 @@ router.get("/:p_id", (req, res, next) => {
   query
     .exec()
     .then((hist_entry) => {
-      if (hist_entry != null) return res.status(200).json({ Viewed: true });
-      else return res.status(200).json({ Viewed: false });
+      if (hist_entry != null) return res.status(200).json({ Viewed: true, seconds: seconds_played });
+      else return res.status(200).json({ Viewed: false, seconds: 0 });
     })
     .catch((err) => {
       console.error(err.message);
@@ -44,16 +44,19 @@ router.get("/:p_id", (req, res, next) => {
     });
 });
 
-// @route  POST api/user-history/:p_id
-// @desc   creates/updates user history entry for a user when given podcast id 'p_id'
+// @route  POST api/user-history/:p_id/:seconds_played
+// @desc   creates/updates user history (date + seconds played) entry for a user when given podcast id 'p_id'
 // @access Private
 
-router.post("/:p_id", (req, res, next) => {
+router.post("/:p_id/:seconds_played", (req, res, next) => {
   const filter = {
     user_id: `${req.user._id}`,
     podcast_id: `${req.params.p_id}`,
   };
-  const update = { last_played: `${Date.now()}` };
+  const update = { 
+    last_played: `${Date.now()}`,
+    seconds_played = `${req.params.seconds_played}`, 
+  };
 
   const query = HistoryModel.findOneAndUpdate(filter, update, {
     new: true,
