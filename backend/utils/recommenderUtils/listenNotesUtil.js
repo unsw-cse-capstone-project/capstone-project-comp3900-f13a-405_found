@@ -19,14 +19,14 @@ const getShowId = async (show, next) => {
         );
         const headers = {
             "user-agent": "node.js",
-            "X-ListenAPI-Key": "49ec7884ad4a47f2be99eed90a061cf4",
+            'X-ListenAPI-Key': '49ec7884ad4a47f2be99eed90a061cf4',
         };
         const id_response = await axios.get(uri, {headers});
-
-        if (id_response.results = []) return "matchFail";
+        const id_res_obj = JSON.parse(id_response.data);
+        if (id_res_obj.results = []) return "matchFail";
         
-        const match = lodash.find(id_response.podcast.publisher_original);
-        if (match == undefined) return "matchFail";
+        const match = lodash.find(id_res_obj.podcast.publisher_original);
+        if (typeof match == "undefined") return "matchFail";
 
         return match.id;
     } catch(err) {
@@ -74,8 +74,9 @@ const getRecommendations = async (id, next) => {
             'X-ListenAPI-Key': '49ec7884ad4a47f2be99eed90a061cf4',
         }
         const rec_response = await axios.get(uri, { headers });
+        const rec_obj = JSON.parse(rec_response.data);
         const rec_list = [];
-        rec_response.recommendations.forEach(recommendation => {
+        rec_obj.recommendations.forEach(recommendation => {
             const rec_data = getData(recommendation);
             rec_list.push(rec_data); 
         })
@@ -90,19 +91,20 @@ const getRecommendations = async (id, next) => {
 
 const getListenNotesRecs = async (shows_list, next) => {
     try {
-        const ids = getShowIds(show_list);
+        const ids = getShowIds(shows_list);
         const rec_list = [];
         ids.forEach(id => {
             const recommendations = getRecommendations(id);
             rec_list.push(recommendations);                    
         });
-        const ListenNotesRecs = lodash.flatten(rec_list);
-        return ListenNotesRecs;
+        const flattened_list = lodash.flatten(rec_list);
+        const filtered_list = lodash.uniqWith(flattened_list, lodash.isEqual);
+        return filtered_list;
     } catch(err) {
 
     }
 };
 
-module.exports = getListenNotesRecs;
+module.exports = getListenNotesRecs(shows_list);
 
 

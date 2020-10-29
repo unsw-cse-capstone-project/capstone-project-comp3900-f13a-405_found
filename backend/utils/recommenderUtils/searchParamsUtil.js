@@ -25,7 +25,9 @@ const findShowId = async (id, next) => {
             Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`
         };
         const spotifyResponse = await axios.get(uri, { headers });
-        return spotifyResponse.show.id;
+        const spotifyResObj = JSON.parse(spotifyResponse.data);
+        return spotifyResObj.id;
+
 
     } catch (err) {
         console.error(err.message);
@@ -37,23 +39,12 @@ const findShowId = async (id, next) => {
 const getShowIdsFromHist = async (history) => {
     // history -> JSON HistoryModel Collection.
     try {
+        const histObj = JSON.parse(history);        
+        const episode_ids = lodash.map(histObj, 'podcast_id');
 
-        // below gets an array of podcast ids from user history.
-        const result = lodash.map(history, (obj) => {
-            if (obj.fields.podcast_id != undefined) {
-                var results = {};
-                var eleName = obj.fields.podcast_id;
-                delete obj.fields.podcast_id;
-                results[eleName] = obj.fields;
-                return results;
-            }
-        });
-        const episode_ids = lodash.filter(result, Boolean);
-
-        // using episodes_id get all values from array, and lookup for show id from spotify:
         var showIdsFromHist = [];
         episode_ids.array.forEach(episode_id => {
-            const val = findShowId(episode_id.podcast_id);
+            const val = findShowId(episode_id);
             showIdsFromHist.push(val);
         });
 
@@ -70,20 +61,8 @@ const getShowIdsFromHist = async (history) => {
 
 const getShowIdsFromSubs = async (subscriptions) => {
     try {
-        const result = lodash.map(subscriptions, (obj) => {
-            var results = {};
-            var eleName = obj.fields.podcast_id;
-            delete obj.fields;
-            results[eleName] = obj.fields;
-            return results;
-        });
-        const show_ids = lodash.filter(result, Boolean);
-
-        var showIdsFromSubs = [];
-        show_ids.array.forEach(show_id => {
-            showIdsFromSubs.push(show_id.showId);
-        });
-
+        const subsObj = JSON.parse(subscriptions);
+        const showIdsFromSubs = lodash.map(subsObj, 'showId');
         return showIdsFromSubs;
 
     } catch (err) {
@@ -115,17 +94,18 @@ const getShowData = async (show_id, next) => {
             Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
         };
         const spotifyResponse = await axios.get(uri, { headers });
+        const spotifyResObj = JSON.parse(spotifyResponse.data);
         const data = 
         {
-            title: `${spotifyResponse.name}`,
-            publisher: `${spotifyResponse.publisher}`,
+            title: `${spotifyResObj.name}`,
+            publisher: `${spotifyResObj.publisher}`,
         };
         return data;
         
 
     } catch (err) {
         console.error(err.message);
-        next (new NotFound([{ msg: "No eshow found with id: " + show_id }]));
+        next (new NotFound([{ msg: "No show found with id: " + show_id }]));
     }
 }
 
@@ -145,4 +125,4 @@ const getSearchParams = async (history, subscriptions, next) => {
     }
 };
 
-module.exports = getSearchParams;
+module.exports = getSearchParams(history, subscriptions);

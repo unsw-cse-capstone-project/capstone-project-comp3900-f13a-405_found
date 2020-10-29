@@ -8,9 +8,10 @@
 
 const express = require("express");
 const axios = require("axios");
-const userRecordUtil = require("../../utils/recommenderUtils/userRecordUtil");
-const searchParamsUtil = require("../../utils/recommenderUtils/searchParamsUtil");
-const listNotesUtil = require("../../utils/recommenderUtils/listenNotesUtil");
+const {getUserHistory, getUserSubscription} = require("../../utils/recommenderUtils/userRecordUtil")(req);
+const getSearchParams = require("../../utils/recommenderUtils/searchParamsUtil")(history, subscriptions);
+const getListenNotesRecs = require("../../utils/recommenderUtils/listenNotesUtil")(shows_list);
+const getMatchedSpotifyRecs = require("../../utils/recommenderUtils/spotifyUtil")(listenNotesRecs);
 const router = express.Router();
 
 // @route  GET api/recommendations
@@ -19,10 +20,12 @@ const router = express.Router();
 
 router.get('/', async(req, res, next) => {
     try {
-        const user_history = userRecordUtil.getUserHistory;
-        const user_subscriptions = userRecordUtil.getUserSubscription;
-        const shows_list = searchParamsUtil.getSearchParams(user_history, user_subscriptions); // array of objects of form [{title: "title", publisher: "publisher"}, ...]
-        const listenNotesRecs = listenNotesUtil.getListNotesRecs(shows_list); // array of objects of form [{title: "title", publisher: "publisher"}, ...];
+        const history = getUserHistory(req); // JSON string of user history
+        const subscriptions = getUserSubscription(req); // JSON string of user subscriptions
+        const shows_list = getSearchParams(history, subscriptions); // array of objects of form [{title: "title", publisher: "publisher"}, ...]
+        const listenNotesRecs = getListenNotesRecs(shows_list); // array of objects of form [{title: "title", publisher: "publisher"}, ...];
+        const matchedSpotifyRecs = getMatchedSpotifyRecs(listenNotesRecs); // array of spotify shows for frontend use.
+        return res.status(200).json(matchedSpotifyRecs);
     } catch (err) {
         console.error(err.message);
         next(new BadRequest([{msg: "Recommender: Bad Request."}]));

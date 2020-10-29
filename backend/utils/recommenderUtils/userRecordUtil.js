@@ -7,7 +7,7 @@ const { NotFound } = require("../errors");
 const getUserHistory = async (req, next) => {
     try {
         const history = await HistoryModel.find({user: req.user.id}).select("-__v");
-        return json(history);
+        return json(history.data);
     } catch {
         console.error(err.message);
         next (new NotFound([{msg: "Recommender: Could not find User History"}]));
@@ -18,12 +18,12 @@ const getUserHistory = async (req, next) => {
 const getUserSubscription = async (req, next) => {
     try {
         const subscriptions = await SubscriptionModel.find({user: req.user.id}).select("-__v");
-        return json(subscriptions);
+        return json(subscriptions.data);
     } catch {
         console.error(err.message);
         next (new NotFound ([{msg: "Recommender: Could not find User Subscriptions"}]));
     }
 }
 
-module.exports = getUserHistory;
-module.exports = getUserSubscription; 
+module.exports = getUserHistory(req);
+module.exports = getUserSubscription(req); 
