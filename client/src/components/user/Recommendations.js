@@ -11,10 +11,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { Grid } from "@material-ui/core";
 
+import { DetailedView } from "../dashboard/DetailedView"
+
 const useStyles = makeStyles({
     root: {
       maxWidth: 345,
-      minHeight: "250px"
+      height: "290px"
     },
     media: {
       height: 140,
@@ -23,13 +25,21 @@ const useStyles = makeStyles({
         paddingLeft: "40px",
         paddingRight: "40px",
         paddingTop: "20px"
-      }
+      },
+      titleFont: {
+          fontSize: "24",
+      },
   });
+
 
 const Recommendations = () => {
     const [isLoading, setLoading] = useState(true);
     const [podcasts, setPodcasts] = useState([]);
     const classes = useStyles();
+
+    const [img, setImg] = useState();
+    const [currPodcast, setCurrPodcast] = useState({});
+    const [open, setOpen] = useState(false);
 
     const fetchPodcasts = async (term) => {
         setLoading(true);
@@ -43,6 +53,15 @@ const Recommendations = () => {
       useEffect(() => {
         fetchPodcasts("a");
       }, []);
+
+      const handleClickOpen = (pod) => {
+        setCurrPodcast(pod);
+        setImg(pod.images[0].url);
+        setOpen(!open);
+      };
+      const handleClose = () => {
+        setOpen(!open);
+      };
 
 
 
@@ -58,8 +77,11 @@ if (isLoading) {
       justify="center"
     >
     {podcasts.map((podcast) => (
-        <Grid item xs={12} sm={6} md={4}>
-        <Card className={classes.root}>
+        
+        <Grid item xs={12} sm={6} md={4}
+        key={podcast.id}>
+        <Card className={classes.root}
+        >
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -67,7 +89,7 @@ if (isLoading) {
                   title= {podcast.name}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="subtitle1" component="h2">
+                  <Typography classes={{root: classes.fontSizeGrid}} variant="h6" gutterBottom component="h2">
                   {podcast.name}
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
@@ -76,10 +98,8 @@ if (isLoading) {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary"
+                onClick={handleClickOpen.bind(this, podcast)}>
                   Learn More
                 </Button>
               </CardActions>
@@ -91,6 +111,15 @@ if (isLoading) {
    Refresh 
     </Button>
     </Grid>
+
+    <DetailedView
+      open = {open}
+      handleClose = {handleClose}
+      selectedPod = {currPodcast}
+      img = {img}>
+      
+      </DetailedView>
+    
    </Grid>
    
     )};
