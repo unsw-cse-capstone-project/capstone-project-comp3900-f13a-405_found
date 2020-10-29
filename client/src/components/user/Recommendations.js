@@ -16,7 +16,7 @@ import { DetailedView } from "../dashboard/DetailedView"
 const useStyles = makeStyles({
     root: {
       maxWidth: 345,
-      height: "290px"
+      minHeight: "340px"
     },
     media: {
       height: 140,
@@ -29,6 +29,9 @@ const useStyles = makeStyles({
       titleFont: {
           fontSize: "24",
       },
+      gutter: {
+        bottom: "0",
+    },
   });
 
 
@@ -97,7 +100,8 @@ if (isLoading) {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <CardActions>
+              <CardActions
+              className={classes.gutter}>
                 <Button size="small" color="primary"
                 onClick={handleClickOpen.bind(this, podcast)}>
                   Learn More
