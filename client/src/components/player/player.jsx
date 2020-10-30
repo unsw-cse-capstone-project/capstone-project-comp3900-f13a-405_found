@@ -38,7 +38,7 @@ const Player = ( { p_id }) => {
   const { playing, url, image, title, artist } = playerState;
 
   // play podcast from last 'seconds_plyed.' Defaults to 0.
-  const handlePlay = async (dispatch) => {
+  const handlePlay =  async () => {
     console.log("onPlay");
     try {
       const config = {
@@ -48,7 +48,7 @@ const Player = ( { p_id }) => {
       const res = await axios.get(`/api/user-history/${p_id}`, config);
       
       const seconds_played = res.data.seconds; 
-      //dispatch({ type: SET_PLAYING, playing: true, seekTo: seconds_played});
+      dispatch({ type: SET_PLAYING, playing: true, seekTo: 20});
       
     } catch (err) {
       displayAlert("An error occurred handlePlay()");
@@ -56,7 +56,7 @@ const Player = ( { p_id }) => {
     
   };
  // pause podcast and update DB with 'seconds_played'
-  const handlePause = async (dispatch) => {
+  const handlePause =  async () => {
     console.log("onPause");
     dispatch({ type: SET_PLAYING, playing: false });
 

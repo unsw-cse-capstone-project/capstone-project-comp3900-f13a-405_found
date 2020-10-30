@@ -34,9 +34,9 @@ router.get("/:p_id", (req, res, next) => {
   }).lean();
   query
     .exec()
-    .then((hist_entry) => {
-      if (hist_entry != null) return res.status(200).json({ Viewed: true, seconds: seconds_played });
-      else return res.status(200).json({ Viewed: false, seconds: 0 });
+    .then((hist_entry) => {                                        
+      if (hist_entry != null) return res.status(200).json({ Viewed: true, seconds: 15 });
+      else return res.status(200).json({ Viewed: false, seconds: 15 });
     })
     .catch((err) => {
       console.error(err.message);
@@ -55,7 +55,7 @@ router.post("/:p_id/:seconds_played", (req, res, next) => {
   };
   const update = { 
     last_played: `${Date.now()}`,
-    seconds_played = `${req.params.seconds_played}`, 
+    seconds_played: `${req.params.seconds_played}`, 
   };
 
   const query = HistoryModel.findOneAndUpdate(filter, update, {
