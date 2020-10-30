@@ -6,8 +6,6 @@ const Playlist = require("../../models/PlaylistModel");
 
 const episodeExists = (playlist, episodeId) => {
     let retval = false;
-    console.log(playlist)
-    console.log(episodeId)
     playlist.playlistEpisodes.forEach(episode => {
         if (episode.id.toString().trim() === episodeId.toString().trim()) {
             retval = true;
@@ -171,7 +169,7 @@ router.delete("/:playlistId/:episodeId", async(req,res,next) => {
                         return res.status(404).json("Error: Episode does not exist in this playlist");
                     }
                     // Remove episode from the playlist
-                    playlist.playlistEpisodes = playlist.playlistEpisodes.filter(episode => episode._id != req.params.episodeId);
+                    playlist.playlistEpisodes = playlist.playlistEpisodes.filter(episode => episode.id != req.params.episodeId);
                     await playlist.save(function(err) {
                         if (err) {
                             console.log(err)
