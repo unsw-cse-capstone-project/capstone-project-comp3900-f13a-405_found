@@ -83,8 +83,12 @@ router.post("/login", async (req, res, next) => {
           (err, token) => {
             if (err) throw new Errors([{ msg: "JWT error" }], true);
             res.cookie("token", token, { httpOnly: true });
+
+            user.set("password", undefined, { strict: false });
+
             return res.status(200).json({
               success: true,
+              user: user,
             });
           }
         );
@@ -121,6 +125,7 @@ router.post("/activate/:token", async (req, res, next) => {
         d: "mm",
       }),
       password: userfromtoken.password,
+      optInEmail: userfromtoken.optInEmail,
     });
     await user.save();
     return res.status(200).json({ success: true });

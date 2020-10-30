@@ -6,6 +6,7 @@ import {
   UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
   GET_TRENDING_SHOWS,
   GET_SHOWS_BY_IDS_FOR_TRENDING,
+  GET_SUBSCRIBED_EPISODES_BY_IDS
 } from "../actions/types";
 
 const initialState = {
@@ -18,6 +19,8 @@ const initialState = {
   detailedTrending: [],
   trendingShowsLoaded: false,
   trendingShowsDetailsLoaded: false,
+  subscribedEpisodes: [],
+  subscribedEpisodesLoaded: false,
 };
 
 export default function (state = initialState, action) {
@@ -80,6 +83,13 @@ export default function (state = initialState, action) {
         isLoaded: true,
         detailedTrending: action.payload.shows,
         trendingShowsDetailsLoaded: true,
+      };
+    case GET_SUBSCRIBED_EPISODES_BY_IDS:
+      return {
+        ...state,
+        isLoaded: true,
+        subscribedEpisodes: action.payload,
+        subscribedEpisodesLoaded: true,
       };
     default:
       return state;

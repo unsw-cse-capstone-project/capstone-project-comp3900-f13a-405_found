@@ -6,17 +6,20 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   EMAIL_VERIFIED,
+  COOKIE_VALID,
+  SAVE_FOR_RESENT_EMAIL_REGISTRATION,
 } from "./types";
 import axios from "axios";
 import { displayAlert, removeAllAlerts } from "./alert";
 import { message } from "antd";
 
 // User Account Creation
-export const signup = ({ name, email, password, id }, history) => async (
-  dispatch
-) => {
+export const signup = (
+  { name, email, password, id, optInEmail },
+  history = null
+) => async (dispatch) => {
   try {
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({ name, email, password, optInEmail });
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +27,13 @@ export const signup = ({ name, email, password, id }, history) => async (
       withCredentials: true,
     };
     await axios.post("/api/authentication/signup", body, config);
-    history.push("/please-click-email");
+    dispatch({
+      type: SAVE_FOR_RESENT_EMAIL_REGISTRATION,
+      payload: { name, email, password, optInEmail },
+    });
+    if (history != null) {
+      history.push("/please-click-email");
+    }
     message.destroy(id);
     dispatch(removeAllAlerts());
   } catch (err) {
@@ -66,9 +75,10 @@ export const login = ({ email, password }) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    await axios.post("/api/authentication/login", body, config);
+    const res = await axios.post("/api/authentication/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
+      payload: res.data,
     });
     dispatch(removeAllAlerts());
   } catch (err) {
@@ -88,9 +98,10 @@ export const checkUserStillVerified = () => async (dispatch) => {
     const config = {
       withCredentials: true,
     };
-    await axios.get("/api/secure/", config);
+    const res = await axios.get("/api/secure/", config);
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: COOKIE_VALID,
+      payload: res.data,
     });
     dispatch(removeAllAlerts());
   } catch (err) {

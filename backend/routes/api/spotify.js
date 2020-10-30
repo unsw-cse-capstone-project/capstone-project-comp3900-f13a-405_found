@@ -113,4 +113,34 @@ router.get("/bulkshows/:ids", async (req, res, next) => {
   }
 });
 
+// @route   GET api/spotify/shows/:id/episodes
+// @desc    Get a list of a Spotify show's episodes by show id
+// @access  Private
+router.get("/shows/:id/episodes", async (req, res, next) => {
+  try {
+    // https://developer.spotify.com/documentation/web-api/reference/shows/
+    let episodeList = []; 
+    let counter = 0;
+    let stop = false;
+    const uri = encodeURI(
+      `https://api.spotify.com/v1/shows/${req.params.id}/episodes?market=AU`
+    );
+    const headers = {
+      "user-agent": "node.js",
+      Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+    };
+    // Iterate through the pages until there are no more pages
+    while(!stop) { 
+      let spotifyResponse = await axios.get(counter == 0 ? uri : spotifyResponse.next, { headers });
+      episodeList = episodeList.concat(spotifyResponse.data.items)
+      counter++;
+      stop = (spotifyResponse.next == null)
+    }
+    return res.status(200).json(episodeList);
+  } catch (err) {
+    console.error(err.message);
+    next(new NotFound([{ msg: "No episodes or shows with that id found" }]));
+  }
+});
+
 module.exports = router;

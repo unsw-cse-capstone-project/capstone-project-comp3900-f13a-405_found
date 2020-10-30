@@ -9,9 +9,9 @@ const Subscription = require("../../models/SubscriptionModel");
 // @access  Private
 router.get("/", async (req, res) => {
   try {
-    const subscriptions = await Subscription.find({ user: req.user.id }).select(
-      "-__v"
-    );
+    const subscriptions = await Subscription.find({
+      user: req.user._id,
+    }).select("-__v");
 
     return res.status(200).json(subscriptions);
   } catch (err) {
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 router.post("/unsubscribe/:showId", async (req, res) => {
   try {
     const subscriptions = await Subscription.deleteOne({
-      user: req.user.id,
+      user: req.user._id,
       showId: req.params.showId,
     });
     if (subscriptions.deletedCount <= 0) {
@@ -66,25 +66,33 @@ router.get("/count/:ids", async (req, res) => {
 router.post("/subscribe/:showId", async (req, res, next) => {
   try {
     // fetching this first will ensure that the provided showId is legit
-    const uri = encodeURI(
+    let uri = encodeURI(
       `https://api.spotify.com/v1/shows/${req.params.showId}/episodes?market=AU`
     );
-    const headers = {
+    let headers = {
       "user-agent": "node.js",
       Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
     };
-    const spotifyResponse = await axios.get(uri, { headers });
+    let spotifyResponse = await axios.get(uri, { headers });
 
     const showEpisodesId = spotifyResponse.data.items.map(
       (episode) => episode.id
     );
 
+    // Make another request to fetch the podcast name
+    uri = encodeURI(
+      `https://api.spotify.com/v1/shows/${req.params.showId}?market=AU`
+    );
+    spotifyResponse = await axios.get(uri, { headers });
+
+    const title = spotifyResponse.data.name;
+
     let subscribe = await Subscription.findOneAndUpdate(
       {
-        user: req.user.id,
+        user: req.user._id,
         showId: req.params.showId,
       },
-      { showId: req.params.showId },
+      { showId: req.params.showId, showTitle: title },
       {
         new: true,
         upsert: true,
@@ -123,4 +131,30 @@ router.get("/trending", async (req, res) => {
   }
 });
 
+// @route   PUT api/subscription/:subscriptionid
+// @desc    Updates a user's subscriptions with the latest episodes
+// @access  Private
+// @accepts Array containing list of new episode Ids which the user has acknowledged.
+router.put("/:subscriptionId", async (req, res, next) => {
+  try {
+    // Array of acknowledged episode Ids
+    const newEpisodeIds = req.body.acknowledgedEpisodeIds;
+    console.log(newEpisodeIds);
+    const subscription = await Subscription.findById(
+      req.params.subscriptionId,
+      async function (err, subscription) {
+        for (const episodeId of newEpisodeIds) {
+          subscription.showEpisodesIds.push(episodeId);
+        }
+        await subscription.save(function (err) {
+          if (err) throw Exception();
+          return res.status(200).json("Success");
+        });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return next(new BadRequest([{ msg: "Bad Request!!" }]));
+  }
+});
 module.exports = router;
