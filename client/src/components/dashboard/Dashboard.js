@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
-<<<<<<< HEAD
 import Playlist from "./Playlist";
-=======
 import Notifications from "../notifications/notifications";
->>>>>>> develop
 
 import {
   makeStyles,
