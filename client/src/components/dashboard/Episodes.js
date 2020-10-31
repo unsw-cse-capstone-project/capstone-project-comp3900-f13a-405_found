@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: "33.33%",
+    flexBasis: "100%",
     flexShrink: 0,
   },
   duration_ms: {
