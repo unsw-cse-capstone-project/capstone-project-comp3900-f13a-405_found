@@ -2,7 +2,6 @@
 
 const axios = require("axios");
 const lodash = require("lodash");
-const { BadRequest } = require("../errors");
 
 
 // ====== Listen Notes keys ======
@@ -12,99 +11,92 @@ const { BadRequest } = require("../errors");
 //const endpoint = "https://listen-api.listennotes.com/api/v2/";
 // ===============================
 
-const getShowId = async (show, next) => {
+var ListenNotes = function() {}; 
+
+const getShowId = async function(show) {
     try {
         const uri = encodeURI(
-            `https://listen-api.listennotes.com/api/v2/search${show.title}%20${show.publisher}&type=podcast&region=au`
+            `https://listen-api.listennotes.com/api/v2/search?q=${show.publisher}&type=podcast&only_in=author`
         );
         const headers = {
-            "user-agent": "node.js",
-            'X-ListenAPI-Key': '49ec7884ad4a47f2be99eed90a061cf4',
+            'X-ListenAPI-Key': '49ec7884ad4a47f2be99eed90a061cf4'
         };
-        const id_response = await axios.get(uri, {headers});
-        const id_res_obj = JSON.parse(id_response.data);
-        if (id_res_obj.results = []) return "matchFail";
-        
-        const match = lodash.find(id_res_obj.podcast.publisher_original);
-        if (typeof match == "undefined") return "matchFail";
-
-        return match.id;
-    } catch(err) {
-        console.error(err.message);
-        next(new BadRequest([{msg: "Recommender: Bad request for listenNotes search"}]));
-    }
-};
-
-const getShowIds = async (show_list, next) => {
-    try {
-        // given a json array of shows with name and id, foreach show find the id - add to list and return.
-        const ids = [];
-        show_list.array.forEach(show => {
-            const id = getShowId(show);
-            if (id != "matchFail") ids.push(id);
+        const idResponse = await axios.get(uri, {headers});
+        if (idResponse.data.total == 0) return "matchFail"; 
+        const results = idResponse.data.results;
+        const match = lodash.find(results, {
+            'title_original': `${show.title}`,
+            'publisher_original': `${show.publisher}`
         });
-        return ids;
+        if (typeof match == undefined) return "matchFail";
+        return match.id;
 
     } catch(err) {
         console.error(err.message);
-        next (new BadRequest([{msg: "Recommender: Bad request for listenNotes search"}]));
-    }
-};
-
-const getData = async (rec_response, next) => {
-    try {
-        const data = {
-            title: `${rec_response.title}`,
-            publisher: `${rec_response.publisher}`,
-        };
-        return data;
-    } catch(err) {
-        console.error(err.message);
-        next(new BadRequest([{msg: "Recommender: Bad listenNotes recommender request"}]))
+        return;
     }
 }
 
-const getRecommendations = async (id, next) => {
+const getShowIds = async function(showsList) {
+    const showIds = [];
+    for (show of showsList) {
+        let showId = await getShowId(show)
+        showIds.push(showId);
+    }
+    return showIds;
+}
+
+const getData = function(recommendation) {
+    const data = {
+        title: `${recommendation.title}`,
+        publisher: `${recommendation.publisher}`,
+    };
+    return data;
+}
+
+const getRecommendation = async function(showId) {
     try {
+        if (showId == "matchFail") return;
         const uri = encodeURI(
-            `https://listen-api.listennotes.com/api/v2/podcasts/${id}/recommendations`
+            `https://listen-api.listennotes.com/api/v2/podcasts/${showId}/recommendations`
         );
         const headers = {
-            "user-agent": "node.js",
             'X-ListenAPI-Key': '49ec7884ad4a47f2be99eed90a061cf4',
         }
-        const rec_response = await axios.get(uri, { headers });
-        const rec_obj = JSON.parse(rec_response.data);
-        const rec_list = [];
-        rec_obj.recommendations.forEach(recommendation => {
-            const rec_data = getData(recommendation);
-            rec_list.push(rec_data); 
-        })
-        return rec_list;
-        
+
+        const recResponse = await axios.get(uri, {headers});
+        const listenNoteRecs = recResponse.data.recommendations;
+
+
+        const recommendations = [];
+        for (rec of listenNoteRecs) {
+            const recData = getData(rec);
+            recommendations.push(recData);
+        }
     } catch(err) {
         console.error(err.message);
-        next(new BadRequest([{msg: "Recommender: Bad listenNotes recommender request"}]));
     }
-
+    return recommendations;
 }
 
-const getListenNotesRecs = async (shows_list, next) => {
-    try {
-        const ids = getShowIds(shows_list);
-        const rec_list = [];
-        ids.forEach(id => {
-            const recommendations = getRecommendations(id);
-            rec_list.push(recommendations);                    
-        });
-        const flattened_list = lodash.flatten(rec_list);
-        const filtered_list = lodash.uniqWith(flattened_list, lodash.isEqual);
-        return filtered_list;
-    } catch(err) {
-
+const getRecommendations = async function(showIds) {
+    const recommendations = [];
+    for (showId of showIds) {
+        const recommendation = await getRecommendation(showId);
+        recommendations.push(recommendation);
     }
-};
+    const flattenedRecs = lodash.flatten(recommendations);
+    const filteredList = lodash.uniqWith(flattenedRecs, lodash.isEqual);
+    return filteredList;
+}
 
-module.exports = getListenNotesRecs(shows_list);
 
+
+ListenNotes.prototype.getListenNotesRecs = async function(showsList) {
+    const showIds = await getShowIds(showsList);
+    const recommendations = await getRecommendations(showIds);
+    return recommendations;
+}
+
+module.exports = ListenNotes;
 
