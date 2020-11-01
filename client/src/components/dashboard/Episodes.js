@@ -66,12 +66,13 @@ const Episodes = ({ podcastEpisodes }) => {
     })
     .catch(function (error) {
       console.log(error);
-    }).then(() => {
-      axios.get(`api/user-history/${episode.id}`)
-      .then(function (response) {
-      console.log(response.data.Viewed);
     })
-    });
+    // .then(() => {
+    //   axios.get(`api/user-history/${episode.id}`)
+    //   .then(function (response) {
+    //   console.log(response.data.Viewed);
+    // })
+    // });
     const copy = beenPlayed;
     copy[`${episode.id}`] =  true;
     setPlayed(copy);
