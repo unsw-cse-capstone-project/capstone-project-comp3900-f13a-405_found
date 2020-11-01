@@ -72,7 +72,6 @@ const Episodes = ({ podcastEpisodes }) => {
       console.log(response.data.Viewed);
     })
     });
-    updatePlayed(episode.id);
     const copy = beenPlayed;
     copy[`${episode.id}`] =  true;
     setPlayed(copy);
@@ -86,21 +85,6 @@ const Episodes = ({ podcastEpisodes }) => {
       },
     });
   };
-
-  const updatePlayed = (id) => {
-    // const myObj = {}
-    //   axios.get(`api/user-history/${id}`)
-    //   .then(function (response) {
-    //   console.log(response.data.Viewed);
-    //   myObj[`${id}`] = response.data.Viewed;
-    // }).then(() => {
-    //   console.log(beenPlayed);
-    //   // const m = beenPlayed;
-    //   // setPlayed(...m, ...myObj);
-    // });
-    // setPlayed(myObj);
-  }
-  
   
   useEffect(() => {
     const myObj = {}
