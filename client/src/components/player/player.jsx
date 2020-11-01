@@ -21,7 +21,7 @@ import axios from "axios";
 // Package reference:       https://www.npmjs.com/package/react-player
 // Source code reference :  https://github.com/CookPete/react-player/blob/master/src/demo/App.js
 
-const Player = ( { p_id }) => {
+const Player = ( {} ) => {
   const dispatch = useDispatch();
   const [player, setPlayer] = useState({});
   const [played, setPlayed] = useState(0);
@@ -45,10 +45,18 @@ const Player = ( { p_id }) => {
         withCredentials: true,
       };
       
+      
+      const p_id = playerState.episode_id;
+      console.log("P_id: " + p_id);
+      
       const res = await axios.get(`/api/user-history/${p_id}`, config);
       
       const seconds_played = res.data.seconds; 
+      console.log("seconds played: " + seconds_played);
+
       dispatch({ type: SET_PLAYING, playing: true, seekTo: 20});
+      
+      player.seekTo(seconds_played);
       
     } catch (err) {
       displayAlert("An error occurred handlePlay()");
@@ -67,7 +75,11 @@ const Player = ( { p_id }) => {
         },
         withCredentials: true,
       };
+
+      const p_id = playerState.episode_id;
       await axios.post(`/api/user-history/${p_id}/${played}`); 
+      console.log("paused at: " + played);
+
     } catch (err) {
       displayAlert("An Error Occurred handlePlay()");
     }

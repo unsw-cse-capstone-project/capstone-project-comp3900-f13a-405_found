@@ -14,6 +14,7 @@ import Player from "../player/player"
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
+import Episodes from "./Episodes";
 
 const theme = createMuiTheme({
   palette: {
@@ -48,7 +49,7 @@ const Dashboard = () => {
   }, [dispatch]);
   return (
       <ThemeProvider theme={theme}>
-      <Player/>
+      <Player p_id={15} />
       <Notifications/>
       <Sidebar />
       <div className={classes.appMain}>
