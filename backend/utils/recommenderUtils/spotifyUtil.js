@@ -38,12 +38,28 @@ const matchSpotifyRecs = async function(listenNotesRecs) {
         var spotifyRec = await matchSpotifyRec(listenNotesRec);
             spotifyRecs.push(spotifyRec);
     }
-    return spotifyRecs;
+    const filteredRecs = lodash.compact(spotifyRecs)
+    return filteredRecs;
 }
 
 SpotifyUtil.prototype.getMatchedSpotifyRecs = async function(listenNotesRecs) {
     const spotifyRecs = matchSpotifyRecs(listenNotesRecs);
     return spotifyRecs;
+}
+
+SpotifyUtil.prototype.getRecommendationsForNewUsers = async function() {
+    try {
+        const uri = encodeURI('https://api.spotify.com/v1/search?q=top%20podcasts&type=show&market=AU');
+        const headers = {
+            "user-agent": "node.js",
+            Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
+        }
+        const spotifyResponse = await axios.get(uri, {headers});
+        console.log(spotifyResponse.data.shows.items.length);
+        return spotifyResponse.data.shows.items;
+    } catch(err) {
+        console.error(err.message);
+    }
 }
 
 module.exports = SpotifyUtil;

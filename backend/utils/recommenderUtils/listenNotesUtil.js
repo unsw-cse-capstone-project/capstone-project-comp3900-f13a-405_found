@@ -5,10 +5,10 @@ const lodash = require("lodash");
 
 
 // ====== Listen Notes keys ======
-// const key = "5df881c89d644904bc39af8b922c9441"; //old key
-// const key = "d370e5f11d0a4b14956d88517e75fd8a"; // Nathan's key
-//const key = "49ec7884ad4a47f2be99eed90a061cf4"; // Spare key 1
-//const endpoint = "https://listen-api.listennotes.com/api/v2/";
+// const key = "5df881c89d644904bc39af8b922c9441"; 
+// const key = "d370e5f11d0a4b14956d88517e75fd8a"; 
+// const key = "49ec7884ad4a47f2be99eed90a061cf4"; < -- currently in use
+// const endpoint = "https://listen-api.listennotes.com/api/v2/";
 // ===============================
 
 var ListenNotes = function() {}; 
