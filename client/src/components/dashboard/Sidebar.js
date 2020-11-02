@@ -79,6 +79,11 @@ const Sidebar = (props) => {
             Dashboard
           </Button>{" "}
         </Link>
+        <Link style={{ textDecoration: "none"}} to='/dashboard/playlist'>
+          <Button size='large' variant='contained'>
+            Playlist
+          </Button>{" "}
+        </Link>
         <div className={classes.myText}>Subscriptions</div>
         <ul className='list-group mb-4'>
           {!subscriptionState.isLoaded ? (

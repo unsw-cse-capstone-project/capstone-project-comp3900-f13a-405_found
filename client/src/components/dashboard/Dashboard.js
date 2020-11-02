@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
+import Playlist from "./Playlist";
 import Notifications from "../notifications/notifications";
 
 import {
@@ -56,6 +57,7 @@ const Dashboard = () => {
           <Route exact path={match.path} component={Header} />
           <Route exact path={`${match.path}/:share_id`} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
+          <Route exact path={`${match.path}/playlist`} component={Playlist} />
           {/* this is just to redirect to 404 */}
           <Route
             render={({ location }) => (
