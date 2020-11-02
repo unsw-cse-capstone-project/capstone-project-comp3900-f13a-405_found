@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
 import Notifications from "../notifications/notifications";
-
+import { displayAlert } from "../../actions/alert";
 import {
   makeStyles,
   CssBaseline,
@@ -14,7 +14,9 @@ import Player from "../player/player"
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
-import Episodes from "./Episodes";
+import axios from "axios";
+import { SET_EPISODE, SET_STATE_FROM_EPISODES } from "../../actions/types";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -47,9 +49,35 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getSubscriptions());
   }, [dispatch]);
+  useEffect( async () => {
+    console.log("Dashboard - Grabbing podcast details user-history");
+    try {
+      const config = {
+        withCredentials: true,
+      };
+
+      const res = await axios(`/api/user-history/`, config);
+      console.log("TESTING EPISODE: " + res.data.episode_id);
+      console.log("TESTING SECONDS: " + res.data.seconds);
+      console.log("TESTING URL: " + res.data.url);
+      console.log("TESTING IMAGE: " + res.data.image);
+
+
+      dispatch({
+        type: SET_STATE_FROM_EPISODES,
+        payload: {
+          episode_id: res.data.episode_id,
+          url: res.data.url,
+          image: res.data.image,
+        }
+      });
+    } catch (err) {
+      displayAlert("An error occurred handlePlay()");
+    }
+  }, []);
   return (
       <ThemeProvider theme={theme}>
-      <Player p_id={15} />
+      <Player />
       <Notifications/>
       <Sidebar />
       <div className={classes.appMain}>

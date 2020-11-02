@@ -5,6 +5,7 @@ import {
   SET_ARTIST,
   SET_STATE_FROM_EPISODES,
   SET_TITLE,
+  SET_EPISODE,
 } from "../actions/types";
 
 const initial_state = {
@@ -18,6 +19,11 @@ const initial_state = {
 
 export default function player(state = initial_state, action) {
   switch (action.type) {
+    case SET_EPISODE:
+      return {
+        ...state,
+        episode_id: action.episode_id,
+      };
     case SET_URL:
       return {
         ...state,

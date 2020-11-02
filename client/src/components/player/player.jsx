@@ -47,20 +47,41 @@ const Player = ( {} ) => {
       
       
       const p_id = playerState.episode_id;
-      console.log("P_id: " + p_id);
+      //console.log("P_id: " + p_id);
       
       const res = await axios.get(`/api/user-history/${p_id}`, config);
       
       const seconds_played = res.data.seconds; 
-      console.log("seconds played: " + seconds_played);
+      // console.log("seconds at PLAY: " + res.data.seconds);
+      // console.log("image at PLAY: " + res.data.image);
+      // console.log("URL at PLAY: " + res.data.url);
 
-      dispatch({ type: SET_PLAYING, playing: true, seekTo: 20});
-      
-      player.seekTo(seconds_played);
-      
+      // is this correct?
+      if (seconds_played == 0) {
+        dispatch({ type: SET_PLAYING, playing: true});
+      } else {
+        player.seekTo(seconds_played);
+      }
+
     } catch (err) {
       displayAlert("An error occurred handlePlay()");
     }
+
+    // try {
+    //   const config = {
+    //     withCredentials: true,
+    //   };
+    //   const res = await axios.get(`/api/user-history/`, config);
+
+    //   const latest = res.data.podcast;
+    //   //console.log("latest podcast played: " + latest);
+    //   console.log("CURRET EPISODE: " + playerState.episode_id)
+    //   console.log("TESTING EPISODE: " + res.data.podcast);
+    //   console.log("TESTING SECONDS: " + res.data.seconds);
+    // } catch (err) {
+    //   displayAlert("An error occurred handlePlay()");
+    // }
+
     
   };
  // pause podcast and update DB with 'seconds_played'
@@ -77,8 +98,17 @@ const Player = ( {} ) => {
       };
 
       const p_id = playerState.episode_id;
-      await axios.post(`/api/user-history/${p_id}/${played}`); 
-      console.log("paused at: " + played);
+      const p_url = String(playerState.url);
+      const p_image = String(playerState.image);
+      console.log("image at PAUSE " + playerState.image);
+      console.log("URL at PAUSE: " + playerState.url);
+      console.log("episode_id at PAUSE: " + playerState.episode_id);
+
+      await axios.post(
+        `/api/user-history/${p_id}/${played}`, 
+        { url: playerState.url,  
+          image: playerState.image, 
+      }); 
 
     } catch (err) {
       displayAlert("An Error Occurred handlePlay()");

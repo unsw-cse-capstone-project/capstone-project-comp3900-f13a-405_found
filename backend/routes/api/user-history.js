@@ -8,15 +8,19 @@ const router = express.Router();
 // @access Private
 
 router.get("/", (req, res, next) => {
-  const query = HistoryModel.find({ user_id: `${req.user._id}` }).select(
-    "-__v"
-  );
-
+  const query = HistoryModel.findOne({ 
+    user_id: `${req.user._id}` 
+  }).sort({last_played: -1});
   query
     .exec()
     .then((user_history) => {
       //  const json_user_history = JSON.stringify(user_history);
-      return res.status(200).json(user_history);
+      return res.status(200).json({ 
+        seconds: user_history.seconds_played, 
+        episode_id: user_history.podcast_id,
+        url: user_history.podcast_url,
+        image: user_history.podcast_image 
+      });
     })
     .catch((err) => {
       console.error(err.message);
@@ -35,8 +39,18 @@ router.get("/:p_id", (req, res, next) => {
   query
     .exec()
     .then((hist_entry) => {                                        
-      if (hist_entry != null) return res.status(200).json({ Viewed: true, seconds: hist_entry.seconds_played});
-      else return res.status(200).json({ Viewed: false, seconds: hist_entry.seconds_played});
+      if (hist_entry != null) return res.status(200).json({ 
+        Viewed: true, 
+        seconds: hist_entry.seconds_played//,
+        //  url: hist_entry.podcast_url,
+        //  image: hist_entry.podcast_image
+      });
+      else return res.status(200).json({ 
+        Viewed: false, 
+        seconds: hist_entry.seconds_played//,
+        //  url: hist_entry.podcat_url,
+        // image: hist_entry.podcaset_image
+      });
     })
     .catch((err) => {
       console.error(err.message);
@@ -48,7 +62,7 @@ router.get("/:p_id", (req, res, next) => {
 // @desc   creates/updates user history (date + seconds played) entry for a user when given podcast id 'p_id'
 // @access Private
 
-//console.log("updated DB with seconds played: " );
+
 router.post("/:p_id/:played", (req, res, next) => {
   const filter = {
     user_id: `${req.user._id}`,
@@ -56,7 +70,10 @@ router.post("/:p_id/:played", (req, res, next) => {
   };
   const update = { 
     last_played: `${Date.now()}`,
-    seconds_played: `${req.params.played}`, 
+    seconds_played: `${req.params.played}`,
+    podcast_id: `${req.params.p_id}`,  // double check this
+    podcast_url: `${req.url}`,
+    podcaset_image: `${req.image}`,
   };
 
   const query = HistoryModel.findOneAndUpdate(filter, update, {
@@ -76,5 +93,26 @@ router.post("/:p_id/:played", (req, res, next) => {
       next(new BadRequest([{ msg: "User History: Bad Request." }]));
     });
 });
+
+
+// router.get("/:latest", (req, res, next) => {
+//   const query = HistoryModel.find({ user_id: `${req.user._id}` }).select(
+//     "-__v"
+//   );
+
+//   query
+//     .exec()
+//     .then((user_history) => {
+//       //  const json_user_history = JSON.stringify(user_history);
+//       return res.status(200).json(user_history);
+//     })
+//     .catch((err) => {
+//       console.error(err.message);
+//       next(new BadRequest([{ msg: "User History: Bad Request." }]));
+//     });
+// });
+
+
+
 
 module.exports = router;
