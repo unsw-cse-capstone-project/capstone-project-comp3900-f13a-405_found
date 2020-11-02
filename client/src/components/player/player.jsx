@@ -77,7 +77,7 @@ const Player = () => {
   };
 
   const handleProgress = (state) => {
-    console.log("onProgress", played, duration);
+    //console.log("onProgress", played, duration);
     // We only want to update time slider if we are not currently seeking
     if (!seeking) {
       // dispatch({type: SET_PLAYED, played: state.played})

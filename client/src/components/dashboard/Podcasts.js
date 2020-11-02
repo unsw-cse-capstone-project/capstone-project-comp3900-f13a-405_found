@@ -9,7 +9,11 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Episodes from "./Episodes";
+<<<<<<< HEAD
 import PlaylistSelector from "./PlaylistSelector"
+=======
+import { DetailedView } from "./DetailedView"
+>>>>>>> develop
 
 const styles = (theme) => ({
   root: {
@@ -88,7 +92,7 @@ const Podcasts = ({ podcasts, loading }) => {
         </li>
       ))}
 
-      <Dialog
+      {/* <Dialog
         onClose={handleClose}
         aria-labelledby='customized-dialog-title'
         open={open}
@@ -105,7 +109,14 @@ const Podcasts = ({ podcasts, loading }) => {
           </Typography>
           <Typography gutterBottom></Typography>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
+      <DetailedView
+      open = {open}
+      handleClose = {handleClose}
+      selectedPod = {podcast}
+      img = {img}>
+      
+      </DetailedView>
     </ul>
   );
 };

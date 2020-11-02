@@ -13,6 +13,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import Podcasts from "./Podcasts";
 import Pagination from "./Pagination";
+import { Link } from "react-router-dom";
 
 const theme = createMuiTheme({
   palette: {
@@ -91,9 +92,11 @@ export default function Header() {
           </Grid>
           <Grid item sm></Grid>
           <Grid item>
+          <Link style={{ textDecoration: "none" }} to='/userpage'>
             <IconButton>
               <AccountCircleIcon fontSize='large' />
-            </IconButton>
+            </IconButton>{" "}
+        </Link>
           </Grid>
         </Grid>
       </Toolbar>
