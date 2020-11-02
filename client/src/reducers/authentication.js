@@ -7,6 +7,7 @@ import {
   LOGOUT_SUCCESS,
   EMAIL_VERIFIED,
   COOKIE_VALID,
+  SAVE_FOR_RESENT_EMAIL_REGISTRATION,
 } from "../actions/types";
 
 const initialState = {
@@ -15,10 +16,16 @@ const initialState = {
   user: null,
   emailVerified: false,
   verifyError: false,
+  userResentEmail: null,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SAVE_FOR_RESENT_EMAIL_REGISTRATION:
+      return {
+        ...state,
+        userResentEmail: action.payload,
+      };
     case COOKIE_VALID:
     case LOGIN_SUCCESS:
       return {
@@ -26,6 +33,7 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         isLoaded: true,
         user: action.payload.user,
+        userResentEmail: null,
       };
     case SIGNUP_SUCCESS:
       return {
