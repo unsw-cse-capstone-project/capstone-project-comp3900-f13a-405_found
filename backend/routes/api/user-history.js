@@ -68,12 +68,13 @@ router.post("/:p_id/:played", (req, res, next) => {
     user_id: `${req.user._id}`,
     podcast_id: `${req.params.p_id}`,
   };
+  console.log("INSIDE POST - URL: " + req.body);
   const update = { 
     last_played: `${Date.now()}`,
     seconds_played: `${req.params.played}`,
     podcast_id: `${req.params.p_id}`,  // double check this
-    podcast_url: `${req.url}`,
-    podcaset_image: `${req.image}`,
+    podcast_url: req.body.p_url,
+    podcast_image: req.body.p_image,
   };
 
   const query = HistoryModel.findOneAndUpdate(filter, update, {
@@ -116,3 +117,8 @@ router.post("/:p_id/:played", (req, res, next) => {
 
 
 module.exports = router;
+
+
+
+
+//https://p.scdn.co/mp3-preview/8409d220ebf79f3dcbd117e9359b60614844606c

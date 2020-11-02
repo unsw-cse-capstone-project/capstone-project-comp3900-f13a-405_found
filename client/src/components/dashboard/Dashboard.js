@@ -57,6 +57,7 @@ const Dashboard = () => {
       };
 
       const res = await axios(`/api/user-history/`, config);
+      
       console.log("TESTING EPISODE: " + res.data.episode_id);
       console.log("TESTING SECONDS: " + res.data.seconds);
       console.log("TESTING URL: " + res.data.url);

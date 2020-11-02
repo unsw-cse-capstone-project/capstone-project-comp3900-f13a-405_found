@@ -98,17 +98,19 @@ const Player = ( {} ) => {
       };
 
       const p_id = playerState.episode_id;
-      const p_url = String(playerState.url);
-      const p_image = String(playerState.image);
-      console.log("image at PAUSE " + playerState.image);
-      console.log("URL at PAUSE: " + playerState.url);
-      console.log("episode_id at PAUSE: " + playerState.episode_id);
+      //const p_url = String(playerState.url);
+      //const p_image = String(playerState.image);
+      console.log("PAUSE image: " + playerState.image);
+      console.log("PAUSE URL: " + playerState.url);
+      console.log("PAUSE episode_id: " + playerState.episode_id);
 
-      await axios.post(
+      const res = await axios.post(
         `/api/user-history/${p_id}/${played}`, 
-        { url: playerState.url,  
-          image: playerState.image, 
-      }); 
+        { p_url: playerState.url,
+          p_image: playerState.image },
+        config
+      ); 
+      console.log("data in handlePause: " + res);
 
     } catch (err) {
       displayAlert("An Error Occurred handlePlay()");
