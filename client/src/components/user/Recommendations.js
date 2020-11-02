@@ -44,17 +44,26 @@ const Recommendations = () => {
     const [currPodcast, setCurrPodcast] = useState({});
     const [open, setOpen] = useState(false);
 
-    const fetchPodcasts = async (term) => {
+    const [currPodcasts, setCurrPodcasts] = useState([]);
+
+    const shufflePods = () => {
         setLoading(true);
-        const res = await axios.get(`/api/spotify/search/${term}`);
-        const array = res.data.shows.items;
-        const shuffled = array.sort(function(){return .5 - Math.random()});
+        const shuffled = currPodcasts.sort(function(){return .5 - Math.random()});
         setPodcasts(shuffled.slice(0,3));
         setLoading(false);
       };
 
+    const fetchPodcasts = async () => {
+      const res = await axios.get(`/api/recommendations`);
+      setCurrPodcasts(res.data.recs);
+      const shuffled = res.data.recs.sort(function(){return .5 - Math.random()});
+      setPodcasts(shuffled.slice(0,3));
+      setLoading(false);
+    };
+
       useEffect(() => {
-        fetchPodcasts("a");
+        setLoading(true);
+        fetchPodcasts();
       }, []);
 
       const handleClickOpen = (pod) => {
@@ -111,8 +120,8 @@ if (isLoading) {
             </Grid>
     ))}
     <Grid container justify="flex-end">
-    <Button  color='primary' size='medium' variant='contained' onClick ={fetchPodcasts.bind(this, "b")}>
-   Refresh 
+    <Button color='primary' size='medium' variant='contained' onClick ={() => shufflePods()}>
+   Shuffle 
     </Button>
     </Grid>
 
@@ -121,11 +130,9 @@ if (isLoading) {
       handleClose = {handleClose}
       selectedPod = {currPodcast}
       img = {img}>
-      
       </DetailedView>
     
    </Grid>
-   
     )};
 
 export default Recommendations;
