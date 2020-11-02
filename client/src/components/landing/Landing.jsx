@@ -1,5 +1,5 @@
 import logo from "./logo.png";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { login } from "../../actions/authentication";
 import "./Landing.scss";
 import Button from "@material-ui/core/Button";
@@ -37,6 +37,15 @@ const LoginComp = () => {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
+  const [share_id, setShare_id] = useState();
+
+  useEffect(() => {
+    const share_exists = localStorage.getItem('share_set') === 'true';
+    const shareId = share_exists ? localStorage.getItem('share_id') : null
+    setShare_id(shareId);
+    console.log(shareId);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
@@ -73,7 +82,9 @@ const LoginComp = () => {
 
   // redirect to dashboard if the user is authenticated
   if (authenticationState.isLoaded && authenticationState.isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+
+    // If there is a share_id stored, then we want to redirect there instead
+    return <Redirect to={share_id != null ? `/dashboard/${share_id}` : '/dashboard'} />;
   }
   if (!authenticationState.isLoaded)
     return (

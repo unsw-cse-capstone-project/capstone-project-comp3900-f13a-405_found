@@ -54,6 +54,7 @@ const Dashboard = () => {
       <div className={classes.appMain}>
         <Switch>
           <Route exact path={match.path} component={Header} />
+          <Route exact path={`${match.path}/:share_id`} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
           {/* this is just to redirect to 404 */}
           <Route
