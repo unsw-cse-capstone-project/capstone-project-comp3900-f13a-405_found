@@ -9,7 +9,11 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Episodes from "./Episodes";
+<<<<<<< HEAD
+import PlaylistSelector from "./PlaylistSelector"
+=======
 import { DetailedView } from "./DetailedView"
+>>>>>>> develop
 
 const styles = (theme) => ({
   root: {
