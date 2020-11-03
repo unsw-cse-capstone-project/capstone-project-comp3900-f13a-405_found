@@ -38,12 +38,11 @@ const History = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
-
   useEffect(() => {
     axios.get("/api/user-history").then((res) => {
-        console.log(res)
-      //setHistory(res.data.episodes.items);
-      //setLoading(false);
+      console.log(res);
+      setHistory(res.data);
+      setLoading(false);
     });
   }, []);
 
@@ -61,15 +60,13 @@ const History = () => {
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1bh-content'
-            id='panel1bh-header'
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
           >
             <Typography className={classes.name}>{episode.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              {episode.description}
-            </Typography>
+            <Typography>{episode.description}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}

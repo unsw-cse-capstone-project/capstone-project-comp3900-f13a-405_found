@@ -9,7 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Episodes from "./Episodes";
-import { DetailedView } from "./DetailedView"
+import { DetailedView } from "./DetailedView";
 
 const styles = (theme) => ({
   root: {
@@ -28,10 +28,10 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant='h6'>{children}</Typography>
+      <Typography variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton
-          aria-label='close'
+          aria-label="close"
           className={classes.closeButton}
           onClick={onClose}
         >
@@ -67,22 +67,22 @@ const Podcasts = ({ podcasts, loading }) => {
   }
 
   return (
-    <ul className='list-group mb-4'>
+    <ul className="list-group mb-4">
       {podcasts.map((podcasts) => (
         <li
           onClick={handleClickOpen.bind(this, podcasts)}
           key={podcasts.id}
-          className='list-group-item'
+          className="list-group-item"
         >
           <div style={{ textAlign: "left", color: "black" }}>
             {podcasts.name}
           </div>
           <div style={{ textAlign: "right", color: "black" }}>
             <img
-              height='60px'
-              width='60px'
+              height="60px"
+              width="60px"
               src={podcasts.images[0].url}
-              alt='podcastimage'
+              alt="podcastimage"
             />
           </div>
         </li>
@@ -107,12 +107,11 @@ const Podcasts = ({ podcasts, loading }) => {
         </DialogContent>
       </Dialog> */}
       <DetailedView
-      open = {open}
-      handleClose = {handleClose}
-      selectedPod = {podcast}
-      img = {img}>
-      
-      </DetailedView>
+        open={open}
+        handleClose={handleClose}
+        selectedPod={podcast}
+        img={img}
+      ></DetailedView>
     </ul>
   );
 };

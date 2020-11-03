@@ -127,8 +127,8 @@ const Episodes = ({ podcastEpisodes }) => {
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1bh-content'
-            id='panel1bh-header'
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
           >
             <Typography className={classes.name}> 
             {!beenPlayed[`${episode.id}`] ? <RadioButtonCheckedIcon fontSize='small'/> : <RadioButtonUncheckedIcon fontSize='small'/>}

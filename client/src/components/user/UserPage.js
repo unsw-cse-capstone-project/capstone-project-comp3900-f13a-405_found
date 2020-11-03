@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Sidebar from "../dashboard/Sidebar";
-import User from "./User"
+import User from "./User";
 
 import {
   makeStyles,
@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
-
 
 const theme = createMuiTheme({
   palette: {
@@ -51,7 +50,7 @@ const UserPage = () => {
     <ThemeProvider theme={theme}>
       <Sidebar />
       <div className={classes.center}>
-        <User/>
+        <User />
       </div>
       <CssBaseline />
     </ThemeProvider>
