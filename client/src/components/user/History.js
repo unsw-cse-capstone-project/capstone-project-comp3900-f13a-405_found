@@ -51,26 +51,34 @@ const History = () => {
   }
 
   return (
-    <Typography>
+    // <Typography>
+    //   {historyDetails.map((episode) => (
+    //     <Accordion
+    //       expanded={expanded === episode._id}
+    //       key={episode._id}
+    //       onChange={handleChange(episode._id)}
+    //     >
+    //       <AccordionSummary
+    //         expandIcon={<ExpandMoreIcon />}
+    //         aria-controls="panel1bh-content"
+    //         id="panel1bh-header"
+    //       >
+    //         <Typography className={classes.name}>{episode.showName}</Typography>
+    //       </AccordionSummary>
+    //       <AccordionDetails>
+    //         <Typography>{episode.episodeName}</Typography>
+    //       </AccordionDetails>
+    //     </Accordion>
+    //   ))}
+    // </Typography>
+
+    <ul>
       {historyDetails.map((episode) => (
-        <Accordion
-          expanded={expanded === episode.id}
-          key={episode.id}
-          onChange={handleChange(episode.id)}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography className={classes.name}>{episode.name}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{episode.description}</Typography>
-          </AccordionDetails>
-        </Accordion>
+        <li key={episode._id}>
+          {episode.showName} - {episode.episodeName}
+        </li>
       ))}
-    </Typography>
+    </ul>
   );
 };
 
