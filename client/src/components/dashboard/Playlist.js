@@ -62,6 +62,7 @@ const Playlist = () => {
         image: episode.image_url,
         artist: episode.podcast_artist,
         playlist: playlist.playlistEpisodes,
+        isVisible: true,
       },
     });
   };
@@ -131,7 +132,7 @@ const Playlist = () => {
             );
           })
         ) : (
-          <p>loading</p>
+          <div>loading</div>
         )}
       </form>
     </div>

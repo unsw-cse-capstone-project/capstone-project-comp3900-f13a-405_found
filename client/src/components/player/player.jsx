@@ -34,11 +34,19 @@ const Player = () => {
 
   const playerState = useSelector((state) => state.player);
 
-  const { playing, url, image, title, artist, playlist, episode_id } = playerState;
+  const {
+    playing,
+    url,
+    image,
+    title,
+    artist,
+    playlist,
+    episode_id,
+  } = playerState;
 
   const handlePlay = () => {
     console.log("onPlay");
-    dispatch({ type: SET_PLAYING, playing: true });
+    dispatch({ type: SET_PLAYING, playing: true, isVisible: true });
   };
 
   const handlePause = () => {
@@ -50,7 +58,7 @@ const Player = () => {
     if (playing) {
       dispatch({ type: SET_PLAYING, playing: false });
     } else {
-      dispatch({ type: SET_PLAYING, playing: true });
+      dispatch({ type: SET_PLAYING, playing: true, isVisible: true });
     }
   };
 
@@ -90,19 +98,23 @@ const Player = () => {
   const handleEnded = () => {
     console.log("onEnded");
     if (playlist.length > 0) {
-      const current = playlist.map(episode => episode.id).indexOf(episode_id);
+      const current = playlist.map((episode) => episode.id).indexOf(episode_id);
       if (current == -1 || current == playlist.length - 1) {
         dispatch({ type: SET_PLAYING, playing: false });
         return;
       }
-      dispatch({ type: SET_STATE_FROM_EPISODES, payload: {
-        url: playlist[current+1].audio_preview_url,
-        playing: true,
-        episode_id: playlist[current+1].id,
-        title: playlist[current+1].name,
-        image: playlist[current+1].image_url,
-        artist: playlist[current+1].podcast_artist
-      }});
+      dispatch({
+        type: SET_STATE_FROM_EPISODES,
+        payload: {
+          url: playlist[current + 1].audio_preview_url,
+          playing: true,
+          episode_id: playlist[current + 1].id,
+          title: playlist[current + 1].name,
+          image: playlist[current + 1].image_url,
+          artist: playlist[current + 1].podcast_artist,
+          isVisible: true,
+        },
+      });
       return;
     }
     dispatch({ type: SET_PLAYING, playing: false });
@@ -154,8 +166,6 @@ const Player = () => {
         justifyContent: "space-between",
         backgroundColor: "#041a33",
         padding: "0",
-        position: "absolute",
-        bottom: "0px",
         left: "0px",
         zIndex: "2",
         borderTop: "2px solid #ff8800",
@@ -200,10 +210,10 @@ const Player = () => {
             paddingLeft: "10px",
           }}
         >
-          <p style={{ width: "295px", fontWeight: "bold", margin: "0" }}>
+          <div style={{ width: "295px", fontWeight: "bold", margin: "0" }}>
             {title}
-          </p>
-          <p style={{ margin: "0" }}>{artist}</p>
+          </div>
+          <div style={{ margin: "0" }}>{artist}</div>
         </div>
       </div>
       <div

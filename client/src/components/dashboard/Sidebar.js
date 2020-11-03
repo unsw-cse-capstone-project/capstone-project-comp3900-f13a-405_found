@@ -38,7 +38,7 @@ const style = {
     position: "absolute",
     left: "0px",
     width: "280px",
-    height: "800px",
+    height: "100%",
     backgroundColor: "#292929",
     overflowY: "scroll",
   },

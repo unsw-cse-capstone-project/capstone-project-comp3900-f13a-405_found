@@ -3,6 +3,8 @@ import Sidebar from "./Sidebar";
 import Trending from "./Trending";
 import Playlist from "./Playlist";
 import Notifications from "../notifications/notifications";
+import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
+import Button from "@material-ui/core/Button";
 
 import {
   makeStyles,
@@ -13,7 +15,7 @@ import {
 import Header from "./Header";
 import Player from "../player/player";
 import { getSubscriptions } from "../../actions/subscriptions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 
 const theme = createMuiTheme({
@@ -44,15 +46,24 @@ const Dashboard = () => {
   let match = useRouteMatch();
   const dispatch = useDispatch();
   const classes = useStyles();
+  const playerState = useSelector((state) => state.player);
+
   useEffect(() => {
     dispatch(getSubscriptions());
   }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
-      <Player />
       <Notifications />
       <Sidebar />
       <div className={classes.appMain}>
+        <SwipeableBottomSheet
+          overflowHeight={0}
+          open={playerState.isVisible}
+          overlay={false}
+          style={{ left: "280px" }}
+        >
+          <Player />
+        </SwipeableBottomSheet>
         <Switch>
           <Route exact path={match.path} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />

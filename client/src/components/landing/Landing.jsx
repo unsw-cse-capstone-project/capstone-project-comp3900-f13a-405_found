@@ -40,8 +40,8 @@ const LoginComp = () => {
   const [share_id, setShare_id] = useState();
 
   useEffect(() => {
-    const share_exists = localStorage.getItem('share_set') === 'true';
-    const shareId = share_exists ? localStorage.getItem('share_id') : null
+    const share_exists = localStorage.getItem("share_set") === "true";
+    const shareId = share_exists ? localStorage.getItem("share_id") : null;
     setShare_id(shareId);
     console.log(shareId);
   }, []);
@@ -82,9 +82,12 @@ const LoginComp = () => {
 
   // redirect to dashboard if the user is authenticated
   if (authenticationState.isLoaded && authenticationState.isAuthenticated) {
-
     // If there is a share_id stored, then we want to redirect there instead
-    return <Redirect to={share_id != null ? `/dashboard/${share_id}` : '/dashboard'} />;
+    return (
+      <Redirect
+        to={share_id != null ? `/dashboard/${share_id}` : "/dashboard"}
+      />
+    );
   }
   if (!authenticationState.isLoaded)
     return (
@@ -119,7 +122,6 @@ const LoginComp = () => {
                   onChange={handleInputChange}
                   error={errors.email}
                 />
-                <p></p>
                 <CustomTextField
                   label='Password'
                   name='password'
