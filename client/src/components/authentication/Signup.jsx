@@ -105,7 +105,7 @@ const Signup = ({ history }) => {
       <div className='row'>
         <div className='middle-column2'>
           <img src={logo} className='App-logo' alt='logo' />
-          <Typography variant='h5' gutterBottom>
+          <Typography component={"div"} variant='h5' gutterBottom>
             {" "}
             Sign up for UltraCast{" "}
           </Typography>

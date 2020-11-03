@@ -121,11 +121,11 @@ const Episodes = ({ podcastEpisodes }) => {
   }, []);
 
   if (isLoading) {
-    return <Typography>Loading episodes...</Typography>;
+    return <Typography component={"div"}>Loading episodes...</Typography>;
   }
 
   return (
-    <Typography>
+    <Typography component={"div"}>
       {podcastDetails.map((episode) => (
         <Accordion
           expanded={expanded === episode.id}
@@ -137,7 +137,7 @@ const Episodes = ({ podcastEpisodes }) => {
             aria-controls='panel1bh-content'
             id='panel1bh-header'
           >
-            <Typography className={classes.name}>
+            <Typography component={"div"} className={classes.name}>
               {!beenPlayed[`${episode.id}`] ? (
                 <RadioButtonCheckedIcon fontSize='small' />
               ) : (
@@ -148,7 +148,7 @@ const Episodes = ({ podcastEpisodes }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
+            <Typography component={"div"}>
               {!playerState.playing ? (
                 <PlayCircleFilledWhiteIcon
                   onClick={() => {

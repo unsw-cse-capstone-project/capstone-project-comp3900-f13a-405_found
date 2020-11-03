@@ -38,21 +38,20 @@ const History = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
-
   useEffect(() => {
     axios.get("/api/user-history").then((res) => {
-        console.log(res)
+      console.log(res);
       //setHistory(res.data.episodes.items);
       //setLoading(false);
     });
   }, []);
 
   if (isLoading) {
-    return <Typography>Loading history...</Typography>;
+    return <Typography component={"div"}>Loading history...</Typography>;
   }
 
   return (
-    <Typography>
+    <Typography component={"div"}>
       {historyDetails.map((episode) => (
         <Accordion
           expanded={expanded === episode.id}
@@ -64,12 +63,12 @@ const History = () => {
             aria-controls='panel1bh-content'
             id='panel1bh-header'
           >
-            <Typography className={classes.name}>{episode.name}</Typography>
+            <Typography component={"div"} className={classes.name}>
+              {episode.name}
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              {episode.description}
-            </Typography>
+            <Typography component={"div"}>{episode.description}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}

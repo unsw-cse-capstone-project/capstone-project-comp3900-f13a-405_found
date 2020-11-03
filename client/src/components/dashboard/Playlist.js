@@ -102,7 +102,7 @@ const Playlist = () => {
                 {playlist.playlistEpisodes.map((episode, i) => {
                   return (
                     <div key={i}>
-                      <Typography>{episode.name}</Typography>
+                      <Typography component={"div"}>{episode.name}</Typography>
                       <Typography>
                         {!playerState.playing ? (
                           <PlayCircleFilledWhiteIcon

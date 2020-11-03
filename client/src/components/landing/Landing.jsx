@@ -108,7 +108,7 @@ const LoginComp = () => {
         <div className='row'>
           <div className='middle-column'>
             <img src={logo} className='App-logo' alt='logo' />
-            <Typography variant='h5' gutterBottom>
+            <Typography component={"div"} variant='h5' gutterBottom>
               {" "}
               UltraCast{" "}
             </Typography>

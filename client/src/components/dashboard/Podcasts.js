@@ -9,7 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Episodes from "./Episodes";
-import { DetailedView } from "./DetailedView"
+import { DetailedView } from "./DetailedView";
 
 const styles = (theme) => ({
   root: {
@@ -28,7 +28,9 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant='h6'>{children}</Typography>
+      <Typography component={"div"} variant='h6'>
+        {children}
+      </Typography>
       {onClose ? (
         <IconButton
           aria-label='close'
@@ -62,8 +64,7 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
   const handleClose = () => {
     setOpen(!open);
     // Clear local storage so the user is not redirected to the setPodcast
-    localStorage.setItem('share_set', false);
-    
+    localStorage.setItem("share_set", false);
   };
 
   const fetchPodcast = async (id) => {
@@ -71,11 +72,11 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
       const res = await axios.get(`/api/spotify/shows/${id}`);
       if (res.status == 200) {
         handleClickOpen(res.data);
-      } 
-    } catch(err) {
-      console.log('Invalid share-id. No podcasts exist with that id'); 
+      }
+    } catch (err) {
+      console.log("Invalid share-id. No podcasts exist with that id");
     }
-  }
+  };
 
   useEffect(() => {
     if (share_id) {
@@ -86,7 +87,7 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
 
   if (loading) {
     return <h2>Loading...</h2>;
-  }  
+  }
 
   return (
     <ul className='list-group mb-4'>
@@ -111,12 +112,11 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
       ))}
 
       <DetailedView
-      open = {open}
-      handleClose = {handleClose}
-      selectedPod = {podcast}
-      img = {img}>
-      
-      </DetailedView>
+        open={open}
+        handleClose={handleClose}
+        selectedPod={podcast}
+        img={img}
+      ></DetailedView>
     </ul>
   );
 };
