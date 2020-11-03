@@ -68,7 +68,7 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
 
   return (
     <Dialog
-      handleClose={handleClose}
+      onClose={handleClose}
       aria-labelledby='customized-dialog-title'
       open={open}
     >
