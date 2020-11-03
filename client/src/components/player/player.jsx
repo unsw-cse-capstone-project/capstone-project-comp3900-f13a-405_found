@@ -45,18 +45,12 @@ const Player = ( {} ) => {
         withCredentials: true,
       };
       
-      
       const p_id = playerState.episode_id;
-      //console.log("P_id: " + p_id);
-      
+
       const res = await axios.get(`/api/user-history/${p_id}`, config);
       
       const seconds_played = res.data.seconds; 
-      // console.log("seconds at PLAY: " + res.data.seconds);
-      // console.log("image at PLAY: " + res.data.image);
-      // console.log("URL at PLAY: " + res.data.url);
 
-      // is this correct?
       if (seconds_played == 0) {
         dispatch({ type: SET_PLAYING, playing: true});
       } else {
@@ -67,23 +61,10 @@ const Player = ( {} ) => {
       displayAlert("An error occurred handlePlay()");
     }
 
-    // try {
-    //   const config = {
-    //     withCredentials: true,
-    //   };
-    //   const res = await axios.get(`/api/user-history/`, config);
-
-    //   const latest = res.data.podcast;
-    //   //console.log("latest podcast played: " + latest);
-    //   console.log("CURRET EPISODE: " + playerState.episode_id)
-    //   console.log("TESTING EPISODE: " + res.data.podcast);
-    //   console.log("TESTING SECONDS: " + res.data.seconds);
-    // } catch (err) {
-    //   displayAlert("An error occurred handlePlay()");
-    // }
 
     
   };
+
  // pause podcast and update DB with 'seconds_played'
   const handlePause =  async () => {
     console.log("onPause");

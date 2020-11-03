@@ -47,6 +47,8 @@ app.use(
   require("./routes/api/user-history.js")
 );
 
+app.use("/api/latest-episode", checkAuth, require("./routes/api/latest-episode"));
+
 // error handler
 app.use(errorHandler);
 

@@ -56,13 +56,12 @@ const Dashboard = () => {
         withCredentials: true,
       };
 
-      const res = await axios(`/api/user-history/`, config);
+      const res = await axios.get(`/api/latest-episode`, config);
       
-      console.log("TESTING EPISODE: " + res.data.episode_id);
-      console.log("TESTING SECONDS: " + res.data.seconds);
-      console.log("TESTING URL: " + res.data.url);
-      console.log("TESTING IMAGE: " + res.data.image);
-
+      // console.log("TESTING EPISODE: " + res.data.episode_id);
+      // console.log("TESTING SECONDS: " + res.data.seconds);
+      // console.log("TESTING URL: " + res.data.url);
+      // console.log("TESTING IMAGE: " + res.data.image);
 
       dispatch({
         type: SET_STATE_FROM_EPISODES,
