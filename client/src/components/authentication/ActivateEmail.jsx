@@ -7,7 +7,7 @@ const ActivateEmail = ({ match }) => {
 
   useEffect(() => {
     dispatch(activateEmail(match.params.token));
-  }, []);
+  }, [dispatch, match.params.token]);
 
   return (
     authenticationState.isLoaded &&
