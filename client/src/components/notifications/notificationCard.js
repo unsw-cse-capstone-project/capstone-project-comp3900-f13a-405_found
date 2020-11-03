@@ -33,7 +33,6 @@ const NotificationCard = (props) => {
             const filtered = notificationList.filter(notification => notification.id != episodeId);
             removeEpisodeFromNotification(episodeId);
         })
-        
     }
 
     return (
