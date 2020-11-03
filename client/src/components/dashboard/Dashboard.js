@@ -11,7 +11,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
-import Player from "../player/player"
+import Player from "../player/player";
 import { getSubscriptions } from "../../actions/subscriptions";
 import { useDispatch } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
@@ -48,16 +48,17 @@ const Dashboard = () => {
     dispatch(getSubscriptions());
   }, [dispatch]);
   return (
-      <ThemeProvider theme={theme}>
-      <Player/>
-      <Notifications/>
+    <ThemeProvider theme={theme}>
+      <Player />
+      <Notifications />
       <Sidebar />
       <div className={classes.appMain}>
         <Switch>
           <Route exact path={match.path} component={Header} />
-          <Route exact path={`${match.path}/:share_id`} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
           <Route exact path={`${match.path}/playlist`} component={Playlist} />
+          <Route exact path={`${match.path}/:share_id`} component={Header} />
+
           {/* this is just to redirect to 404 */}
           <Route
             render={({ location }) => (
@@ -73,7 +74,6 @@ const Dashboard = () => {
       </div>
       <CssBaseline />
     </ThemeProvider>
-    
   );
 };
 

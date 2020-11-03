@@ -29,6 +29,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import QueueMusicIcon from "@material-ui/icons/QueueMusic";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import { logout } from "../../actions/authentication";
+import { useHistory } from "react-router-dom";
 
 const style = {
   sidebar: {
@@ -49,7 +50,6 @@ const style = {
     fontSize: "1.6rem",
   },
   wrapper: {
-    margin: "0 auto",
     paddingTop: "10px",
   },
   icons: {
@@ -76,7 +76,7 @@ const style = {
 
 const Sidebar = (props) => {
   const subscriptionState = useSelector((state) => state.subscriptions);
-
+  const history = useHistory();
   const [open, setOpen] = useState(false);
 
   const handleExpandClick = () => {
@@ -132,30 +132,39 @@ const Sidebar = (props) => {
             <ListItemText primary='Logout' />
           </ListItem>
           <Divider style={{ backgroundColor: "white" }} />
-          <Link style={{ textDecoration: "none" }} to='/dashboard'>
-            <ListItem button>
-              <ListItemIcon className={classes.icons}>
-                <HomeIcon className={classes.icons} />
-              </ListItemIcon>
-              <ListItemText primary='Dashboard' />
-            </ListItem>
-          </Link>
-          <Link style={{ textDecoration: "none" }} to='/dashboard/playlist'>
-            <ListItem button>
-              <ListItemIcon className={classes.icons}>
-                <QueueMusicIcon className={classes.icons} />
-              </ListItemIcon>
-              <ListItemText primary='Playlist' />
-            </ListItem>
-          </Link>
-          <Link style={{ textDecoration: "none" }} to='/dashboard/trending'>
-            <ListItem button>
-              <ListItemIcon className={classes.icons}>
-                <ShowChartIcon className={classes.icons} />
-              </ListItemIcon>
-              <ListItemText primary='Trending Shows' />
-            </ListItem>
-          </Link>
+          <ListItem
+            button
+            onClick={() => {
+              history.push("/dashboard");
+            }}
+          >
+            <ListItemIcon className={classes.icons}>
+              <HomeIcon className={classes.icons} />
+            </ListItemIcon>
+            <ListItemText primary='Dashboard' />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              history.push("/dashboard/playlist");
+            }}
+          >
+            <ListItemIcon className={classes.icons}>
+              <QueueMusicIcon className={classes.icons} />
+            </ListItemIcon>
+            <ListItemText primary='Playlist' />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              history.push("/dashboard/trending");
+            }}
+          >
+            <ListItemIcon className={classes.icons}>
+              <ShowChartIcon className={classes.icons} />
+            </ListItemIcon>
+            <ListItemText primary='Trending Shows' />
+          </ListItem>
           <ListItem button onClick={handleExpandClick}>
             <ListItemIcon className={classes.icons}>
               <InboxIcon className={classes.icons} />

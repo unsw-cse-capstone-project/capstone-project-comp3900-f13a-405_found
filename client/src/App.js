@@ -14,8 +14,7 @@ import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import store from "./store";
 import { checkUserStillVerified } from "./actions/authentication";
 import notfoundmeme from "./404.png";
-import Playlist from "./components/dashboard/Playlist"
-
+import Playlist from "./components/dashboard/Playlist";
 const NotFound = () => (
   <img style={{ width: "100%" }} src={notfoundmeme} alt='notFound' />
 );
@@ -45,7 +44,7 @@ const App = () => {
                 component={ActivateEmail}
               />
               <PrivateRoute path='/dashboard' component={Dashboard} />
-              <PrivateRoute path='/playlist' component={Playlist}/>
+              <PrivateRoute path='/playlist' component={Playlist} />
               <Route component={NotFound} />
             </Switch>
           </Container>
