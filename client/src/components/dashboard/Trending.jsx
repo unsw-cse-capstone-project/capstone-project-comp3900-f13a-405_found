@@ -5,6 +5,8 @@ import {
   getShowsDetailsByListOfIds,
 } from "../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import "./Trending.scss";
+import Grid from "@material-ui/core/Grid";
 
 const Trending = () => {
   const subscriptionState = useSelector((state) => state.subscriptions);
@@ -39,36 +41,42 @@ const Trending = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <h1>Top Shows!</h1>
-      <ul className='list-group mb-4'>
-        {!subscriptionState.isLoaded ||
-        !subscriptionState.trendingShowsDetailsLoaded ? (
-          <CircularProgress size={200} thickness={6} color='secondary' />
-        ) : subscriptionState.trendingShows.length > 0 ? (
-          subscriptionState.trendingShows.map((trending, index) => (
-            <li key={trending.showId} className='list-group-item'>
-              <div style={{ textAlign: "left", color: "black" }}>
-                {`${index + 1}.  `}
-                {getShowName(trending.showId)}
-              </div>
-              <div style={{ textAlign: "right", color: "black" }}>
-                {" "}
-                Subscriber count: {trending.count}
-                <img
-                  height='60px'
-                  width='60px'
-                  src={getShowImage(trending.showId)}
-                  alt='trending'
-                />
-              </div>
-            </li>
-          ))
-        ) : (
-          <h1> No Subscriptions :( </h1>
-        )}
-      </ul>
-    </>
+    <Grid container>
+      <Grid item xs={12}>
+        <div>
+          <h1>Top Shows!</h1>
+        </div>
+      </Grid>
+      <Grid style={{ height: "80vh", overflowY: "scroll" }} item xs={12}>
+        <ul className='list-group mb-4'>
+          {!subscriptionState.isLoaded ||
+          !subscriptionState.trendingShowsDetailsLoaded ? (
+            <CircularProgress size={200} thickness={6} color='secondary' />
+          ) : subscriptionState.trendingShows.length > 0 ? (
+            subscriptionState.trendingShows.map((trending, index) => (
+              <li key={trending.showId} className='list-group-item'>
+                <div style={{ textAlign: "left", color: "black" }}>
+                  {`${index + 1}.  `}
+                  {getShowName(trending.showId)}
+                </div>
+                <div style={{ textAlign: "right", color: "black" }}>
+                  {" "}
+                  Subscriber count: {trending.count}
+                  <img
+                    height='60px'
+                    width='60px'
+                    src={getShowImage(trending.showId)}
+                    alt='trending'
+                  />
+                </div>
+              </li>
+            ))
+          ) : (
+            <h1> No Subscriptions :( </h1>
+          )}
+        </ul>
+      </Grid>
+    </Grid>
   );
 };
 

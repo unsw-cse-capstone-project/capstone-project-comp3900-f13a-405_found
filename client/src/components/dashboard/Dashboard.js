@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
+import Playlist from "./Playlist";
 import Notifications from "../notifications/notifications";
+import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
+import Button from "@material-ui/core/Button";
 import { displayAlert } from "../../actions/alert";
 import {
   makeStyles,
@@ -10,9 +13,9 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import Header from "./Header";
-import Player from "../player/player"
+import Player from "../player/player";
 import { getSubscriptions } from "../../actions/subscriptions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import axios from "axios";
 import { SET_EPISODE, SET_STATE_FROM_EPISODES } from "../../actions/types";
@@ -46,6 +49,8 @@ const Dashboard = () => {
   let match = useRouteMatch();
   const dispatch = useDispatch();
   const classes = useStyles();
+  const playerState = useSelector((state) => state.player);
+
   useEffect(() => {
     dispatch(getSubscriptions());
   }, [dispatch]);
@@ -76,14 +81,24 @@ const Dashboard = () => {
     }
   }, []);
   return (
-      <ThemeProvider theme={theme}>
-      <Player />
-      <Notifications/>
+ <ThemeProvider theme={theme}>
+      <Notifications />
       <Sidebar />
       <div className={classes.appMain}>
+        <SwipeableBottomSheet
+          overflowHeight={0}
+          open={playerState.isVisible}
+          overlay={false}
+          style={{ left: "280px" }}
+        >
+          <Player />
+        </SwipeableBottomSheet>
         <Switch>
           <Route exact path={match.path} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
+          <Route exact path={`${match.path}/playlist`} component={Playlist} />
+          <Route exact path={`${match.path}/:share_id`} component={Header} />
+
           {/* this is just to redirect to 404 */}
           <Route
             render={({ location }) => (
@@ -99,7 +114,6 @@ const Dashboard = () => {
       </div>
       <CssBaseline />
     </ThemeProvider>
-    
   );
 };
 

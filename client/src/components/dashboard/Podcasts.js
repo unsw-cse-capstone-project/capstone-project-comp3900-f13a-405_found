@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SubscribeButton from "../SubscribeButton";
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,6 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Episodes from "./Episodes";
+import { DetailedView } from "./DetailedView";
 
 const styles = (theme) => ({
   root: {
@@ -27,7 +28,9 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant='h6'>{children}</Typography>
+      <Typography component={"div"} variant='h6'>
+        {children}
+      </Typography>
       {onClose ? (
         <IconButton
           aria-label='close'
@@ -47,7 +50,7 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-const Podcasts = ({ podcasts, loading }) => {
+const Podcasts = ({ podcasts, loading, share_id }) => {
   const [open, setOpen] = useState(false);
   const [podcast, setPodcast] = useState({});
   const [img, setImg] = useState();
@@ -57,9 +60,30 @@ const Podcasts = ({ podcasts, loading }) => {
     setImg(pod.images[0].url);
     setOpen(!open);
   };
+
   const handleClose = () => {
     setOpen(!open);
+    // Clear local storage so the user is not redirected to the setPodcast
+    localStorage.setItem("share_set", false);
   };
+
+  const fetchPodcast = async (id) => {
+    try {
+      const res = await axios.get(`/api/spotify/shows/${id}`);
+      if (res.status == 200) {
+        handleClickOpen(res.data);
+      }
+    } catch (err) {
+      console.log("Invalid share-id. No podcasts exist with that id");
+    }
+  };
+
+  useEffect(() => {
+    if (share_id) {
+      // If there is a share_id, fetch for the current podcast and set it
+      fetchPodcast(share_id);
+    }
+  }, []);
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -87,24 +111,12 @@ const Podcasts = ({ podcasts, loading }) => {
         </li>
       ))}
 
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby='customized-dialog-title'
+      <DetailedView
         open={open}
-      >
-        <DialogTitle id='customized-dialog-title' onClose={handleClose}>
-          {podcast.name}
-        </DialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>{podcast.description}</Typography>
-          <SubscribeButton id={podcast.id} />
-          <img height='60px' width='60px' src={img} alt='podcastimage' />
-          <Typography gutterBottom>
-            <Episodes podcastName={podcast.name} podcastEpisodes={podcast} />
-          </Typography>
-          <Typography gutterBottom></Typography>
-        </DialogContent>
-      </Dialog>
+        handleClose={handleClose}
+        selectedPod={podcast}
+        img={img}
+      ></DetailedView>
     </ul>
   );
 };

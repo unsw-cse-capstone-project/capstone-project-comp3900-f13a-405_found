@@ -13,6 +13,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import Podcasts from "./Podcasts";
 import Pagination from "./Pagination";
+import { Link, useParams } from "react-router-dom";
 
 const theme = createMuiTheme({
   palette: {
@@ -46,6 +47,7 @@ export default function Header() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [podcastsPerPage] = useState(4);
+  const { share_id } = useParams();
 
   const fetchPodcasts = async (term) => {
     setLoading(true);
@@ -91,15 +93,17 @@ export default function Header() {
           </Grid>
           <Grid item sm></Grid>
           <Grid item>
+          <Link style={{ textDecoration: "none" }} to='/userpage'>
             <IconButton>
               <AccountCircleIcon fontSize='large' />
-            </IconButton>
+            </IconButton>{" "}
+        </Link>
           </Grid>
         </Grid>
       </Toolbar>
       <Grid>
         <div className='container mt-5'>
-          <Podcasts podcasts={currentPodcasts} loading={loading} />
+          <Podcasts podcasts={currentPodcasts} loading={loading} share_id={share_id}/>
           <Pagination
             className={theme.pag}
             podcastsPerPage={podcastsPerPage}
