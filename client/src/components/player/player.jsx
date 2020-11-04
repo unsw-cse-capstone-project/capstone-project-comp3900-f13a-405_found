@@ -62,11 +62,11 @@ const Player = ( {} ) => {
       
       const seconds_played = res.data.seconds; 
 
-      if (seconds_played == 0) {
-        dispatch({ type: SET_PLAYING, playing: true});
-      } else {
+      // if (seconds_played == 0) {
+      //   dispatch({ type: SET_PLAYING, playing: true});
+      // } else {
         player.seekTo(seconds_played);
-      }
+     // }
 
     } catch (err) {
       displayAlert("An error occurred handlePlay()");

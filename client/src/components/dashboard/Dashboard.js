@@ -81,7 +81,8 @@ const Dashboard = () => {
     }
   }, []);
   return (
- <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+     
       <Notifications />
       <Sidebar />
       <div className={classes.appMain}>
@@ -91,7 +92,7 @@ const Dashboard = () => {
           overlay={false}
           style={{ left: "280px" }}
         >
-          <Player />
+        <Player />
         </SwipeableBottomSheet>
         <Switch>
           <Route exact path={match.path} component={Header} />
