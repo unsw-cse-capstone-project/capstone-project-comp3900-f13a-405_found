@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import History from "./History";
 import Recommendations from "./Recommendations";
+import Notifications from "../notifications/notifications";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,15 +27,18 @@ const User = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Paper variant="outlined">
-        <div className={classes.myText}>Recommended for you</div>
-        <Recommendations />
-      </Paper>
-      <Paper variant="outlined">
-        <div className={classes.myText}>Your Episode History</div>
-        <History />
-      </Paper>
+    <div>
+      <Notifications />
+      <div className={classes.root}>
+        <Paper variant="outlined">
+          <div className={classes.myText}>Recommended for you</div>
+          <Recommendations />
+        </Paper>
+        <Paper variant="outlined">
+          <div className={classes.myText}>Your Episode History</div>
+          <History />
+        </Paper>
+      </div>
     </div>
   );
 };

@@ -43,7 +43,7 @@ export const Notifications = () => {
   const notifications = notificationsState.notifications;
 
   return (
-    <div style={{ position: "absolute", right: "0", top: "0", zIndex: "-1" }}>
+    <div style={{ position: "absolute", right: "0", top: "0" }}>
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -69,7 +69,13 @@ export const Notifications = () => {
               }}
             />
           </Badge>
-          <NotificationBox notifications={notifications} expanded={expanded} />
+          <NotificationBox
+            style={{
+              zIndex: 7,
+            }}
+            notifications={notifications}
+            expanded={expanded}
+          />
         </>
       )}
     </div>

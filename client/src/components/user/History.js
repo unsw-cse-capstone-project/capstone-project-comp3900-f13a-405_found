@@ -19,7 +19,7 @@ const History = () => {
   useEffect(() => {
     axios.get("/api/user-history").then((res) => {
       console.log(res);
-      setHistory(res.data);
+      setHistory(res.data.reverse());
       setLoading(false);
     });
   }, []);

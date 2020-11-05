@@ -96,6 +96,9 @@ export default function Header() {
       <Grid>
         <div className="container mt-5">
           <Podcasts
+            style={{
+              zIndex: -1,
+            }}
             podcasts={currentPodcasts}
             loading={loading}
             share_id={share_id}
