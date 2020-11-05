@@ -59,8 +59,9 @@ const Episodes = ({ podcastEpisodes }) => {
         withCredentials: true,
       }
       const res = await axios.get(`/api/latest-episode/${episode.id}`, config);
-      const seconds_played = res.data.seconds;
-      console.log("seconds played from Episodes.js: " + seconds_played);
+      var fraction_played = res.data.seconds;
+      console.log("seconds played from Episodes.js: " + fraction_played);
+  
     } catch (err) {
       displayAlert("An error occurred handlePlay() at Episodes.js");
     }
@@ -76,6 +77,7 @@ const Episodes = ({ podcastEpisodes }) => {
         image: episode.images[0].url,
         artist: podcastEpisodes.name,
         isVisible: true,
+        loaded: fraction_played, 
       },
     });
 
