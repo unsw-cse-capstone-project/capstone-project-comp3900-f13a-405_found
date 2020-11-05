@@ -61,9 +61,15 @@ const Episodes = ({ podcastEpisodes }) => {
         isVisible: true,
       },
     });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
 
     axios
-      .post(`/api/user-history/${episode.id}`)
+      .post(`/api/user-history/${episode.id}`, {}, config)
       .then(function (response) {
         console.log(response.data);
       })
@@ -92,16 +98,22 @@ const Episodes = ({ podcastEpisodes }) => {
 
   useEffect(() => {
     const myObj = {};
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
     axios
-      .get(`/api/spotify/shows/${podcastEpisodes.id}`)
+      .get(`/api/spotify/shows/${podcastEpisodes.id}`, {}, config)
       .then((res) => {
         setPodcastDetails(res.data.episodes.items);
         res.data.episodes.items.forEach(function (element) {
           axios
-            .get(`api/user-history/${element.id}`)
+            .get(`api/user-history/${element.id}`, {}, config)
             .then(function (response) {
-              console.log(response.data.Viewed);
-              myObj[`${element.id}`] = response.data.Viewed;
+              console.log(response);
+              myObj[`${element.id}`] = response.data;
             })
             .catch(function (error) {
               console.log(error);
@@ -113,7 +125,7 @@ const Episodes = ({ podcastEpisodes }) => {
       });
 
     axios
-      .get(`/api/spotify/shows/${podcastEpisodes.id}`)
+      .get(`/api/spotify/shows/${podcastEpisodes.id}`, {}, config)
       .then((res) => {})
       .then(() => {
         setLoading(false);
@@ -134,8 +146,8 @@ const Episodes = ({ podcastEpisodes }) => {
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
+            aria-controls='panel1bh-content'
+            id='panel1bh-header'
           >
             <Typography component={"div"} className={classes.name}>
               {!beenPlayed[`${episode.id}`] ? (
