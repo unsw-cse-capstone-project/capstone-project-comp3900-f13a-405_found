@@ -252,7 +252,7 @@ const Player = ( {} ) => {
         onDuration={handleDuration}
         style={{ display: "none" }}
       />
-      <div style={{ display: "flex", width: "500px" }}>
+      <div style={{ display: "flex", width: "440px" }}>
         {image ? (
           <img style={{ width: "auto", height: "100%" }} src={image} />
         ) : null}
@@ -271,8 +271,8 @@ const Player = ( {} ) => {
       </div>
       <div
         style={{
-          position: "absolute",
-          left: " 50%",
+          position: "sticky",
+          left: "50%",
           transform: "translateX(-50%) translateY(70px)",
           width: "60%",
           zIndex: "3",

@@ -54,39 +54,42 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getSubscriptions());
   }, [dispatch]);
-  useEffect( async () => {
-    console.log("Dashboard - Grabbing podcast details user-history");
-    try {
-      const config = {
-        withCredentials: true,
-      };
+  useEffect(() => {
+    
+    async function grabEpisodeDetails() {
+      console.log("Dashboard - Grabbing podcast details user-history");
+      try {
+        const config = {
+          withCredentials: true,
+        };
 
-      const res = await axios.get(`/api/latest-episode`, config);
-      
-      console.log("DASHBOARD EPISODE: " + res.data.episode_id);
-      console.log("DASHBOARD SECONDS: " + res.data.seconds);
-      console.log("DASHBOARD URL: " + res.data.url);
-      console.log("DASHBOARD IMAGE: " + res.data.image);
+        const res = await axios.get(`/api/latest-episode`, config);
+        
+        console.log("DASHBOARD EPISODE: " + res.data.episode_id);
+        console.log("DASHBOARD SECONDS: " + res.data.seconds);
+        console.log("DASHBOARD URL: " + res.data.url);
+        console.log("DASHBOARD IMAGE: " + res.data.image);
 
-      // console.log("dispatching from Dashboard.js");
-      dispatch({
-        type: SET_STATE_FROM_EPISODES,
-        payload: {
-          episode_id: res.data.episode_id,
-          url: res.data.url,
-          image: res.data.image,
-        }
-      });
-    } catch (err) {
-      displayAlert("An error occurred handlePlay()");
+        // console.log("dispatching from Dashboard.js");
+        dispatch({
+          type: SET_STATE_FROM_EPISODES,
+          payload: {
+            episode_id: res.data.episode_id,
+            url: res.data.url,
+            image: res.data.image,
+          }
+        });
+      } catch (err) {
+        displayAlert("An error occurred handlePlay()");
+      }
     }
+    grabEpisodeDetails(); 
   }, []);
   return (
       <ThemeProvider theme={theme}>
      
       <Notifications />
       <Sidebar />
-      <Player />
       <div className={classes.appMain}>
         <SwipeableBottomSheet
           overflowHeight={0}
@@ -94,8 +97,8 @@ const Dashboard = () => {
           overlay={false}
           style={{ left: "280px" }}
         >
-        
         </SwipeableBottomSheet>
+        <Player />
         <Switch>
           <Route exact path={match.path} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
