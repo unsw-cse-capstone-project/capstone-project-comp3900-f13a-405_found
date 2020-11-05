@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import PlaylistSelector from "./PlaylistSelector";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+import Player from "../player/player"; 
+import { displayAlert } from "../../actions/alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,8 +49,24 @@ const Episodes = ({ podcastEpisodes }) => {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+  
 
-  const handlePlay = (episode) => {
+  const handlePlay = async (episode) => {
+    console.log("playing from episode.js");
+
+    try {
+      const config = {
+        withCredentials: true,
+      }
+      const res = await axios.get(`/api/latest-episode/${episode.id}`, config);
+      var fraction_played = res.data.seconds;
+      console.log("seconds played from Episodes.js: " + fraction_played);
+  
+    } catch (err) {
+      displayAlert("An error occurred handlePlay() at Episodes.js");
+    }
+
+
     dispatch({
       type: SET_STATE_FROM_EPISODES,
       payload: {
@@ -59,6 +77,7 @@ const Episodes = ({ podcastEpisodes }) => {
         image: episode.images[0].url,
         artist: podcastEpisodes.name,
         isVisible: true,
+        loaded: fraction_played, 
       },
     });
 
@@ -153,18 +172,20 @@ const Episodes = ({ podcastEpisodes }) => {
                 <PlayCircleFilledWhiteIcon
                   onClick={() => {
                     handlePlay(episode);
+                    //Player.handlePlay;
                   }}
                   className={classes.playButton}
                 />
               ) : playerState.episode_id == episode.id ? (
-                <PauseCircleFilledWhiteIcon
+                <PauseCircleFilledWhiteIcon 
                   onClick={handlePause}
                   className={classes.playButton}
                 />
               ) : (
-                <PlayCircleFilledWhiteIcon
+                <PlayCircleFilledWhiteIcon 
                   onClick={() => {
                     handlePlay(episode);
+                    //Player.handlePlay;
                   }}
                   className={classes.playButton}
                 />

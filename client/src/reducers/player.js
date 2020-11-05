@@ -5,6 +5,8 @@ import {
   SET_ARTIST,
   SET_STATE_FROM_EPISODES,
   SET_TITLE,
+  SET_EPISODE,
+  SET_LOADED,
 } from "../actions/types";
 
 const initial_state = {
@@ -16,10 +18,16 @@ const initial_state = {
   episode_id: null,
   playlist: [],
   isVisible: false,
+  loaded: 0,
 };
 
 export default function player(state = initial_state, action) {
   switch (action.type) {
+    case SET_EPISODE:
+      return {
+        ...state,
+        episode_id: action.episode_id,
+      };
     case SET_URL:
       return {
         ...state,
@@ -44,6 +52,11 @@ export default function player(state = initial_state, action) {
       return {
         ...state,
         title: action.title,
+      };
+    case SET_LOADED:
+      return {
+        ...state, 
+        loaded: action.loaded,
       };
     case SET_STATE_FROM_EPISODES:
       return { ...state, ...action.payload };

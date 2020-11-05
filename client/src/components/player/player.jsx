@@ -16,11 +16,13 @@ import {
   SET_LOADED,
   SET_STATE_FROM_EPISODES,
 } from "../../actions/types";
+import { displayAlert } from "../../actions/alert";
+import axios from "axios";
 
 // Package reference:       https://www.npmjs.com/package/react-player
 // Source code reference :  https://github.com/CookPete/react-player/blob/master/src/demo/App.js
 
-const Player = () => {
+const Player = ( {} ) => {
   const dispatch = useDispatch();
   const [player, setPlayer] = useState({});
   const [played, setPlayed] = useState(0);
@@ -44,14 +46,65 @@ const Player = () => {
     episode_id,
   } = playerState;
 
-  const handlePlay = () => {
+  // play podcast from last 'seconds_plyed.' Defaults to 0.
+  const handlePlay =  async () => {
     console.log("onPlay");
-    dispatch({ type: SET_PLAYING, playing: true, isVisible: true });
+    console.log("playing from player.jsx");
+    //dispatch({ type: SET_PLAYING, playing: true, isVisible: true });
+
+    try {
+      const config = {
+        withCredentials: true,
+      };
+      
+      const p_id = playerState.episode_id;
+
+      const res = await axios.get(`/api/latest-episode/${p_id}`, config);
+      
+      const seconds_played = res.data.seconds; 
+
+      if (seconds_played == 0) {
+        dispatch({ type: SET_PLAYING, playing: true});
+      } else {
+        player.seekTo(seconds_played);
+      }
+
+    } catch (err) {
+      displayAlert("An error occurred handlePlay()");
+    }
   };
 
-  const handlePause = () => {
+ // pause podcast and update DB with 'seconds_played'
+  const handlePause =  async () => {
     console.log("onPause");
     dispatch({ type: SET_PLAYING, playing: false });
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+
+      const p_id = playerState.episode_id;
+      //const p_url = String(playerState.url);
+      //const p_image = String(playerState.image);
+      console.log("PAUSE image: " + playerState.image);
+      console.log("PAUSE URL: " + playerState.url);
+      console.log("PAUSE episode_id: " + playerState.episode_id);
+
+      const res = await axios.post(
+        `/api/latest-episode/${p_id}/${played}`, 
+        { p_url: playerState.url,
+          p_image: playerState.image },
+        config
+      ); 
+      console.log("data in handlePause: " + res);
+
+    } catch (err) {
+      displayAlert("An Error Occurred handlePlay()");
+    }
   };
 
   const handlePlayPause = () => {
@@ -199,7 +252,7 @@ const Player = () => {
         onDuration={handleDuration}
         style={{ display: "none" }}
       />
-      <div style={{ display: "flex", width: "500px" }}>
+      <div style={{ display: "flex", width: "440px" }}>
         {image ? (
           <img style={{ width: "auto", height: "100%" }} src={image} />
         ) : null}
@@ -219,7 +272,7 @@ const Player = () => {
       <div
         style={{
           position: "absolute",
-          left: " 50%",
+          left: "50%",
           transform: "translateX(-50%) translateY(70px)",
           width: "60%",
           zIndex: "3",
