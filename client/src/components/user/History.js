@@ -2,16 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: 400,
-    maxWidth: "95%",
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -19,16 +15,11 @@ const useStyles = makeStyles((theme) => ({
 const History = () => {
   const [isLoading, setLoading] = useState(true);
   const [historyDetails, setHistory] = useState([]);
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
 
   useEffect(() => {
     axios.get("/api/user-history").then((res) => {
       console.log(res);
-      setHistory(res.data);
+      setHistory(res.data.reverse());
       setLoading(false);
     });
   }, []);
@@ -38,16 +29,19 @@ const History = () => {
   }
 
   return (
-    <div className={classes.root}>
-      {historyDetails.map((episode) => (
-        <ListItem key={episode._id}>
-          <ListItemText
-            primary={`${episode.showName} - ${episode.episodeName}`}
-          />
-          <Divider />
-        </ListItem>
-      ))}
-    </div>
+    <Grid container style={{ width: "98%" }}>
+      <Grid style={{ height: "40vh", overflowY: "scroll" }} item xs={12}>
+        <ul className="list-group mb-4">
+          {historyDetails.map((episode) => (
+            <li key={episode._id} className="list-group-item">
+              <div style={{ textAlign: "left", color: "black" }}>
+                <b>{episode.showName}</b>: {episode.episodeName}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Grid>
+    </Grid>
   );
 };
 
