@@ -98,13 +98,13 @@ const Dashboard = () => {
           style={{ left: "280px" }}
         >
         </SwipeableBottomSheet>
-        <Player />
+        
         <Switch>
           <Route exact path={match.path} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
           <Route exact path={`${match.path}/playlist`} component={Playlist} />
           <Route exact path={`${match.path}/:share_id`} component={Header} />
-
+        <Player />
           {/* this is just to redirect to 404 */}
           <Route
             render={({ location }) => (
