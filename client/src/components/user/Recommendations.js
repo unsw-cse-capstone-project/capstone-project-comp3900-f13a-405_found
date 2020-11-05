@@ -43,11 +43,21 @@ const Recommendations = () => {
   const [currPodcast, setCurrPodcast] = useState({});
   const [open, setOpen] = useState(false);
 
-  const fetchPodcasts = async (term) => {
+  const [currPodcasts, setCurrPodcasts] = useState([]);
+
+  const shufflePods = () => {
     setLoading(true);
-    const res = await axios.get(`/api/spotify/search/${term}`);
-    const array = res.data.shows.items;
-    const shuffled = array.sort(function () {
+    const shuffled = currPodcasts.sort(function () {
+      return 0.5 - Math.random();
+    });
+    setPodcasts(shuffled.slice(0, 3));
+    setLoading(false);
+  };
+
+  const fetchPodcasts = async () => {
+    const res = await axios.get(`/api/recommendations`);
+    setCurrPodcasts(res.data.recs);
+    const shuffled = res.data.recs.sort(function () {
       return 0.5 - Math.random();
     });
     setPodcasts(shuffled.slice(0, 3));
@@ -55,7 +65,8 @@ const Recommendations = () => {
   };
 
   useEffect(() => {
-    fetchPodcasts("a");
+    setLoading(true);
+    fetchPodcasts();
   }, []);
 
   const handleClickOpen = (pod) => {
@@ -68,7 +79,7 @@ const Recommendations = () => {
   };
 
   if (isLoading) {
-    return <Typography component={"div"}>Loading episodes...</Typography>;
+    return <Typography>Loading episodes...</Typography>;
   }
 
   return (
@@ -90,27 +101,21 @@ const Recommendations = () => {
               <CardContent>
                 <Typography
                   classes={{ root: classes.fontSizeGrid }}
-                  variant='h6'
+                  variant="h6"
                   gutterBottom
-                  component='h2'
-                  component={"div"}
+                  component="h2"
                 >
                   {podcast.name}
                 </Typography>
-                <Typography
-                  component={"div"}
-                  variant='body2'
-                  color='textSecondary'
-                  component='p'
-                >
+                <Typography variant="body2" color="textSecondary" component="p">
                   {/* {podcast.description} */}
                 </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions className={classes.gutter}>
               <Button
-                size='small'
-                color='primary'
+                size="small"
+                color="primary"
                 onClick={handleClickOpen.bind(this, podcast)}
               >
                 Learn More
@@ -119,14 +124,14 @@ const Recommendations = () => {
           </Card>
         </Grid>
       ))}
-      <Grid container justify='flex-end'>
+      <Grid container justify="flex-end">
         <Button
-          color='primary'
-          size='medium'
-          variant='contained'
-          onClick={fetchPodcasts.bind(this, "b")}
+          color="primary"
+          size="medium"
+          variant="contained"
+          onClick={() => shufflePods()}
         >
-          Refresh
+          Shuffle
         </Button>
       </Grid>
 

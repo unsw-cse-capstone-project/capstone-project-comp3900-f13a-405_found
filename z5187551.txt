@@ -17,3 +17,14 @@ on app reload
 
 Week 5
 - created Private Route for FE
+- I did backend and frontend for subscriptions, notification still not included tho
+- I worked on trending shows
+
+Week 6
+- I did some PR reviews
+- Integrated the player with the episodes
+- I did email verification for user registration.
+- Started working on email notifications
+
+Week 7
+- I finished email notifications for new episodes
