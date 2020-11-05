@@ -63,11 +63,12 @@ const Dashboard = () => {
 
       const res = await axios.get(`/api/latest-episode`, config);
       
-      // console.log("TESTING EPISODE: " + res.data.episode_id);
-      // console.log("TESTING SECONDS: " + res.data.seconds);
-      // console.log("TESTING URL: " + res.data.url);
-      // console.log("TESTING IMAGE: " + res.data.image);
+      console.log("DASHBOARD EPISODE: " + res.data.episode_id);
+      console.log("DASHBOARD SECONDS: " + res.data.seconds);
+      console.log("DASHBOARD URL: " + res.data.url);
+      console.log("DASHBOARD IMAGE: " + res.data.image);
 
+      // console.log("dispatching from Dashboard.js");
       dispatch({
         type: SET_STATE_FROM_EPISODES,
         payload: {
