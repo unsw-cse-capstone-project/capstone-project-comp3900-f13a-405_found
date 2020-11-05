@@ -85,6 +85,7 @@ const Dashboard = () => {
      
       <Notifications />
       <Sidebar />
+      <Player />
       <div className={classes.appMain}>
         <SwipeableBottomSheet
           overflowHeight={0}
@@ -92,7 +93,7 @@ const Dashboard = () => {
           overlay={false}
           style={{ left: "280px" }}
         >
-        <Player />
+        
         </SwipeableBottomSheet>
         <Switch>
           <Route exact path={match.path} component={Header} />

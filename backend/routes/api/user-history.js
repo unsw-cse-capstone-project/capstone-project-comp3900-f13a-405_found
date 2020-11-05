@@ -34,19 +34,9 @@ router.get("/:p_id", (req, res, next) => {
   }).lean();
   query
     .exec()
-    .then((hist_entry) => {                                        
-      if (hist_entry != null) return res.status(200).json({ 
-        Viewed: true, 
-        seconds: hist_entry.seconds_played//,
-        //  url: hist_entry.podcast_url,
-        //  image: hist_entry.podcast_image
-      });
-      else return res.status(200).json({ 
-        Viewed: false, 
-        seconds: hist_entry.seconds_played//,
-        //  url: hist_entry.podcat_url,
-        // image: hist_entry.podcaset_image
-      });
+    .then((hist_entry) => {
+      if (hist_entry != null) return res.status(200).json({ Viewed: true });
+      else return res.status(200).json({ Viewed: false });
     })
     .catch((err) => {
       console.error(err.message);
@@ -54,22 +44,16 @@ router.get("/:p_id", (req, res, next) => {
     });
 });
 
-// @route  POST api/user-history/:p_id/:seconds_played
-// @desc   creates/updates user history (date + seconds played) entry for a user when given podcast id 'p_id'
+// @route  POST api/user-history/:p_id
+// @desc   creates/updates user history entry for a user when given podcast id 'p_id'
 // @access Private
-router.post("/:p_id/:played", (req, res, next) => {
+
+router.post("/:p_id", (req, res, next) => {
   const filter = {
     user_id: `${req.user._id}`,
     podcast_id: `${req.params.p_id}`,
   };
-  console.log("INSIDE POST - URL: " + req.body);
-  const update = { 
-    last_played: `${Date.now()}`,
-    seconds_played: `${req.params.played}`,
-    podcast_id: `${req.params.p_id}`,  // double check this
-    podcast_url: req.body.p_url,
-    podcast_image: req.body.p_image,
-  };
+  const update = { last_played: `${Date.now()}` };
 
   const query = HistoryModel.findOneAndUpdate(filter, update, {
     new: true,
@@ -89,10 +73,4 @@ router.post("/:p_id/:played", (req, res, next) => {
     });
 });
 
-
-
-
-
-
 module.exports = router;
-

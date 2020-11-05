@@ -58,7 +58,7 @@ const Player = ( {} ) => {
       
       const p_id = playerState.episode_id;
 
-      const res = await axios.get(`/api/user-history/${p_id}`, config);
+      const res = await axios.get(`/api/latest-episode/${p_id}`, config);
       
       const seconds_played = res.data.seconds; 
 
@@ -94,7 +94,7 @@ const Player = ( {} ) => {
       console.log("PAUSE episode_id: " + playerState.episode_id);
 
       const res = await axios.post(
-        `/api/user-history/${p_id}/${played}`, 
+        `/api/latest-episode/${p_id}/${played}`, 
         { p_url: playerState.url,
           p_image: playerState.image },
         config
