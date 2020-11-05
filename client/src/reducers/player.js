@@ -14,7 +14,8 @@ const initial_state = {
   artist: null,
   image: null,
   episode_id: null,
-  playlist: []
+  playlist: [],
+  isVisible: false,
 };
 
 export default function player(state = initial_state, action) {

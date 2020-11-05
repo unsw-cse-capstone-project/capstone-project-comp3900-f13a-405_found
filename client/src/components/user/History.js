@@ -34,7 +34,7 @@ const History = () => {
   }, []);
 
   if (isLoading) {
-    return <Typography>Loading history...</Typography>;
+    return <Typography component={"div"}>Loading history...</Typography>;
   }
 
   return (

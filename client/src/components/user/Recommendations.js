@@ -87,7 +87,7 @@ const Recommendations = () => {
       container
       spacing={4}
       className={classes.gridContainer}
-      justify="center"
+      justify='center'
     >
       {podcasts.map((podcast) => (
         <Grid item xs={12} sm={6} md={4} key={podcast.id}>
