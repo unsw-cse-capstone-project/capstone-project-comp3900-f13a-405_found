@@ -26,6 +26,7 @@
     "@material-ui/icons": "^4.9.1",
     "nodemailer": "^6.4.14",
     "react-player": "^2.6.2",
+    "react-swipeable-bottom-sheet": "^1.1.2",
     "react-window": "^1.8.6"
   }
 }
