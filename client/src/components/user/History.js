@@ -1,31 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-  },
-  name: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: "33.33%",
-    flexShrink: 0,
-  },
-  duration_ms: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  playButton: {
-    fontSize: "50px",
-    display: "block",
-    "&:hover": {
-      cursor: "pointer",
-    },
+    height: 400,
+    maxWidth: "95%",
+    backgroundColor: theme.palette.background.paper,
   },
 }));
 
@@ -51,34 +38,16 @@ const History = () => {
   }
 
   return (
-    // <Typography>
-    //   {historyDetails.map((episode) => (
-    //     <Accordion
-    //       expanded={expanded === episode._id}
-    //       key={episode._id}
-    //       onChange={handleChange(episode._id)}
-    //     >
-    //       <AccordionSummary
-    //         expandIcon={<ExpandMoreIcon />}
-    //         aria-controls="panel1bh-content"
-    //         id="panel1bh-header"
-    //       >
-    //         <Typography className={classes.name}>{episode.showName}</Typography>
-    //       </AccordionSummary>
-    //       <AccordionDetails>
-    //         <Typography>{episode.episodeName}</Typography>
-    //       </AccordionDetails>
-    //     </Accordion>
-    //   ))}
-    // </Typography>
-
-    <ul>
+    <div className={classes.root}>
       {historyDetails.map((episode) => (
-        <li key={episode._id}>
-          {episode.showName} - {episode.episodeName}
-        </li>
+        <ListItem key={episode._id}>
+          <ListItemText
+            primary={`${episode.showName} - ${episode.episodeName}`}
+          />
+          <Divider />
+        </ListItem>
       ))}
-    </ul>
+    </div>
   );
 };
 
