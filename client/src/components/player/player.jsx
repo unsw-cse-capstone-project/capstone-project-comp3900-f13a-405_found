@@ -271,7 +271,7 @@ const Player = ( {} ) => {
       </div>
       <div
         style={{
-          position: "sticky",
+          position: "absolute",
           left: "50%",
           transform: "translateX(-50%) translateY(70px)",
           width: "60%",
