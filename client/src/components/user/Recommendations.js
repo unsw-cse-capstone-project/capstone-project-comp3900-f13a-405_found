@@ -11,12 +11,13 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core";
 
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { DetailedView } from "../dashboard/DetailedView";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    minHeight: "340px",
+    minHeight: "320px",
   },
   media: {
     height: 140,
@@ -30,7 +31,12 @@ const useStyles = makeStyles({
     fontSize: "24",
   },
   gutter: {
-    bottom: "0",
+    bottom: "0px",
+    position: "absolute",
+  },
+  load: {
+    width: "98%",
+    paddingTop: "36vh",
   },
 });
 
@@ -79,7 +85,13 @@ const Recommendations = () => {
   };
 
   if (isLoading) {
-    return <Typography>Loading episodes...</Typography>;
+    return (
+      <div className={classes.load}>
+        <Typography>Generating your custom recommendedations...</Typography>
+        <LinearProgress />
+        <LinearProgress color="secondary" />
+      </div>
+    );
   }
 
   return (
@@ -87,12 +99,12 @@ const Recommendations = () => {
       container
       spacing={4}
       className={classes.gridContainer}
-      justify='center'
+      justify="center"
     >
       {podcasts.map((podcast) => (
         <Grid item xs={12} sm={6} md={4} key={podcast.id}>
           <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea onClick={handleClickOpen.bind(this, podcast)}>
               <CardMedia
                 className={classes.media}
                 image={podcast.images[0].url}
@@ -107,20 +119,8 @@ const Recommendations = () => {
                 >
                   {podcast.name}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {/* {podcast.description} */}
-                </Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions className={classes.gutter}>
-              <Button
-                size="small"
-                color="primary"
-                onClick={handleClickOpen.bind(this, podcast)}
-              >
-                Learn More
-              </Button>
-            </CardActions>
           </Card>
         </Grid>
       ))}

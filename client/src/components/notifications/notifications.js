@@ -43,13 +43,13 @@ export const Notifications = () => {
   const notifications = notificationsState.notifications;
 
   return (
-    <div style={{ position: "absolute", right: "0", top: "0" }}>
+    <div style={{ position: "absolute", right: "0", top: "0", zIndex: "-1" }}>
       {isLoading ? (
         <CircularProgress />
       ) : (
         <>
           <Badge
-            color='secondary'
+            color="secondary"
             badgeContent={countNotifications(notifications)}
             style={{
               cursor: "pointer",
