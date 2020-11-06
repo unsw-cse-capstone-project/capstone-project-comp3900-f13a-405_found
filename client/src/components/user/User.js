@@ -28,7 +28,6 @@ const User = () => {
 
   return (
     <div>
-      <Notifications />
       <div className={classes.root}>
         <Paper variant="outlined">
           <div className={classes.myText}>Recommended for you</div>

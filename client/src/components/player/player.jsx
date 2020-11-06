@@ -173,9 +173,9 @@ const Player = () => {
     >
       <ReactPlayer
         ref={ref}
-        className='react-player'
-        width='100%'
-        height='100%'
+        className="react-player"
+        width="100%"
+        height="100%"
         url={url}
         pip={false}
         playing={playing}
@@ -226,10 +226,10 @@ const Player = () => {
         }}
       >
         <input
-          type='range'
+          type="range"
           min={0}
           max={0.999999}
-          step='any'
+          step="any"
           value={played}
           onMouseDown={handleSeekMouseDown}
           onChange={handleSeekChange}

@@ -71,7 +71,7 @@ export const Notifications = () => {
           </Badge>
           <NotificationBox
             style={{
-              zIndex: 7,
+              zIndex: 15,
             }}
             notifications={notifications}
             expanded={expanded}

@@ -22,7 +22,7 @@ const History = () => {
       setHistory(res.data.reverse());
       setLoading(false);
     });
-  }, []);
+  });
 
   if (isLoading) {
     return <Typography component={"div"}>Loading history...</Typography>;
