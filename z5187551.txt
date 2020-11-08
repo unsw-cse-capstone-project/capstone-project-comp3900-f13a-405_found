@@ -28,3 +28,7 @@ Week 6
 
 Week 7
 - I finished email notifications for new episodes
+
+Week 8
+- I helped other members by doing pair programming
+- Redesigned the UI of the sidebar so that it looks more aesthetically pleasing
