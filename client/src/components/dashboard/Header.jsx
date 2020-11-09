@@ -9,11 +9,10 @@ import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
 } from "@material-ui/core";
 import axios from "axios";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import Podcasts from "./Podcasts";
 import Pagination from "./Pagination";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const theme = createMuiTheme({
   palette: {
