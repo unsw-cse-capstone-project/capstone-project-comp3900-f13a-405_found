@@ -88,13 +88,6 @@ const Sidebar = (props) => {
     dispatch(logout());
   };
 
-  const getSubCount = (id) => {
-    const item = subscriptionState.subscribedShowSubCounts.filter(
-      (i) => i.id === id
-    );
-    if (item.length <= 0) return 0;
-    return item[0].count;
-  };
   const getNewEpisodes = (id) => {
     const item = subscriptionState.subscribedEpisodes.filter(
       (i) => i.id === id

@@ -36,7 +36,7 @@ const Playlist = () => {
 
   useEffect(() => {
     dispatch(getPlaylists());
-  }, []);
+  });
 
   const HandleCreatePlaylist = () => {
     dispatch(createPlaylist(playlistName));
@@ -111,7 +111,7 @@ const Playlist = () => {
                             }}
                             className={classes.playButton}
                           />
-                        ) : playerState.episode_id == episode.id ? (
+                        ) : playerState.episode_id === episode.id ? (
                           <PauseCircleFilledWhiteIcon
                             onClick={handlePause}
                             className={classes.playButton}

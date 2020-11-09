@@ -71,7 +71,7 @@ const Player = () => {
   const handleEnded = () => {
     if (playlist.length > 0) {
       const current = playlist.map((episode) => episode.id).indexOf(episode_id);
-      if (current == -1 || current == playlist.length - 1) {
+      if (current === -1 || current === playlist.length - 1) {
         dispatch({ type: SET_PLAYING, playing: false });
         return;
       }
@@ -144,7 +144,7 @@ const Player = () => {
       />
       <div style={{ display: "flex", width: "500px" }}>
         {image ? (
-          <img style={{ width: "auto", height: "100%" }} src={image} />
+          <img style={{ width: "auto", height: "100%" }} src={image} alt="hi Lina"/>
         ) : null}
         <div
           style={{

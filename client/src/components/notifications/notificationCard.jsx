@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Accordion,
   AccordionSummary,
-  AccordionDetails,
-  Button,
+  AccordionDetails
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -23,10 +22,10 @@ const NotificationCard = (props) => {
   const removeEpisodeFromNotification = (episodeId) => {
     // First, find the notification object corresponding to the podcast id
     const filtered = notifications.map((notification) => {
-      if (notification.podcastId == props.podcastId) {
+      if (notification.podcastId === props.podcastId) {
         // Now remove the notification for the episode we are acknowledging
         notification.newEpisodes = notification.newEpisodes.filter(
-          (episode) => episode.id != episodeId
+          (episode) => episode.id !== episodeId
         );
       }
       return notification;
@@ -40,9 +39,6 @@ const NotificationCard = (props) => {
         acknowledgedEpisodeIds: [episodeId],
       })
       .then((res) => {
-        const filtered = notificationList.filter(
-          (notification) => notification.id != episodeId
-        );
         removeEpisodeFromNotification(episodeId);
       });
   };

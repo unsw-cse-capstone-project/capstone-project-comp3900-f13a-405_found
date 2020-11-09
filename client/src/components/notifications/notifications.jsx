@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import NotificationBox from "./notificationBox";
-import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Badge from "@material-ui/core/Badge";
@@ -32,7 +31,7 @@ export const Notifications = () => {
       }
       setLoading(false);
     });
-  }, []);
+  });
 
   const toggleExpanded = () => {
     setExpanded(!expanded);

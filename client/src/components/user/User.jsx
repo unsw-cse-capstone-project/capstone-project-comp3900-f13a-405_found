@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import History from "./History";
 import Recommendations from "./Recommendations";
-import Notifications from "../notifications/notifications";
 
 const useStyles = makeStyles((theme) => ({
   root: {

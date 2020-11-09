@@ -6,7 +6,7 @@ import {
   DEL_FROM_PLAYLIST_SUCCESS,
   GET_PLAYLISTS,
 } from "./types";
-import { displayAlert, removeAllAlerts } from "./alert";
+import { displayAlert } from "./alert";
 
 // Create a new playlist
 export const createPlaylist = (name) => async (dispatch) => {
@@ -37,7 +37,7 @@ export const deletePlaylist = (id) => async (dispatch) => {
       },
       withCredentials: true,
     };
-    const res = await axios.delete(`/api/playlist/${id}`, config);
+    await axios.delete(`/api/playlist/${id}`, config);
     dispatch({
       type: DELETE_PLAYLIST,
       payload: id,
