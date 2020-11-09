@@ -28,12 +28,12 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography component={"div"} variant="h6">
+      <Typography component={"div"} variant='h6'>
         {children}
       </Typography>
       {onClose ? (
         <IconButton
-          aria-label="close"
+          aria-label='close'
           className={classes.closeButton}
           onClick={onClose}
         >
@@ -69,14 +69,14 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
   return (
     <Dialog
       onClose={handleClose}
-      aria-labelledby="customized-dialog-title"
+      aria-labelledby='customized-dialog-title'
       open={open}
     >
-      <DialogTitle id="customized-dialog-title">
+      <DialogTitle id='customized-dialog-title'>
         {selectedPod.name}
         <IconButton
           style={{ position: "absolute", right: "0", top: "0" }}
-          aria-label="close"
+          aria-label='close'
           onClick={handleClose}
           className={styles.closeButton}
         >
@@ -89,13 +89,13 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
         </Typography>
         <SubscribeButton id={selectedPod.id} />
         <Button
-          size="large"
-          variant="contained"
+          size='large'
+          variant='contained'
           onClick={() => HandleCopyURL(selectedPod)}
         >
           Generate Share Podcast URL
         </Button>
-        <img height="60px" width="60px" src={img} alt="podcastimage" />
+        <img height='60px' width='60px' src={img} alt='podcastimage' />
         <Typography component={"div"} gutterBottom>
           <Episodes
             podcastName={selectedPod.name}
@@ -112,16 +112,16 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
         open={openSnack}
         autoHideDuration={6000}
         onClose={handleSnackClose}
-        message="Podcast URL Copied to Clipboard"
+        message='Podcast URL Copied to Clipboard'
         action={
           <React.Fragment>
             <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
+              size='small'
+              aria-label='close'
+              color='inherit'
               onClick={handleSnackClose}
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon fontSize='small' />
             </IconButton>
           </React.Fragment>
         }

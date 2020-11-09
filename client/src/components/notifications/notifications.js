@@ -49,7 +49,7 @@ export const Notifications = () => {
       ) : (
         <>
           <Badge
-            color="secondary"
+            color='secondary'
             badgeContent={countNotifications(notifications)}
             style={{
               cursor: "pointer",

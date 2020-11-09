@@ -36,7 +36,7 @@ const getNewEpisodes = async function (podcastId) {
 };
 
 const getEpisodeDelta = (currentEpisodeIds, newEpisodeIds) => {
-  // This function takes two arrays containing episode Jacqui James Alex Jeddi Ids and returns the ids which correspond to new episodes
+  // This function takes two arrays containing episode Ids and returns the ids which correspond to new episodes
   return newEpisodeIds.filter((id) => !currentEpisodeIds.includes(id));
 };
 

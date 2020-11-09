@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { collection } = require("./UserModel");
 
 const HistorySchema = new mongoose.Schema({
   user: {

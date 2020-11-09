@@ -119,7 +119,7 @@ router.get("/bulkshows/:ids", async (req, res, next) => {
 router.get("/shows/:id/episodes", async (req, res, next) => {
   try {
     // https://developer.spotify.com/documentation/web-api/reference/shows/
-    let episodeList = []; 
+    let episodeList = [];
     let counter = 0;
     let stop = false;
     const uri = encodeURI(
@@ -130,11 +130,14 @@ router.get("/shows/:id/episodes", async (req, res, next) => {
       Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
     };
     // Iterate through the pages until there are no more pages
-    while(!stop) { 
-      let spotifyResponse = await axios.get(counter == 0 ? uri : spotifyResponse.next, { headers });
-      episodeList = episodeList.concat(spotifyResponse.data.items)
+    while (!stop) {
+      let spotifyResponse = await axios.get(
+        counter == 0 ? uri : spotifyResponse.next,
+        { headers }
+      );
+      episodeList = episodeList.concat(spotifyResponse.data.items);
       counter++;
-      stop = (spotifyResponse.next == null)
+      stop = spotifyResponse.next == null;
     }
     return res.status(200).json(episodeList);
   } catch (err) {

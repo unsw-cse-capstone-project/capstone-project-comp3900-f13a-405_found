@@ -2,13 +2,11 @@ const express = require("express");
 const axios = require("axios");
 const History = require("../../models/HistoryModel");
 const { BadRequest } = require("../../utils/errors");
-const { route } = require("./subscription");
 const router = express.Router();
 
 // @route  GET api/user-history
 // @desc   Gets podcast history for user currently logged in.
 // @access Private
-
 router.get("/", async (req, res, next) => {
   try {
     const usersHistory = await History.find({
@@ -22,27 +20,9 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//router.get("/", (req, res, next) => {
-//  const query = HistoryModel.find({ user_id: `${req.user._id}` }).select(
-//    "-__v"
-//  );
-//
-//  query
-//    .exec()
-//    .then((user_history) => {
-//      //  const json_user_history = JSON.stringify(user_history);
-//      return res.status(200).json(user_history);
-//    })
-//    .catch((err) => {
-//      console.error(err.message);
-//      next(new BadRequest([{ msg: "User History: Bad Request." }]));
-//    });
-//});
-
 // @route GET api/user-history/:p_id
 // @desc Gets bool value of if podcast 'p_id' has been viewed by a user.
 // @access Private
-
 router.get("/:episodeId", async (req, res, next) => {
   try {
     const historyEntry = await History.exists({

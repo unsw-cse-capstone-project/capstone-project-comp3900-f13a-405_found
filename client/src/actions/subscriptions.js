@@ -7,7 +7,7 @@ import {
   UPDATE_SUBSCRIBED_SHOWS_SUBS_COUNT,
   GET_TRENDING_SHOWS,
   GET_SHOWS_BY_IDS_FOR_TRENDING,
-  GET_SUBSCRIBED_EPISODES_BY_IDS
+  GET_SUBSCRIBED_EPISODES_BY_IDS,
 } from "./types";
 import { displayAlert, removeAllAlerts } from "./alert";
 
@@ -137,7 +137,6 @@ export const getTrendingShows = () => async (dispatch) => {
 
 // GET list of all new episodes
 export const getSubscribedShowsNewEpisodes = (ids) => async (dispatch) => {
-  
   try {
     const config = {
       withCredentials: true,
@@ -149,25 +148,27 @@ export const getSubscribedShowsNewEpisodes = (ids) => async (dispatch) => {
     const daysInMonth = 31;
     const episodeList = [];
     for (const id of ids) {
-        const res = await axios.get(`/api/spotify/shows/${id}/episodes`, config);
-        const filtered = res.data.filter(episode => {
-        const releaseDate = episode.release_date.split('-');
+      const res = await axios.get(`/api/spotify/shows/${id}/episodes`, config);
+      const filtered = res.data.filter((episode) => {
+        const releaseDate = episode.release_date.split("-");
         const day = releaseDate[2];
-        const month = releaseDate[1]
-       
+        const month = releaseDate[1];
+
         if (today >= day && month == thisMonth) {
           return today - parseInt(day) <= daysInWeek;
-        } else if ( today < day && parseInt(month) == (thisMonth - 1) ){
+        } else if (today < day && parseInt(month) == thisMonth - 1) {
           return parseInt(day) + daysInMonth - today <= daysInWeek;
         } else {
           return false;
         }
       });
-      episodeList.push({id: id, episodes: filtered});
+      episodeList.push({ id: id, episodes: filtered });
     }
-    dispatch({type: GET_SUBSCRIBED_EPISODES_BY_IDS, payload: episodeList } );
-  } catch(err) {
+    dispatch({ type: GET_SUBSCRIBED_EPISODES_BY_IDS, payload: episodeList });
+  } catch (err) {
     console.log(err);
-    displayAlert("An Error occurred when grabbing subscribed shows new episodes:(");
+    displayAlert(
+      "An Error occurred when grabbing subscribed shows new episodes:("
+    );
   }
-}
+};

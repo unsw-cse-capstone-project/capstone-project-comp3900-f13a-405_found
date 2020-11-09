@@ -29,11 +29,11 @@ const User = () => {
   return (
     <div>
       <div className={classes.root}>
-        <Paper variant="outlined">
+        <Paper variant='outlined'>
           <div className={classes.myText}>Recommended for you</div>
           <Recommendations />
         </Paper>
-        <Paper variant="outlined">
+        <Paper variant='outlined'>
           <div className={classes.myText}>Your Episode History</div>
           <History />
         </Paper>

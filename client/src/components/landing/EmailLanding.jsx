@@ -21,22 +21,22 @@ const EmailLanding = () => {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="row">
-          <div className="middle-column">
-            <img src={logo} className="App-logo" alt="logo" />
-            <Typography component={"div"} variant="h5" gutterBottom>
+    <div className='App'>
+      <header className='App-header'>
+        <div className='row'>
+          <div className='middle-column'>
+            <img src={logo} className='App-logo' alt='logo' />
+            <Typography component={"div"} variant='h5' gutterBottom>
               {" "}
               UltraCast{" "}
             </Typography>
             <div>Email has been sent to your acc, check and click please!</div>
-            <Link style={{ textDecoration: "none" }} to="/">
-              <Button size="large" variant="contained">
+            <Link style={{ textDecoration: "none" }} to='/'>
+              <Button size='large' variant='contained'>
                 Log In
               </Button>
             </Link>{" "}
-            <div className="link" onClick={handleResent}>
+            <div className='link' onClick={handleResent}>
               click here to resend email!
             </div>
           </div>

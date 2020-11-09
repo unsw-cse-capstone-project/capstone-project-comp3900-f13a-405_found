@@ -17,7 +17,7 @@ import { checkUserStillVerified } from "./actions/authentication";
 import notfoundmeme from "./404.png";
 import Playlist from "./components/dashboard/Playlist";
 const NotFound = () => (
-  <img style={{ width: "100%" }} src={notfoundmeme} alt="notFound" />
+  <img style={{ width: "100%" }} src={notfoundmeme} alt='notFound' />
 );
 
 const App = () => {
@@ -31,21 +31,21 @@ const App = () => {
           <Container>
             <Alert />
             <Switch>
-              <Route exact path="/" component={LoginComp} />
-              <Route exact path="/signup" component={Signup} />
-              <PrivateRoute path="/userpage" component={UserPage} />
+              <Route exact path='/' component={LoginComp} />
+              <Route exact path='/signup' component={Signup} />
+              <PrivateRoute path='/userpage' component={UserPage} />
               <Route
                 exact
-                path="/please-click-email"
+                path='/please-click-email'
                 component={EmailLanding}
               />
               <Route
                 exact
-                path="/activate-email/:token"
+                path='/activate-email/:token'
                 component={ActivateEmail}
               />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
-              <PrivateRoute path="/playlist" component={Playlist} />
+              <PrivateRoute path='/dashboard' component={Dashboard} />
+              <PrivateRoute path='/playlist' component={Playlist} />
               <Route component={NotFound} />
             </Switch>
           </Container>

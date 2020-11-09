@@ -80,21 +80,21 @@ export default function Header() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <AppBar position="static" className={classes.root}>
+    <AppBar position='static' className={classes.root}>
       <Toolbar>
-        <Grid container alignItems="center">
+        <Grid container alignItems='center'>
           <Grid item>
             <InputBase
-              placeholder="Search podcasts"
+              placeholder='Search podcasts'
               className={classes.searchInput}
-              startAdornment={<SearchIcon fontSize="large" />}
+              startAdornment={<SearchIcon fontSize='large' />}
               onChange={handleSearchChange}
             />
           </Grid>
         </Grid>
       </Toolbar>
       <Grid>
-        <div className="container mt-5">
+        <div className='container mt-5'>
           <Podcasts
             style={{
               zIndex: -1,
