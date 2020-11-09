@@ -12,7 +12,7 @@ import {
   getPlaylists,
   addToPlaylist,
   removeFromPlaylist,
-} from "../../actions/playlist";
+} from "../../../actions/playlist";
 
 const PlaylistSelector = (props) => {
   const playlistState = useSelector((state) => state.playlist);

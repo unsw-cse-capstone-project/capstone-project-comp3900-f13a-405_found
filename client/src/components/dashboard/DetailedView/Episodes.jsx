@@ -8,9 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledWhiteIcon from "@material-ui/icons/PauseCircleFilled";
-import { SET_STATE_FROM_EPISODES } from "../../actions/types";
+import { SET_STATE_FROM_EPISODES } from "../../../actions/types";
 import { useDispatch, useSelector } from "react-redux";
-import PlaylistSelector from "./PlaylistSelector";
+import PlaylistSelector from "../Playlist/PlaylistSelector";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 

@@ -8,7 +8,7 @@ import MuiDialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Episodes from "./Episodes";
 import Typography from "@material-ui/core/Typography";
-import SubscribeButton from "../SubscribeButton";
+import SubscribeButton from "../../SubscribeButton";
 import Snackbar from "@material-ui/core/Snackbar";
 
 const styles = (theme) => ({

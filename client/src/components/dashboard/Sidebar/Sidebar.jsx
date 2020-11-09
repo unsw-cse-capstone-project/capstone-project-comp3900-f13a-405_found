@@ -22,12 +22,12 @@ import ShowChartIcon from "@material-ui/icons/ShowChart";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logout } from "../../actions/authentication";
+import { logout } from "../../../actions/authentication";
 import {
   getShowsDetailsByListOfIds,
   getSubscribedShowsNewEpisodes,
   getSubscribedShowsSubsCount,
-} from "../../actions/subscriptions";
+} from "../../../actions/subscriptions";
 import "./Sidebar.scss";
 
 const style = {
@@ -138,7 +138,7 @@ const Sidebar = (props) => {
           <ListItem
             button
             onClick={() => {
-              history.push("/userpage");
+              history.push("/dashboard/userpage");
             }}
           >
             <ListItemIcon className={classes.icons}>

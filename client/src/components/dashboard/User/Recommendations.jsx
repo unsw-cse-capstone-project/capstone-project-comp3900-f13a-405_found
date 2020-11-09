@@ -11,7 +11,7 @@ import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core";
 
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { DetailedView } from "../dashboard/DetailedView";
+import { DetailedView } from "../DetailedView/DetailedView";
 
 const useStyles = makeStyles({
   root: {

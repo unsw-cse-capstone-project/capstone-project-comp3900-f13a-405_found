@@ -11,10 +11,11 @@ import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { getSubscriptions } from "../../actions/subscriptions";
 import Notifications from "../notifications/notifications";
 import Player from "../player/player";
-import Header from "./Header";
-import Playlist from "./Playlist";
-import Sidebar from "./Sidebar";
-import Trending from "./Trending";
+import Header from "./Search/Header";
+import Playlist from "./Playlist/Playlist";
+import Sidebar from "./Sidebar/Sidebar";
+import Trending from "./Trending/Trending";
+import UserPage from "./User/UserPage";
 
 const theme = createMuiTheme({
   palette: {
@@ -66,8 +67,8 @@ const Dashboard = () => {
           <Route exact path={match.path} component={Header} />
           <Route exact path={`${match.path}/trending`} component={Trending} />
           <Route exact path={`${match.path}/playlist`} component={Playlist} />
+          <Route exact path={`${match.path}/userpage`} component={UserPage} />
           <Route exact path={`${match.path}/:share_id`} component={Header} />
-
           {/* this is just to redirect to 404 */}
           <Route
             render={({ location }) => (

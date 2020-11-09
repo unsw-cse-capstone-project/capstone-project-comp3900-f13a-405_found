@@ -42,9 +42,9 @@ export const Notifications = () => {
   const notifications = notificationsState.notifications;
 
   return (
-    <div style={{ position: "absolute", right: "0", top: "0", zIndex: '4', width: '275px' }}>
+    <div style={{ position: "absolute", right: "0", top: "0", zIndex: '4', width: '275px'}}>
       {isLoading ? (
-        <CircularProgress />
+        <CircularProgress style={{position: "absolute", right: "0", top: "0", margin: "5px"}}/>
       ) : (
         <>
           <Badge
@@ -64,7 +64,8 @@ export const Notifications = () => {
                 cursor: "pointer",
                 display: "block",
                 marginLeft: "auto",
-                marginRight: "0px",
+                marginRight: "5px",
+                marginTop: "5px",
               }}
             />
           </Badge>

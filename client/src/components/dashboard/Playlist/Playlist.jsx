@@ -4,14 +4,14 @@ import {
   getPlaylists,
   createPlaylist,
   deletePlaylist,
-} from "../../actions/playlist";
+} from "../../../actions/playlist";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledWhiteIcon from "@material-ui/icons/PauseCircleFilled";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { SET_STATE_FROM_EPISODES } from "../../actions/types";
+import { SET_STATE_FROM_EPISODES } from "../../../actions/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

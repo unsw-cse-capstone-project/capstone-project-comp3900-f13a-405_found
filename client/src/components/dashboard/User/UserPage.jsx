@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import Sidebar from "../dashboard/Sidebar";
 import User from "./User";
-import Player from "../player/player";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +9,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core";
-import { getSubscriptions } from "../../actions/subscriptions";
+import { getSubscriptions } from "../../../actions/subscriptions";
 
 const theme = createMuiTheme({
   palette: {
@@ -30,15 +28,9 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles({
-  appMain: {
-    paddingLeft: "160px",
-    width: "100%",
-    paddingTop: "10px",
-  },
   center: {
     margin: "0 auto",
     position: "relative",
-    left: "280px",
   },
 });
 
@@ -51,14 +43,12 @@ const UserPage = () => {
   }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
-      <Sidebar />
       <SwipeableBottomSheet
         overflowHeight={0}
         open={playerState.isVisible}
         overlay={false}
-        style={{ left: "280px", zIndex: "10" }}
+        style={{ zIndex: "1" }}
       >
-        <Player />
       </SwipeableBottomSheet>
       <div className={classes.center}>
         <User />
