@@ -48,9 +48,9 @@ const NotificationCard = (props) => {
   };
 
   return notificationList.length > 0 ? (
-    <Accordion>
+    <Accordion style={{backgroundColor: '#292929', color: 'white'}}>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon style={{color: 'white'}}/>}
         aria-controls='panel1a-content'
         id='panel1a-header'
       >

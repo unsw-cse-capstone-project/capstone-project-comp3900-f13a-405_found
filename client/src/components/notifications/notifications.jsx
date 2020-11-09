@@ -43,7 +43,7 @@ export const Notifications = () => {
   const notifications = notificationsState.notifications;
 
   return (
-    <div style={{ position: "absolute", right: "0", top: "0" }}>
+    <div style={{ position: "absolute", right: "0", top: "0", zIndex: '4', width: '275px' }}>
       {isLoading ? (
         <CircularProgress />
       ) : (
