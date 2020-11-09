@@ -43,7 +43,6 @@ const LoginComp = () => {
     const share_exists = localStorage.getItem("share_set") === "true";
     const shareId = share_exists ? localStorage.getItem("share_id") : null;
     setShare_id(shareId);
-    console.log(shareId);
   }, []);
 
   const handleSubmit = (e) => {

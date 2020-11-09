@@ -26,7 +26,6 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
-    //width: "100vh"
   },
   searchInput: {
     opacity: "0.6",

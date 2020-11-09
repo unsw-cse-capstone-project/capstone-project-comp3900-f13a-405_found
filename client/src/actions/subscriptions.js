@@ -143,7 +143,7 @@ export const getSubscribedShowsNewEpisodes = (ids) => async (dispatch) => {
     };
     const date = new Date();
     const today = date.getDate();
-    const thisMonth = date.getMonth() + 1; // + 1 because i think it starts from 0 or something weird like that
+    const thisMonth = date.getMonth() + 1;
     const daysInWeek = 7;
     const daysInMonth = 31;
     const episodeList = [];
