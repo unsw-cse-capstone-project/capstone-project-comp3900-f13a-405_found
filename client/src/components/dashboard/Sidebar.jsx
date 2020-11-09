@@ -1,36 +1,34 @@
-import React, { useEffect, useState } from "react";
 import {
-  withStyles,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  withStyles,
 } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getShowsDetailsByListOfIds,
-  getSubscribedShowsSubsCount,
-  getSubscribedShowsNewEpisodes,
-} from "../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Link } from "react-router-dom";
-import "./Sidebar.scss";
+import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 import QueueMusicIcon from "@material-ui/icons/QueueMusic";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { logout } from "../../actions/authentication";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { logout } from "../../actions/authentication";
+import {
+  getShowsDetailsByListOfIds,
+  getSubscribedShowsNewEpisodes,
+  getSubscribedShowsSubsCount,
+} from "../../actions/subscriptions";
+import "./Sidebar.scss";
 
 const style = {
   sidebar: {

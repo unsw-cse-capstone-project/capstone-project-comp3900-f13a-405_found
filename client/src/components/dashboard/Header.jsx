@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
 import {
   AppBar,
-  Toolbar,
   Grid,
   InputBase,
-  IconButton,
   makeStyles,
+  Toolbar,
   unstable_createMuiStrictModeTheme as createMuiTheme,
 } from "@material-ui/core";
-import axios from "axios";
 import SearchIcon from "@material-ui/icons/Search";
-import Podcasts from "./Podcasts";
-import Pagination from "./Pagination";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Pagination from "./Pagination";
+import Podcasts from "./Podcasts";
 
 const theme = createMuiTheme({
   palette: {

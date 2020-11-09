@@ -1,15 +1,14 @@
-import logo from "./logo.png";
-import React, { useState, useEffect } from "react";
-import "./Landing.scss";
-
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../../actions/authentication";
-import { v4 as uuid } from "uuid";
+import Typography from "@material-ui/core/Typography";
 import { message } from "antd";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { v4 as uuid } from "uuid";
+import { signup } from "../../actions/authentication";
+import "./Landing.scss";
+import logo from "./logo.png";
+
 const EmailLanding = () => {
   const authState = useSelector((state) => state.authentication);
   const dispatch = useDispatch();
