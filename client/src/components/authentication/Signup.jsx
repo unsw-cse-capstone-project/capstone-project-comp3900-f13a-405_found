@@ -70,7 +70,6 @@ const Signup = ({ history }) => {
       message.loading({ content: "Loading...", key: id });
 
       dispatch(signup({ name, email, password, id, optInEmail }, history));
-      //resetForm()
     }
   };
 
@@ -87,7 +86,6 @@ const Signup = ({ history }) => {
         [name]: value,
       });
     }
-    //if (validateOnChange)
     validate({ [name]: value });
   };
 

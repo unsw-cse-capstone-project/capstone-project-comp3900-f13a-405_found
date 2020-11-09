@@ -13,7 +13,6 @@ import CustomTextField from "../CustomTextField";
 const FormA = (initialValues, validateOnChange = false, validate) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
-  //const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,7 +35,6 @@ const FormA = (initialValues, validateOnChange = false, validate) => {
     setErrors,
     handleInputChange,
     resetForm,
-    //handleSubmit
   };
 };
 
@@ -66,7 +64,6 @@ export default function SignupForm() {
     if (validate()) {
       const { id, name, email, password } = values;
       dispatch(signup({ name, email, password }));
-      //resetForm()
     }
   };
 
@@ -98,15 +95,11 @@ export default function SignupForm() {
       return Object.values(temp).every((x) => x === "");
   };
 
-  const {
-    values,
-    setValues,
-    errors,
-    setErrors,
-    handleInputChange,
-    resetForm,
-    //handleSubmit
-  } = FormA(initialValues, true, validate);
+  const { values, errors, setErrors, handleInputChange, resetForm } = FormA(
+    initialValues,
+    true,
+    validate
+  );
 
   return (
     <form onSubmit={handleSubmit}>
@@ -125,7 +118,6 @@ export default function SignupForm() {
             value={values.name}
             onChange={handleInputChange}
             error={errors.name}
-            //helperText={errors.name}
           />
           <CustomTextField
             label='Email'
