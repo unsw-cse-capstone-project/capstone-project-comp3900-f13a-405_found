@@ -44,7 +44,7 @@ export const Notifications = () => {
   return (
     <div style={{ position: "absolute", right: "0", top: "0", zIndex: '4', width: '275px'}}>
       {isLoading ? (
-        <CircularProgress style={{position: "absolute", right: "0", top: "0", margin: "5px"}}/>
+        <CircularProgress style={{position: "absolute", right: "0", top: "0", margin: "10px"}}/>
       ) : (
         <>
           <Badge
@@ -54,8 +54,8 @@ export const Notifications = () => {
               cursor: "pointer",
               display: "block",
               marginLeft: "auto",
-              marginRight: "10px",
-              marginTop: "10px",
+              marginRight: "15px",
+              marginTop: "15px",
             }}
           >
             <NotificationsIcon
@@ -64,8 +64,8 @@ export const Notifications = () => {
                 cursor: "pointer",
                 display: "block",
                 marginLeft: "auto",
-                marginRight: "5px",
-                marginTop: "5px",
+                marginRight: "15px",
+                marginTop: "15px",
               }}
             />
           </Badge>
