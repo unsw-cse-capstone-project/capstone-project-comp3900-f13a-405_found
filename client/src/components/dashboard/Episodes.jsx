@@ -121,7 +121,7 @@ const Episodes = ({ podcastEpisodes }) => {
       .then(() => {
         setLoading(false);
       });
-  }, []);
+  }, [podcastEpisodes.id]);
 
   if (isLoading) {
     return <Typography component={"div"}>Loading episodes...</Typography>;
@@ -158,7 +158,7 @@ const Episodes = ({ podcastEpisodes }) => {
                   }}
                   className={classes.playButton}
                 />
-              ) : playerState.episode_id == episode.id ? (
+              ) : playerState.episode_id === episode.id ? (
                 <PauseCircleFilledWhiteIcon
                   onClick={handlePause}
                   className={classes.playButton}
