@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
 import {
   AppBar,
-  Toolbar,
   Grid,
   InputBase,
-  IconButton,
   makeStyles,
+  Toolbar,
   unstable_createMuiStrictModeTheme as createMuiTheme,
 } from "@material-ui/core";
-import axios from "axios";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
-import Podcasts from "./Podcasts";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
-import { Link, useParams } from "react-router-dom";
+import Podcasts from "./Podcasts";
 
 const theme = createMuiTheme({
   palette: {
@@ -26,7 +24,6 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
-    //width: "100vh"
   },
   searchInput: {
     opacity: "0.6",
@@ -80,21 +77,21 @@ export default function Header() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <AppBar position="static" className={classes.root}>
+    <AppBar position='static' className={classes.root}>
       <Toolbar>
-        <Grid container alignItems="center">
+        <Grid container alignItems='center'>
           <Grid item>
             <InputBase
-              placeholder="Search podcasts"
+              placeholder='Search podcasts'
               className={classes.searchInput}
-              startAdornment={<SearchIcon fontSize="large" />}
+              startAdornment={<SearchIcon fontSize='large' />}
               onChange={handleSearchChange}
             />
           </Grid>
         </Grid>
       </Toolbar>
       <Grid>
-        <div className="container mt-5">
+        <div className='container mt-5'>
           <Podcasts
             style={{
               zIndex: -1,

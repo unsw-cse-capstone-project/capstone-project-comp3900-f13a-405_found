@@ -42,37 +42,37 @@ export default function CustomTextField(props) {
 
   return !passwordViewable ? (
     <TextField
-      variant="outlined"
+      variant='outlined'
       label={label}
       type={type}
       name={name}
       value={value}
       onChange={onChange}
       className={classes.textField}
-      autoComplete="off"
+      autoComplete='off'
       {...(error && { error: true, helperText: error })}
     />
   ) : (
     <FormControl
-      variant="outlined"
+      variant='outlined'
       error={error && error.length > 0 ? true : false}
       className={classes.textField}
     >
-      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+      <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
       <OutlinedInput
-        id="outlined-adornment-password"
+        id='outlined-adornment-password'
         type={showPassword ? "text" : "password"}
-        name="password"
+        name='password'
         value={value}
         onChange={onChange}
         {...(error && { error: true })}
         endAdornment={
-          <InputAdornment position="end">
+          <InputAdornment position='end'>
             <IconButton
-              aria-label="toggle password visibility"
+              aria-label='toggle password visibility'
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
-              edge="end"
+              edge='end'
             >
               {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
@@ -80,7 +80,7 @@ export default function CustomTextField(props) {
         }
         labelWidth={70}
       />
-      <FormHelperText id="component-error-text">{error}</FormHelperText>
+      <FormHelperText id='component-error-text'>{error}</FormHelperText>
     </FormControl>
   );
 }

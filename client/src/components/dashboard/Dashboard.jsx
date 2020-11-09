@@ -1,22 +1,20 @@
+import {
+  CssBaseline,
+  makeStyles,
+  ThemeProvider,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+} from "@material-ui/core";
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
+import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
+import { getSubscriptions } from "../../actions/subscriptions";
+import Notifications from "../notifications/notifications";
+import Player from "../player/player";
+import Header from "./Header";
+import Playlist from "./Playlist";
 import Sidebar from "./Sidebar";
 import Trending from "./Trending";
-import Playlist from "./Playlist";
-import Notifications from "../notifications/notifications";
-import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
-import Button from "@material-ui/core/Button";
-
-import {
-  makeStyles,
-  CssBaseline,
-  unstable_createMuiStrictModeTheme as createMuiTheme,
-  ThemeProvider,
-} from "@material-ui/core";
-import Header from "./Header";
-import Player from "../player/player";
-import { getSubscriptions } from "../../actions/subscriptions";
-import { useDispatch, useSelector } from "react-redux";
-import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 
 const theme = createMuiTheme({
   palette: {

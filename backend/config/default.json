@@ -5,5 +5,8 @@
   "spotifyClientId": "05442626b8a84afb967b52c4f33ca837",
   "spotifyClientSecret": "c4a54e089a5f4d7e815289b4fbb9cbbe",
   "email_account": "comp3900405foundlol@gmail.com",
-  "email_password": "Adm1N123!"
+  "email_password": "Adm1N123!",
+  "listenNotesAPIKey1": "5df881c89d644904bc39af8b922c9441",
+  "listenNotesAPIKey2": "d370e5f11d0a4b14956d88517e75fd8a",
+  "listenNotesAPIKey3": "49ec7884ad4a47f2be99eed90a061cf4"
 }

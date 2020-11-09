@@ -18,7 +18,6 @@ const History = () => {
 
   useEffect(() => {
     axios.get("/api/user-history").then((res) => {
-      console.log(res);
       setHistory(res.data.reverse());
       setLoading(false);
     });
@@ -31,9 +30,9 @@ const History = () => {
   return (
     <Grid container style={{ width: "98%" }}>
       <Grid style={{ height: "40vh", overflowY: "scroll" }} item xs={12}>
-        <ul className="list-group mb-4">
+        <ul className='list-group mb-4'>
           {historyDetails.map((episode) => (
-            <li key={episode._id} className="list-group-item">
+            <li key={episode._id} className='list-group-item'>
               <div style={{ textAlign: "left", color: "black" }}>
                 <b>{episode.showName}</b>: {episode.episodeName}
               </div>

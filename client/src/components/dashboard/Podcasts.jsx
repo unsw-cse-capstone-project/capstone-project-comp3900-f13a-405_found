@@ -33,7 +33,7 @@ const DialogTitle = withStyles(styles)((props) => {
       </Typography>
       {onClose ? (
         <IconButton
-          aria-label="close"
+          aria-label='close'
           className={classes.closeButton}
           onClick={onClose}
         >
@@ -90,22 +90,22 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
   }
 
   return (
-    <ul className="list-group mb-4">
+    <ul className='list-group mb-4'>
       {podcasts.map((podcasts) => (
         <li
           onClick={handleClickOpen.bind(this, podcasts)}
           key={podcasts.id}
-          className="list-group-item"
+          className='list-group-item'
         >
           <div style={{ textAlign: "left", color: "black" }}>
             {podcasts.name}
           </div>
           <div style={{ textAlign: "right", color: "black" }}>
             <img
-              height="60px"
-              width="60px"
+              height='60px'
+              width='60px'
               src={podcasts.images[0].url}
-              alt="podcastimage"
+              alt='podcastimage'
             />
           </div>
         </li>

@@ -114,7 +114,6 @@ const Signup = ({ history }) => {
             value={values.name}
             onChange={handleInputChange}
             error={errors.name}
-            //helperText={errors.name}
           />
           <CustomTextField
             label='Email'

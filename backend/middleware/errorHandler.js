@@ -6,8 +6,8 @@ const errorHandler = (err, req, res, next) => {
     if (err.getShouldRemoveCookie()) {
       res.clearCookie("token");
     }
-  } catch(err) {
-    // Do nothing. 
+  } catch (err) {
+    // Do nothing.
   }
   if (err instanceof Errors) {
     return res.status(err.code()).json({

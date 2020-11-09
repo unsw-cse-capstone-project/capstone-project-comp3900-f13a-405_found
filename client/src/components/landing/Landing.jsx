@@ -43,7 +43,6 @@ const LoginComp = () => {
     const share_exists = localStorage.getItem("share_set") === "true";
     const shareId = share_exists ? localStorage.getItem("share_id") : null;
     setShare_id(shareId);
-    console.log(shareId);
   }, []);
 
   const handleSubmit = (e) => {
@@ -103,50 +102,50 @@ const LoginComp = () => {
       />
     );
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="row">
-          <div className="middle-column">
-            <img src={logo} className="App-logo" alt="logo" />
-            <Typography component={"div"} variant="h5" gutterBottom>
+    <div className='App'>
+      <header className='App-header'>
+        <div className='row'>
+          <div className='middle-column'>
+            <img src={logo} className='App-logo' alt='logo' />
+            <Typography component={"div"} variant='h5' gutterBottom>
               {" "}
               UltraCast{" "}
             </Typography>
-            <form className="loginForm" onSubmit={handleSubmit}>
+            <form className='loginForm' onSubmit={handleSubmit}>
               <div>
                 <CustomTextField
-                  label="Email"
-                  name="email"
-                  variant="outlined"
+                  label='Email'
+                  name='email'
+                  variant='outlined'
                   value={values.email}
                   onChange={handleInputChange}
                   error={errors.email}
                 />
                 <CustomTextField
-                  label="Password"
-                  name="password"
-                  type="password"
-                  variant="outlined"
+                  label='Password'
+                  name='password'
+                  type='password'
+                  variant='outlined'
                   value={values.password}
                   onChange={handleInputChange}
                   error={errors.password}
                 />
               </div>
-              <div className="loginForm-buttons">
+              <div className='loginForm-buttons'>
                 <Button
                   className={classes.root}
-                  size="large"
-                  variant="contained"
-                  type="submit"
+                  size='large'
+                  variant='contained'
+                  type='submit'
                 >
                   Login
                 </Button>{" "}
-                <Link style={{ textDecoration: "none" }} to="/signup">
+                <Link style={{ textDecoration: "none" }} to='/signup'>
                   <Button
                     className={classes.root}
-                    color="primary"
-                    size="large"
-                    variant="contained"
+                    color='primary'
+                    size='large'
+                    variant='contained'
                   >
                     Sign Up
                   </Button>

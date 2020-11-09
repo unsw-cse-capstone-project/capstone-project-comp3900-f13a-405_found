@@ -89,7 +89,7 @@ const Recommendations = () => {
       <div className={classes.load}>
         <Typography>Generating your custom recommendedations...</Typography>
         <LinearProgress />
-        <LinearProgress color="secondary" />
+        <LinearProgress color='secondary' />
       </div>
     );
   }
@@ -99,7 +99,7 @@ const Recommendations = () => {
       container
       spacing={4}
       className={classes.gridContainer}
-      justify="center"
+      justify='center'
     >
       {podcasts.map((podcast) => (
         <Grid item xs={12} sm={6} md={4} key={podcast.id}>
@@ -113,9 +113,9 @@ const Recommendations = () => {
               <CardContent>
                 <Typography
                   classes={{ root: classes.fontSizeGrid }}
-                  variant="h6"
+                  variant='h6'
                   gutterBottom
-                  component="h2"
+                  component='h2'
                 >
                   {podcast.name}
                 </Typography>
@@ -124,11 +124,11 @@ const Recommendations = () => {
           </Card>
         </Grid>
       ))}
-      <Grid container justify="flex-end">
+      <Grid container justify='flex-end'>
         <Button
-          color="primary"
-          size="medium"
-          variant="contained"
+          color='primary'
+          size='medium'
+          variant='contained'
           onClick={() => shufflePods()}
         >
           Shuffle

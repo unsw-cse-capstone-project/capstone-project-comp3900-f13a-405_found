@@ -1,36 +1,34 @@
-import React, { useEffect, useState } from "react";
 import {
-  withStyles,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  withStyles,
 } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getShowsDetailsByListOfIds,
-  getSubscribedShowsSubsCount,
-  getSubscribedShowsNewEpisodes,
-} from "../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Link } from "react-router-dom";
-import "./Sidebar.scss";
+import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 import QueueMusicIcon from "@material-ui/icons/QueueMusic";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { logout } from "../../actions/authentication";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { logout } from "../../actions/authentication";
+import {
+  getShowsDetailsByListOfIds,
+  getSubscribedShowsNewEpisodes,
+  getSubscribedShowsSubsCount,
+} from "../../actions/subscriptions";
+import "./Sidebar.scss";
 
 const style = {
   sidebar: {
@@ -122,15 +120,15 @@ const Sidebar = (props) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <List
-          component="nav"
+          component='nav'
           className={classes.sidebaritems}
-          aria-labelledby="nested-list-subheader"
+          aria-labelledby='nested-list-subheader'
         >
           <ListItem button onClick={handleLogout}>
             <ListItemIcon className={classes.icons}>
               <ExitToAppIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText primary='Logout' />
           </ListItem>
           <Divider style={{ backgroundColor: "white" }} />
           <ListItem
@@ -142,7 +140,7 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <HomeIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary='Dashboard' />
           </ListItem>
           <ListItem
             button
@@ -153,7 +151,7 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <AccountCircleIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary="User Page" />
+            <ListItemText primary='User Page' />
           </ListItem>
           <ListItem
             button
@@ -164,7 +162,7 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <QueueMusicIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary="Playlist" />
+            <ListItemText primary='Playlist' />
           </ListItem>
           <ListItem
             button
@@ -175,38 +173,38 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <ShowChartIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary="Trending Shows" />
+            <ListItemText primary='Trending Shows' />
           </ListItem>
           <ListItem button onClick={handleExpandClick}>
             <ListItemIcon className={classes.icons}>
               <InboxIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary="Subscriptions" />
+            <ListItemText primary='Subscriptions' />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open} timeout='auto' unmountOnExit>
             {!subscriptionState.isLoaded ? (
-              <CircularProgress size={200} thickness={6} color="secondary" />
+              <CircularProgress size={200} thickness={6} color='secondary' />
             ) : subscriptionState.detailedSubscriptions.length > 0 ? (
               subscriptionState.detailedSubscriptions.map((subs) => (
                 <List
                   key={subs.id}
-                  component="div"
+                  component='div'
                   className={classes.paddingItems}
                 >
                   <ListItemText className={classes.nested}>
                     <ListItemText
                       style={{ display: "flex" }}
-                      component="span"
+                      component='span'
                       className={classes.backgroundComponent}
                     >
                       <ListItemIcon>
                         <img
-                          height="60px"
-                          width="60px"
+                          height='60px'
+                          width='60px'
                           src={subs.images[0].url}
-                          alt="trending"
-                          className="showImages"
+                          alt='trending'
+                          className='showImages'
                         />
                       </ListItemIcon>
                       <ListItemText

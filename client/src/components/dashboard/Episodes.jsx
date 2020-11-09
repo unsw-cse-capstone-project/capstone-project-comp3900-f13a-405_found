@@ -70,18 +70,10 @@ const Episodes = ({ podcastEpisodes }) => {
 
     axios
       .post(`/api/user-history/${episode.id}`, {}, config)
-      .then(function (response) {
-        console.log(response.data);
-      })
+      .then(function (response) {})
       .catch(function (error) {
         console.log(error);
       });
-    // .then(() => {
-    //   axios.get(`api/user-history/${episode.id}`)
-    //   .then(function (response) {
-    //   console.log(response.data.Viewed);
-    // })
-    // });
     const copy = beenPlayed;
     copy[`${episode.id}`] = true;
     setPlayed(copy);
@@ -112,7 +104,6 @@ const Episodes = ({ podcastEpisodes }) => {
           axios
             .get(`api/user-history/${element.id}`, {}, config)
             .then(function (response) {
-              console.log(response);
               myObj[`${element.id}`] = response.data;
             })
             .catch(function (error) {
@@ -155,7 +146,6 @@ const Episodes = ({ podcastEpisodes }) => {
               ) : (
                 <RadioButtonUncheckedIcon fontSize='small' />
               )}
-              {/* {console.log(beenPlayed)} */}
               {episode.name}
             </Typography>
           </AccordionSummary>
