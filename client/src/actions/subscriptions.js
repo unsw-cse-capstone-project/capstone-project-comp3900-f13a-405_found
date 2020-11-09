@@ -154,7 +154,7 @@ export const getSubscribedShowsNewEpisodes = (ids) => async (dispatch) => {
         const day = releaseDate[2];
         const month = releaseDate[1];
 
-        if (today >= day && month === thisMonth) {
+        if (today >= day && parseInt(month) === thisMonth) {
           return today - parseInt(day) <= daysInWeek;
         } else if (today < day && parseInt(month) === thisMonth - 1) {
           return parseInt(day) + daysInMonth - today <= daysInWeek;
