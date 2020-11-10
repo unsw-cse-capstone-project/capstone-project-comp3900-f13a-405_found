@@ -32,3 +32,6 @@ Week 7
 Week 8
 - I helped other members by doing pair programming
 - Redesigned the UI of the sidebar so that it looks more aesthetically pleasing
+
+Week 9
+- cleaned up the code structure for software quality
