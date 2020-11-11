@@ -129,6 +129,36 @@ const Player = ( {} ) => {
   const handleSeekChange = (e) => {
     // dispatch({ type: SET_PLAYED, played: parseFloat(e.target.value) });
     setPlayed(parseFloat(e.target.value));
+
+    async function uploadEpisodeDetails() {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        };
+
+        const p_id = playerState.episode_id;
+        //const p_url = String(playerState.url);
+        //const p_image = String(playerState.image);
+        console.log("SEEK image: " + playerState.image);
+        console.log("SEEK URL: " + playerState.url);
+        console.log("SEEK episode_id: " + playerState.episode_id);
+
+        const res = await axios.post(
+          `/api/latest-episode/${p_id}/${played}`, 
+          { p_url: playerState.url,
+            p_image: playerState.image },
+          config
+        ); 
+        console.log("data in handlePause: " + res);
+
+      } catch (err) {
+        displayAlert("An Error Occurred handlePlay()");
+      }    
+    }
+    uploadEpisodeDetails();
   };
 
   const handleSeekMouseUp = (e) => {
