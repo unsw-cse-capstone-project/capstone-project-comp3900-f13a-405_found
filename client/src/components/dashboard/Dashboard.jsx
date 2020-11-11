@@ -38,6 +38,7 @@ const useStyles = makeStyles({
     paddingLeft: "160px",
     width: "100%",
     paddingTop: "10px",
+    height: "100%",
   },
 });
 
@@ -59,7 +60,7 @@ const Dashboard = () => {
           overflowHeight={0}
           open={playerState.isVisible}
           overlay={false}
-          style={{ left: "280px" }}
+          style={{ left: "280px", zIndex: "1200" }}
         >
           <Player />
         </SwipeableBottomSheet>

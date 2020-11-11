@@ -43,15 +43,8 @@ const UserPage = () => {
   }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
-      <SwipeableBottomSheet
-        overflowHeight={0}
-        open={playerState.isVisible}
-        overlay={false}
-        style={{ zIndex: "1" }}
-      >
-      </SwipeableBottomSheet>
       <div className={classes.center}>
-        <User />
+        <User style={{ zIndex: "-9999" }} />
       </div>
       <CssBaseline />
     </ThemeProvider>

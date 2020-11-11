@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PlaylistSelector from "../Playlist/PlaylistSelector";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
   playButton: {
     fontSize: "50px",
+    width: "50px",
+    float: "left",
     display: "block",
     "&:hover": {
       cursor: "pointer",
     },
+  },
+  playlistSelect: {
+    width: "80%",
+    marginBottom: "5px",
+    float: "right",
   },
 }));
 
@@ -137,20 +145,20 @@ const Episodes = ({ podcastEpisodes }) => {
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1bh-content'
-            id='panel1bh-header'
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
           >
             <Typography component={"div"} className={classes.name}>
               {!beenPlayed[`${episode.id}`] ? (
-                <RadioButtonCheckedIcon fontSize='small' />
+                <RadioButtonCheckedIcon fontSize="small" />
               ) : (
-                <RadioButtonUncheckedIcon fontSize='small' />
+                <RadioButtonUncheckedIcon fontSize="small" />
               )}
               {episode.name}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography component={"div"}>
+            {/* <div>
               {!playerState.playing ? (
                 <PlayCircleFilledWhiteIcon
                   onClick={() => {
@@ -171,14 +179,50 @@ const Episodes = ({ podcastEpisodes }) => {
                   className={classes.playButton}
                 />
               )}
-              <div style={{ width: "50%", marginBottom: "5px" }}>
+              <div className={classes.playlistSelect}>
                 <PlaylistSelector
                   episodeId={episode.id}
                   style={{ width: "30px" }}
                 />
               </div>
               {episode.description}
-            </Typography>
+            </div>
+             */}
+            <Grid container spacing={3}>
+              <Grid item xs={1}>
+                {!playerState.playing ? (
+                  <PlayCircleFilledWhiteIcon
+                    onClick={() => {
+                      handlePlay(episode);
+                    }}
+                    className={classes.playButton}
+                  />
+                ) : playerState.episode_id === episode.id ? (
+                  <PauseCircleFilledWhiteIcon
+                    onClick={handlePause}
+                    className={classes.playButton}
+                  />
+                ) : (
+                  <PlayCircleFilledWhiteIcon
+                    onClick={() => {
+                      handlePlay(episode);
+                    }}
+                    className={classes.playButton}
+                  />
+                )}
+              </Grid>
+              <Grid item xs={11}>
+                <div className={classes.playlistSelect}>
+                  <PlaylistSelector
+                    episodeId={episode.id}
+                    style={{ width: "30px" }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                {episode.description}
+              </Grid>
+            </Grid>
           </AccordionDetails>
         </Accordion>
       ))}
