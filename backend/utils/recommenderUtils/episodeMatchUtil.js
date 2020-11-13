@@ -24,7 +24,7 @@ const findShowId = async function (episodeId) {
 const getShowIdsFromHist = async function (history) {
   if ((history.length = 0)) return history;
   const trimmedHistory = lodash.takeRight(history, 5);
-  const episodeIds = lodash.map(trimmedHistory, "podcast_id");
+  const episodeIds = lodash.map(trimmedHistory, "episodeId");
   const matchedIds = [];
   for (episodeId of episodeIds) {
     var res = await findShowId(episodeId);
@@ -34,6 +34,9 @@ const getShowIdsFromHist = async function (history) {
   return showIds;
 };
 
+// @desc: Returns a list of unique showIds given a list of episodeIds and showIds
+// @inputs: history, subscriptions - list of episodeIds, list of showIds.
+// @output: showIds: list of showIds.
 EpisodeMatch.prototype.getShowIds = async function (history, subscriptions) {
   const showIdsFromHist = await getShowIdsFromHist(history);
   const showIdsFromSubs = lodash.map(subscriptions, "showId");

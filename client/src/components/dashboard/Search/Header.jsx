@@ -11,7 +11,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
-import Podcasts from "./Podcasts";
+import Podcasts from "../DetailedView/Podcasts";
 
 const theme = createMuiTheme({
   palette: {

@@ -1,4 +1,3 @@
-// Utility methods for finding equivalent spotify ids given a podcast title and publisher.
 const axios = require("axios");
 const lodash = require("lodash");
 
@@ -36,11 +35,16 @@ const matchSpotifyRecs = async function (listenNotesRecs) {
   return filteredRecs;
 };
 
+// @desc:    Returns a list of Spotify show objects given a list of shows
+// @inputs:  listenNotesRecs - list of objects {name,publisher}
+// @outputs: spotifyRec - list of spotify response objects.
 SpotifyUtil.prototype.getMatchedSpotifyRecs = async function (listenNotesRecs) {
   const spotifyRecs = matchSpotifyRecs(listenNotesRecs);
   return spotifyRecs;
 };
 
+// @desc:    Returns a list of Spotify shows for a user with no history or subscriptions
+// @outputs: spotifyResponse.data.show.items - list of spotify shows.
 SpotifyUtil.prototype.getRecommendationsForNewUsers = async function () {
   try {
     const uri = encodeURI(

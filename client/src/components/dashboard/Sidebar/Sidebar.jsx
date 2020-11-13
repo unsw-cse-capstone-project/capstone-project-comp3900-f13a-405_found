@@ -22,12 +22,12 @@ import ShowChartIcon from "@material-ui/icons/ShowChart";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logout } from "../../actions/authentication";
+import { logout } from "../../../actions/authentication";
 import {
   getShowsDetailsByListOfIds,
   getSubscribedShowsNewEpisodes,
   getSubscribedShowsSubsCount,
-} from "../../actions/subscriptions";
+} from "../../../actions/subscriptions";
 import "./Sidebar.scss";
 
 const style = {
@@ -88,13 +88,6 @@ const Sidebar = (props) => {
     dispatch(logout());
   };
 
-  const getSubCount = (id) => {
-    const item = subscriptionState.subscribedShowSubCounts.filter(
-      (i) => i.id === id
-    );
-    if (item.length <= 0) return 0;
-    return item[0].count;
-  };
   const getNewEpisodes = (id) => {
     const item = subscriptionState.subscribedEpisodes.filter(
       (i) => i.id === id
@@ -120,15 +113,15 @@ const Sidebar = (props) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <List
-          component='nav'
+          component="nav"
           className={classes.sidebaritems}
-          aria-labelledby='nested-list-subheader'
+          aria-labelledby="nested-list-subheader"
         >
           <ListItem button onClick={handleLogout}>
             <ListItemIcon className={classes.icons}>
               <ExitToAppIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary='Logout' />
+            <ListItemText primary="Logout" />
           </ListItem>
           <Divider style={{ backgroundColor: "white" }} />
           <ListItem
@@ -140,18 +133,18 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <HomeIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary='Dashboard' />
+            <ListItemText primary="Dashboard" />
           </ListItem>
           <ListItem
             button
             onClick={() => {
-              history.push("/userpage");
+              history.push("/dashboard/userpage");
             }}
           >
             <ListItemIcon className={classes.icons}>
               <AccountCircleIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary='User Page' />
+            <ListItemText primary="User Page" />
           </ListItem>
           <ListItem
             button
@@ -162,7 +155,7 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <QueueMusicIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary='Playlist' />
+            <ListItemText primary="Playlist" />
           </ListItem>
           <ListItem
             button
@@ -173,38 +166,38 @@ const Sidebar = (props) => {
             <ListItemIcon className={classes.icons}>
               <ShowChartIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary='Trending Shows' />
+            <ListItemText primary="Trending Shows" />
           </ListItem>
           <ListItem button onClick={handleExpandClick}>
             <ListItemIcon className={classes.icons}>
               <InboxIcon className={classes.icons} />
             </ListItemIcon>
-            <ListItemText primary='Subscriptions' />
+            <ListItemText primary="Subscriptions" />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={open} timeout='auto' unmountOnExit>
+          <Collapse in={open} timeout="auto" unmountOnExit>
             {!subscriptionState.isLoaded ? (
-              <CircularProgress size={200} thickness={6} color='secondary' />
+              <CircularProgress size={200} thickness={6} color="secondary" />
             ) : subscriptionState.detailedSubscriptions.length > 0 ? (
               subscriptionState.detailedSubscriptions.map((subs) => (
                 <List
                   key={subs.id}
-                  component='div'
+                  component="div"
                   className={classes.paddingItems}
                 >
                   <ListItemText className={classes.nested}>
                     <ListItemText
                       style={{ display: "flex" }}
-                      component='span'
+                      component="span"
                       className={classes.backgroundComponent}
                     >
                       <ListItemIcon>
                         <img
-                          height='60px'
-                          width='60px'
+                          height="60px"
+                          width="60px"
                           src={subs.images[0].url}
-                          alt='trending'
-                          className='showImages'
+                          alt="trending"
+                          className="showImages"
                         />
                       </ListItemIcon>
                       <ListItemText

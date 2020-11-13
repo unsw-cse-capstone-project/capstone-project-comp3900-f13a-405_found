@@ -12,7 +12,7 @@ import {
   getPlaylists,
   addToPlaylist,
   removeFromPlaylist,
-} from "../../actions/playlist";
+} from "../../../actions/playlist";
 
 const PlaylistSelector = (props) => {
   const playlistState = useSelector((state) => state.playlist);
@@ -21,7 +21,7 @@ const PlaylistSelector = (props) => {
 
   useEffect(() => {
     dispatch(getPlaylists());
-  }, []);
+  }, [dispatch]);
 
   const handleAddPlaylist = (playlistId, episodeId) => {
     dispatch(addToPlaylist(playlistId, episodeId));
@@ -48,8 +48,8 @@ const PlaylistSelector = (props) => {
                   {playlist.playlistName}
                 </Typography>
                 {playlist.playlistEpisodes.filter(
-                  (episode) => episode.id == props.episodeId
-                ).length == 1 ? (
+                  (episode) => episode.id === props.episodeId
+                ).length === 1 ? (
                   <RemoveCircleIcon
                     onClick={() =>
                       handleRemovePlaylist(playlist._id, props.episodeId)

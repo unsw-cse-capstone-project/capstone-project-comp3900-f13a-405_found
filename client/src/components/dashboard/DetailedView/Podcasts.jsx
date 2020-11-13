@@ -1,54 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SubscribeButton from "../SubscribeButton";
-import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import Episodes from "./Episodes";
 import { DetailedView } from "./DetailedView";
-
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-});
-
-const DialogTitle = withStyles(styles)((props) => {
-  const { children, classes, onClose, ...other } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography component={"div"} variant='h6'>
-        {children}
-      </Typography>
-      {onClose ? (
-        <IconButton
-          aria-label='close'
-          className={classes.closeButton}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
 
 const Podcasts = ({ podcasts, loading, share_id }) => {
   const [open, setOpen] = useState(false);
@@ -70,7 +22,7 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
   const fetchPodcast = async (id) => {
     try {
       const res = await axios.get(`/api/spotify/shows/${id}`);
-      if (res.status == 200) {
+      if (res.status === 200) {
         handleClickOpen(res.data);
       }
     } catch (err) {
@@ -83,7 +35,7 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
       // If there is a share_id, fetch for the current podcast and set it
       fetchPodcast(share_id);
     }
-  }, []);
+  });
 
   if (loading) {
     return <h2>Loading...</h2>;

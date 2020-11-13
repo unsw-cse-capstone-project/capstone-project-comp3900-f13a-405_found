@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getTrendingShows,
   getShowsDetailsByListOfIds,
-} from "../../actions/subscriptions";
+} from "../../../actions/subscriptions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "./Trending.scss";
 import Grid from "@material-ui/core/Grid";

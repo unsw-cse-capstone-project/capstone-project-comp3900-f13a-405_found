@@ -24,7 +24,7 @@ export default function playlist(state = initial_state, action) {
         ...state,
         isLoaded: true,
         playlists: state.playlists.filter(
-          (playlist) => playlist._id != action.payload
+          (playlist) => playlist._id !== action.payload
         ),
       };
     case ADD_TO_PLAYLIST_SUCCESS:
@@ -32,7 +32,7 @@ export default function playlist(state = initial_state, action) {
         ...state,
         isLoaded: true,
         playlists: state.playlists.map((playlist) => {
-          if (playlist._id == action.payload._id) {
+          if (playlist._id === action.payload._id) {
             return action.payload;
           }
           return playlist;
@@ -43,7 +43,7 @@ export default function playlist(state = initial_state, action) {
         ...state,
         isLoaded: true,
         playlists: state.playlists.map((playlist) => {
-          if (playlist._id == action.payload._id) {
+          if (playlist._id === action.payload._id) {
             return action.payload;
           }
           return playlist;

@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    height: 400,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 const History = () => {
   const [isLoading, setLoading] = useState(true);
@@ -28,11 +19,14 @@ const History = () => {
   }
 
   return (
-    <Grid container style={{ width: "98%" }}>
-      <Grid style={{ height: "40vh", overflowY: "scroll" }} item xs={12}>
-        <ul className='list-group mb-4'>
+    <Grid
+      container
+      style={{ height: "95%", overflowY: "scroll", width: "98%" }}
+    >
+      <Grid style={{}} item xs={12}>
+        <ul className="list-group mb-4">
           {historyDetails.map((episode) => (
-            <li key={episode._id} className='list-group-item'>
+            <li key={episode._id} className="list-group-item">
               <div style={{ textAlign: "left", color: "black" }}>
                 <b>{episode.showName}</b>: {episode.episodeName}
               </div>

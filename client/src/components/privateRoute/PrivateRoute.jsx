@@ -19,7 +19,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       localStorage.setItem('share_set', true);
     }
     dispatch(checkUserStillVerified());
-  }, [dispatch]);
+  }, [dispatch, rest.location.pathname]);
 
   return (
     <Route

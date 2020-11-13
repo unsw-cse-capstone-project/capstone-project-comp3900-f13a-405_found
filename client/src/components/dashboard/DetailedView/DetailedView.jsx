@@ -8,8 +8,9 @@ import MuiDialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Episodes from "./Episodes";
 import Typography from "@material-ui/core/Typography";
-import SubscribeButton from "../SubscribeButton";
+import SubscribeButton from "../../SubscribeButton";
 import Snackbar from "@material-ui/core/Snackbar";
+import { Grid } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
@@ -28,12 +29,12 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography component={"div"} variant='h6'>
+      <Typography component={"div"} variant="h6">
         {children}
       </Typography>
       {onClose ? (
         <IconButton
-          aria-label='close'
+          aria-label="close"
           className={classes.closeButton}
           onClick={onClose}
         >
@@ -69,14 +70,14 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
   return (
     <Dialog
       onClose={handleClose}
-      aria-labelledby='customized-dialog-title'
+      aria-labelledby="customized-dialog-title"
       open={open}
     >
-      <DialogTitle id='customized-dialog-title'>
+      <DialogTitle id="customized-dialog-title">
         {selectedPod.name}
         <IconButton
           style={{ position: "absolute", right: "0", top: "0" }}
-          aria-label='close'
+          aria-label="close"
           onClick={handleClose}
           className={styles.closeButton}
         >
@@ -84,22 +85,29 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        <Typography component={"div"} gutterBottom>
-          {selectedPod.description}
-        </Typography>
-        <SubscribeButton id={selectedPod.id} />
-        <Button
-          size='large'
-          variant='contained'
-          onClick={() => HandleCopyURL(selectedPod)}
-        >
-          Generate Share Podcast URL
-        </Button>
-        <img height='60px' width='60px' src={img} alt='podcastimage' />
+        <Grid container spacing={3} style={{ paddingBottom: "10px" }}>
+          <Grid item xs={8} style={{ fontSize: "16px" }}>
+            {selectedPod.description}
+          </Grid>
+          <Grid item xs={3} style={{ padding: "10px" }}>
+            <img height="160px" width="160px" src={img} alt="podcastimage" />
+          </Grid>
+          <Grid item xs={12}>
+            <SubscribeButton id={selectedPod.id} />
+            <Button
+              size="large"
+              variant="contained"
+              onClick={() => HandleCopyURL(selectedPod)}
+            >
+              Generate Share Podcast URL
+            </Button>
+          </Grid>
+        </Grid>
         <Typography component={"div"} gutterBottom>
           <Episodes
             podcastName={selectedPod.name}
             podcastEpisodes={selectedPod}
+            style={{ paddingTop: "10px" }}
           />
         </Typography>
         <Typography component={"div"} gutterBottom></Typography>
@@ -112,16 +120,16 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
         open={openSnack}
         autoHideDuration={6000}
         onClose={handleSnackClose}
-        message='Podcast URL Copied to Clipboard'
+        message="Podcast URL Copied to Clipboard"
         action={
           <React.Fragment>
             <IconButton
-              size='small'
-              aria-label='close'
-              color='inherit'
+              size="small"
+              aria-label="close"
+              color="inherit"
               onClick={handleSnackClose}
             >
-              <CloseIcon fontSize='small' />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </React.Fragment>
         }

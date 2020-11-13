@@ -9,11 +9,10 @@ import Alert from "./components/alert/Alert";
 import ActivateEmail from "./components/authentication/ActivateEmail";
 import Signup from "./components/authentication/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
-import Playlist from "./components/dashboard/Playlist";
+import Playlist from "./components/dashboard/Playlist/Playlist";
 import EmailLanding from "./components/landing/EmailLanding";
 import LoginComp from "./components/landing/Landing";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
-import UserPage from "./components/user/UserPage";
 import store from "./store";
 const NotFound = () => (
   <img style={{ width: "100%" }} src={notfoundmeme} alt='notFound' />
@@ -32,7 +31,6 @@ const App = () => {
             <Switch>
               <Route exact path='/' component={LoginComp} />
               <Route exact path='/signup' component={Signup} />
-              <PrivateRoute path='/userpage' component={UserPage} />
               <Route
                 exact
                 path='/please-click-email'
