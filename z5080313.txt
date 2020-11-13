@@ -1,7 +1,6 @@
 Week 1
 We had our first meeting where we introduced ourselves and decided that Theon would be the scrum master. 
 
-
 Week 2
 First sprint started:
 I made rough sketches of the user interface diagrams and got feedback from the group.
@@ -10,3 +9,26 @@ Created the designs digitally on Figma for the proposal/to reference during the 
 Week 3
 Had a meeting to discuss how the first sprint went. Allocated tasks for next sprint.
 I worked on the front end for the log in and registration page.
+
+Week 4
+Did the basic front end for the user dashboard. 
+This included the serach function and disaplying podcast results with names and images.
+
+Week 5
+Did the front end for history of user's episodes
+Did the front end for detailed view of podcasts.
+Worked on displaying "played" if a podcast has been played by the user
+
+Week 6
+Completed displaying "played" if a podcast has been played by the user
+Started work on the front end for the userpage and recommedation view
+
+Week 7
+Finshed the front end for the userpage and recommedation view.
+Combined it with the episode history front end.
+
+Week 8
+Clenaed up the UI and refactored parts of the code.
+
+Week 9
+Did some final bug fixes and UI tweaking.
