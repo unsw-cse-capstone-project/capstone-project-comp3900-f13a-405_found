@@ -70,7 +70,6 @@ const Signup = ({ history }) => {
       message.loading({ content: "Loading...", key: id });
 
       dispatch(signup({ name, email, password, id, optInEmail }, history));
-      //resetForm()
     }
   };
 
@@ -87,7 +86,6 @@ const Signup = ({ history }) => {
         [name]: value,
       });
     }
-    //if (validateOnChange)
     validate({ [name]: value });
   };
 
@@ -105,7 +103,7 @@ const Signup = ({ history }) => {
       <div className='row'>
         <div className='middle-column2'>
           <img src={logo} className='App-logo' alt='logo' />
-          <Typography variant='h5' gutterBottom>
+          <Typography component={"div"} variant='h5' gutterBottom>
             {" "}
             Sign up for UltraCast{" "}
           </Typography>
@@ -118,7 +116,6 @@ const Signup = ({ history }) => {
             error={errors.name}
             //helperText={errors.name}
           />
-          <p></p>
           <CustomTextField
             label='Email'
             name='email'
@@ -127,7 +124,6 @@ const Signup = ({ history }) => {
             onChange={handleInputChange}
             error={errors.email}
           />
-          <p></p>
           <CustomTextField
             label='Password'
             name='password'
@@ -137,7 +133,6 @@ const Signup = ({ history }) => {
             error={errors.password}
             passwordViewable={true}
           />
-          <p></p>
           <CustomTextField
             variant='outlined'
             label='Confirm Password'
@@ -147,7 +142,6 @@ const Signup = ({ history }) => {
             onChange={handleInputChange}
             error={errors.confirmPassword}
           />
-          <p></p>
           <div
             style={{
               display: "flex",
@@ -163,10 +157,10 @@ const Signup = ({ history }) => {
               onChange={handleInputChange}
               inputProps={{ "aria-label": "primary checkbox" }}
             />
-            <p style={{ textAlign: "left" }}>
+            <div style={{ textAlign: "left" }}>
               I opt in for emails (we will email you new episodes based on your
               subscription)
-            </p>
+            </div>
           </div>
           <Button
             size='large'

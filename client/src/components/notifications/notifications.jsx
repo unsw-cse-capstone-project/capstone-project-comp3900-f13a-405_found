@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import NotificationBox from "./notificationBox";
-import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Badge from "@material-ui/core/Badge";
@@ -32,7 +31,7 @@ export const Notifications = () => {
       }
       setLoading(false);
     });
-  }, []);
+  });
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -43,9 +42,9 @@ export const Notifications = () => {
   const notifications = notificationsState.notifications;
 
   return (
-    <div style={{ position: "absolute", right: "0", top: "0" }}>
+    <div style={{ position: "absolute", right: "0", top: "0", zIndex: '4', width: '275px'}}>
       {isLoading ? (
-        <CircularProgress />
+        <CircularProgress style={{position: "absolute", right: "0", top: "0", margin: "10px"}}/>
       ) : (
         <>
           <Badge
@@ -55,8 +54,8 @@ export const Notifications = () => {
               cursor: "pointer",
               display: "block",
               marginLeft: "auto",
-              marginRight: "10px",
-              marginTop: "10px",
+              marginRight: "15px",
+              marginTop: "15px",
             }}
           >
             <NotificationsIcon
@@ -65,11 +64,18 @@ export const Notifications = () => {
                 cursor: "pointer",
                 display: "block",
                 marginLeft: "auto",
-                marginRight: "0px",
+                marginRight: "15px",
+                marginTop: "15px",
               }}
             />
           </Badge>
-          <NotificationBox notifications={notifications} expanded={expanded} />
+          <NotificationBox
+            style={{
+              zIndex: 15,
+            }}
+            notifications={notifications}
+            expanded={expanded}
+          />
         </>
       )}
     </div>

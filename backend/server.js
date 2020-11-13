@@ -39,12 +39,16 @@ app.use("/api/secure", checkAuth, require("./routes/api/secure-routes"));
 
 app.use("/api/subscription", checkAuth, require("./routes/api/subscription"));
 
+app.use("/api/user-history", checkAuth, require("./routes/api/user-history"));
+
+app.use("/api/playlist", checkAuth, require("./routes/api/playlist"));
+
 app.use("/api/notifications", checkAuth, require("./routes/api/notifications"));
 
 app.use(
-  "/api/user-history",
+  "/api/recommendations",
   checkAuth,
-  require("./routes/api/user-history.js")
+  require("./routes/api/recommendations")
 );
 
 // error handler

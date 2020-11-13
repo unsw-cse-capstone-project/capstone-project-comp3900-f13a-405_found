@@ -26,7 +26,7 @@ const getAccessTokenFromSpotify = async () => {
       headers,
     });
 
-    // this is global, access this anywhere (not really best practice but it's ez)
+    // this is global, access this anywhere
     SPOTIFY_ACCESS_TOKEN = spotifyResponse.data.access_token;
   } catch (err) {
     console.error(err.message);

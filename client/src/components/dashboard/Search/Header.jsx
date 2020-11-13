@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
 import {
   AppBar,
-  Toolbar,
   Grid,
   InputBase,
-  IconButton,
   makeStyles,
+  Toolbar,
   unstable_createMuiStrictModeTheme as createMuiTheme,
 } from "@material-ui/core";
-import axios from "axios";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
-import Podcasts from "./Podcasts";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
+import Podcasts from "../DetailedView/Podcasts";
 
 const theme = createMuiTheme({
   palette: {
@@ -25,7 +24,6 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
-    //width: "100vh"
   },
   searchInput: {
     opacity: "0.6",
@@ -46,6 +44,7 @@ export default function Header() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [podcastsPerPage] = useState(4);
+  const { share_id } = useParams();
 
   const fetchPodcasts = async (term) => {
     setLoading(true);
@@ -89,17 +88,18 @@ export default function Header() {
               onChange={handleSearchChange}
             />
           </Grid>
-          <Grid item sm></Grid>
-          <Grid item>
-            <IconButton>
-              <AccountCircleIcon fontSize='large' />
-            </IconButton>
-          </Grid>
         </Grid>
       </Toolbar>
       <Grid>
         <div className='container mt-5'>
-          <Podcasts podcasts={currentPodcasts} loading={loading} />
+          <Podcasts
+            style={{
+              zIndex: -1,
+            }}
+            podcasts={currentPodcasts}
+            loading={loading}
+            share_id={share_id}
+          />
           <Pagination
             className={theme.pag}
             podcastsPerPage={podcastsPerPage}
