@@ -1,5 +1,3 @@
-// utility functions for getting recommendations from listen notes.
-
 const axios = require("axios");
 const lodash = require("lodash");
 const config = require("config");
@@ -83,6 +81,9 @@ const getRecommendations = async function (showIds) {
   return filteredList;
 };
 
+// @desc:    Gets ListenNotes recommendations given a base list of show names and publishers.
+// @inputs:  showsList - list of objects {name, publisher}
+// @outputs: recommendations - list of objects {name, publisher}
 ListenNotes.prototype.getListenNotesRecs = async function (showsList) {
   const showIds = await getShowIds(showsList);
   const recommendations = await getRecommendations(showIds);

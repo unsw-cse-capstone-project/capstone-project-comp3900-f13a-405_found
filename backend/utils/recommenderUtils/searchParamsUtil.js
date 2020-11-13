@@ -1,6 +1,3 @@
-// Search Parameters Utility Methods:
-// @Desc  Given a MongoDB (JSON formatted) object for history and subscription,
-//        returns a list of all associated unique show ids.
 const axios = require("axios");
 
 var SearchParams = function () {};
@@ -28,9 +25,9 @@ const getShowsList = async function (showIds) {
   return shows;
 };
 
-// @desc: Gets a list of data objects given a user's history and subscriptions
-// @inputs: history, subscriptions
-// @outputs: shows - [data.1, ..., data.n]
+// @desc:    Gets a list of shows to search given its spotify ShowId
+// @inputs:  showIds - list of spotify ShowIDs
+// @outputs: searchParams - list of objects {name, publisher}
 SearchParams.prototype.getSearchParams = async function (showIds) {
   var SearchParams = await getShowsList(showIds);
   return SearchParams;

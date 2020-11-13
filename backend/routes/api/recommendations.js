@@ -10,7 +10,7 @@ const { BadRequest } = require("../../utils/errors");
 const router = express.Router();
 
 // @route  GET api/recommendations
-// @desc   For the logged in user, returns an recommendations object with properties nrecs = no recs and recs = [{o.type = spotify show}, ... {...}]
+// @desc Returns a list of recommendations for the currently logged in user.
 // @access Private
 router.get("/", async (req, res, next) => {
   try {

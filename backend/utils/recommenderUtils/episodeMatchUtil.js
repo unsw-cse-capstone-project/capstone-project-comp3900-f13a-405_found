@@ -24,7 +24,7 @@ const findShowId = async function (episodeId) {
 const getShowIdsFromHist = async function (history) {
   if ((history.length = 0)) return history;
   const trimmedHistory = lodash.takeRight(history, 5);
-  const episodeIds = lodash.map(trimmedHistory, "podcast_id");
+  const episodeIds = lodash.map(trimmedHistory, "episodeId");
   const matchedIds = [];
   for (episodeId of episodeIds) {
     var res = await findShowId(episodeId);
