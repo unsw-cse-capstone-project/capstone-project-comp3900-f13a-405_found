@@ -55,7 +55,6 @@ SpotifyUtil.prototype.getRecommendationsForNewUsers = async function () {
       Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
     };
     const spotifyResponse = await axios.get(uri, { headers });
-    console.log(spotifyResponse.data.shows.items.length);
     return spotifyResponse.data.shows.items;
   } catch (err) {
     console.error(err.message);
