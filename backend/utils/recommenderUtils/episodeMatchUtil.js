@@ -1,6 +1,5 @@
 const axios = require("axios");
 const lodash = require("lodash");
-const { NotFound } = require("../errors")
 
 var EpisodeMatch = function () {};
 
@@ -18,7 +17,6 @@ const findShowId = async function (episodeId) {
     return spotifyResponse.data.show.id;
   } catch (err) {
     console.error(err.message);
-    return new NotFound([{ msg: "Could not find episode id" }]);
   }
 };
 
