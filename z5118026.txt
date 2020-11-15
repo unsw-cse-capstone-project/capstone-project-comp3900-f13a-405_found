@@ -11,3 +11,21 @@ I redesigned the System Architecture diagram to have a lot more depth and with h
 from Matt wrote up a description of the SA diagram.
 I attempted to integrate a BE endpoint for the dashboard. This was revised to be a task that 
 is encapsulated by other tasks and removed due to the big overlap. 
+
+Week 4:
+Worked on User History Backend Endpoint. Added needed endpoints for core functionality: getting entire history, checking database to see if a user played a song, adding to and updating a log in database.
+
+Week 5:
+Finished testing for User History. Fully tested using authentication endpoints.
+
+Week 6:
+Started work on the recommender system. Ran into quite a few issues towards the end of the sprint trying to get it to work. Had a hard time testing due to having my IP banned by ListenNotes when trying make an account with them using a temporary email.
+
+Week 7:
+Finished the recommender system. Completed all functionality for users with history/subscriptions to return up to 32 recommendations. Later added functionality for new users to return recommendations of them when no search and view history, and subscriptions exist.
+
+Week 8:
+Refactored User History backend to have code structure match that of the backend. Changed from Mongoose .then() syntax to async functions and try, catch blocks with await. Added some additional functionality to find and store the episode and show name for a given episode id.
+
+Week 9:
+Cleaned up some backend code. Fixed some bugs for the recommender BE to match new User History Schema. Worked on report - drew a new SA diagram for the final report and added to parts of the report applicable to me.
