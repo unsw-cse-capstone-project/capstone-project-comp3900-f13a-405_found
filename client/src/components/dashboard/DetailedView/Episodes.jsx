@@ -110,7 +110,7 @@ const Episodes = ({ podcastEpisodes }) => {
         setPodcastDetails(res.data.episodes.items);
         res.data.episodes.items.forEach(function (element) {
           axios
-            .get(`api/user-history/${element.id}`, {}, config)
+            .get(`/api/user-history/${element.id}`, {}, config)
             .then(function (response) {
               myObj[`${element.id}`] = response.data;
             })
@@ -129,7 +129,7 @@ const Episodes = ({ podcastEpisodes }) => {
       .then(() => {
         setLoading(false);
       });
-  }, [podcastEpisodes.id]);
+  }, []);
 
   if (isLoading) {
     return <Typography component={"div"}>Loading episodes...</Typography>;
@@ -145,14 +145,14 @@ const Episodes = ({ podcastEpisodes }) => {
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
+            aria-controls='panel1bh-content'
+            id='panel1bh-header'
           >
             <Typography component={"div"} className={classes.name}>
               {!beenPlayed[`${episode.id}`] ? (
-                <RadioButtonCheckedIcon fontSize="small" />
+                <RadioButtonCheckedIcon fontSize='small' />
               ) : (
-                <RadioButtonUncheckedIcon fontSize="small" />
+                <RadioButtonUncheckedIcon fontSize='small' />
               )}
               {episode.name}
             </Typography>

@@ -31,7 +31,7 @@ export const Notifications = () => {
       }
       setLoading(false);
     });
-  });
+  }, []);
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -42,9 +42,19 @@ export const Notifications = () => {
   const notifications = notificationsState.notifications;
 
   return (
-    <div style={{ position: "absolute", right: "0", top: "0", zIndex: '4', width: '275px'}}>
+    <div
+      style={{
+        position: "absolute",
+        right: "0",
+        top: "0",
+        zIndex: "4",
+        width: "275px",
+      }}
+    >
       {isLoading ? (
-        <CircularProgress style={{position: "absolute", right: "0", top: "0", margin: "10px"}}/>
+        <CircularProgress
+          style={{ position: "absolute", right: "0", top: "0", margin: "10px" }}
+        />
       ) : (
         <>
           <Badge

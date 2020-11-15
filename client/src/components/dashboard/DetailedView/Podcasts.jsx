@@ -35,7 +35,7 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
       // If there is a share_id, fetch for the current podcast and set it
       fetchPodcast(share_id);
     }
-  });
+  }, []);
 
   if (loading) {
     return <h2>Loading...</h2>;
