@@ -85,6 +85,7 @@ const Sidebar = (props) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    localStorage.setItem("share_set", "false");
     dispatch(logout());
   };
 
