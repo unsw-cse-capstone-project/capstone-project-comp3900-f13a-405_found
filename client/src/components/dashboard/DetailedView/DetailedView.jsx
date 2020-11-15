@@ -56,7 +56,7 @@ export const DetailedView = ({ selectedPod, open, handleClose, img }) => {
 
   const HandleCopyURL = (selectedPod) => {
     // Should replace with a namespace variable but since the application is not being hosted this is okay.
-    navigator.clipboard.writeText(`localhost:3000/dashboard/${selectedPod.id}`);
+    navigator.clipboard.writeText(`localhost:3000/dashboard/share/${selectedPod.id}`);
     setSnackOpen(true);
   };
 

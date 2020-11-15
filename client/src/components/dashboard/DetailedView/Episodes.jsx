@@ -158,36 +158,6 @@ const Episodes = ({ podcastEpisodes }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {/* <div>
-              {!playerState.playing ? (
-                <PlayCircleFilledWhiteIcon
-                  onClick={() => {
-                    handlePlay(episode);
-                  }}
-                  className={classes.playButton}
-                />
-              ) : playerState.episode_id === episode.id ? (
-                <PauseCircleFilledWhiteIcon
-                  onClick={handlePause}
-                  className={classes.playButton}
-                />
-              ) : (
-                <PlayCircleFilledWhiteIcon
-                  onClick={() => {
-                    handlePlay(episode);
-                  }}
-                  className={classes.playButton}
-                />
-              )}
-              <div className={classes.playlistSelect}>
-                <PlaylistSelector
-                  episodeId={episode.id}
-                  style={{ width: "30px" }}
-                />
-              </div>
-              {episode.description}
-            </div>
-             */}
             <Grid container spacing={3}>
               <Grid item xs={1}>
                 {!playerState.playing ? (
