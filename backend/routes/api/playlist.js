@@ -133,7 +133,6 @@ router.post("/:playlistId/:episodeId", async (req, res, next) => {
             podcast_name: episode.show.name,
             podcast_artist: episode.show.publisher,
           });
-          console.log(playlist);
           await playlist.save(function (err) {
             if (err) {
               console.log(err);
@@ -162,7 +161,6 @@ router.delete("/:playlistId/:episodeId", async (req, res, next) => {
       req.params.playlistId,
       async function (err, playlist) {
         try {
-          console.log(playlist);
           // Check if the episode exists in the playlist
           if (!episodeExists(playlist, req.params.episodeId)) {
             return res

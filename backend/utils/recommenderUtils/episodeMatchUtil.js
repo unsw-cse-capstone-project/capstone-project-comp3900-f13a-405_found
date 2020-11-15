@@ -1,7 +1,9 @@
 const axios = require("axios");
 const lodash = require("lodash");
+const { NotFound } = require("../errors")
 
 var EpisodeMatch = function () {};
+
 
 const findShowId = async function (episodeId) {
   try {
@@ -13,8 +15,7 @@ const findShowId = async function (episodeId) {
       Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
     };
     const spotifyResponse = await axios.get(uri, { headers });
-    const spotifyResObj = JSON.parse(spotifyResponse.data);
-    return spotifyResObj.id;
+    return spotifyResponse.data.show.id;
   } catch (err) {
     console.error(err.message);
     return new NotFound([{ msg: "Could not find episode id" }]);
@@ -22,7 +23,7 @@ const findShowId = async function (episodeId) {
 };
 
 const getShowIdsFromHist = async function (history) {
-  if ((history.length = 0)) return history;
+  if ((history.length == 0)) return history;
   const trimmedHistory = lodash.takeRight(history, 5);
   const episodeIds = lodash.map(trimmedHistory, "episodeId");
   const matchedIds = [];
