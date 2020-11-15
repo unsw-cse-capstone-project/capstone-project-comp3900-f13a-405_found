@@ -84,7 +84,7 @@ const LoginComp = () => {
     // If there is a share_id stored, then we want to redirect there instead
     return (
       <Redirect
-        to={share_id != null ? `/dashboard/${share_id}` : "/dashboard"}
+        to={share_id != null ? `/dashboard/share/${share_id}` : "/dashboard"}
       />
     );
   }

@@ -12,11 +12,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const id = rest.location.pathname || '';
-    const regex_match = /\/dashboard\/([A-Za-z0-9]*)/.exec(id);
+    const id = rest.location.pathname || "";
+    const regex_match = /\/dashboard\/share\/([A-Za-z0-9]*)/.exec(id);
     if (regex_match && regex_match.length > 1) {
-      localStorage.setItem('share_id', regex_match[1]);
-      localStorage.setItem('share_set', true);
+      localStorage.setItem("share_id", regex_match[1]);
+      localStorage.setItem("share_set", true);
     }
     dispatch(checkUserStillVerified());
   }, [dispatch, rest.location.pathname]);
