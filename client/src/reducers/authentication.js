@@ -45,7 +45,6 @@ export default function (state = initialState, action) {
     case LOGOUT_FAIL:
     case LOGIN_FAIL:
     case SIGNUP_FAIL:
-      localStorage.setItem("share_set", false);
       return {
         ...state,
         isAuthenticated: false,
