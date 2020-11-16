@@ -28,4 +28,4 @@ Week 8:
 Refactored User History backend to have code structure match that of the backend. Changed from Mongoose .then() syntax to async functions and try, catch blocks with await. Added some additional functionality to find and store the episode and show name for a given episode id.
 
 Week 9:
-Cleaned up some backend code. Fixed some bugs for the recommender BE to match new User History Schema. Worked on report - drew a new SA diagram for the final report and added to parts of the report applicable to me.
+Cleaned up some backend code. Fixed some bugs for the recommender BE to match new User History Schema. Worked on report - drew a new SA diagram for the final report and added to parts of the report applicable to me. Tested code on CSE and added some hotfixes
