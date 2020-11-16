@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
     const userRecord = new UserRecord();
     const subscriptions = await userRecord.getUserSubscription(req);
     const history = await userRecord.getUserHistory(req);
-    if (subscriptions.length != 0 && history.length != 0) {
+    if (subscriptions.length != 0 || history.length != 0) {
       const episodeMatch = new EpisodeMatch();
       const spotifyShowIds = await episodeMatch.getShowIds(
         history,
