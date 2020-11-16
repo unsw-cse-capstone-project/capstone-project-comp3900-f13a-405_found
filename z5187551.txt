@@ -35,3 +35,6 @@ Week 8
 
 Week 9
 - cleaned up the code structure for software quality
+
+Week 10
+- mainly just fixing up any existing bugs, UI tweaks
