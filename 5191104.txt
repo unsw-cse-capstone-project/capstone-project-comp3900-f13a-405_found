@@ -1,0 +1,25 @@
+Week 1
+Had our first meeting - delegated roles for the report and decided Theon would be the scrum master. 
+
+Week 2
+Worked on the background for the project proposal.
+
+Week 3
+Finished off background for the project proposal. Started 
+Started working on Spotify API. I didn’t end up linking it up with the backend of our project - it was a standalone script. Matthew integrated it to our backend. 
+
+Week 5 
+Started email verification for user registration but couldn’t complete it properly.
+
+Week 6 
+Matthew took over email verification and finished it off. Started working on user playlist. 
+
+Week 7 
+Finished BE for user playlist but couldn’t finish FE. Tassja or Matthew ended up helping out. 
+
+Week 8
+Started working on ‘resuming play from last played.’ Feature works, but some minor bugs. It’s producing some errors and warnings on the console, the feature doesn’t work properly when you skip the podcast with your cursor, and there’s a slight delay in the episode going back to where you left off when you play from the ‘episodes list.’
+
+Week 9 
+Fixed up bugs for ‘resume play’ feature - all warnings and errors on the console are fixed. The feature works when you skip through the podcast with your mouse on the ‘progressor bar.’ Still having some issues with the slight delay in starting the episode when played from ‘episode list.’ The episode plays about 0.5 seconds of the first second, then it’ll start playing from where I left off. I know what’s causing the issue but I’m not sure what the fix should be. 
+
