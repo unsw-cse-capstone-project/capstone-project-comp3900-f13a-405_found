@@ -7,6 +7,7 @@ import {
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "./Trending.scss";
 import Grid from "@material-ui/core/Grid";
+import PersonIcon from "@material-ui/icons/Person";
 
 const Trending = () => {
   const subscriptionState = useSelector((state) => state.subscriptions);
@@ -56,12 +57,17 @@ const Trending = () => {
             subscriptionState.trendingShows.map((trending, index) => (
               <li key={trending.showId} className='list-group-item'>
                 <div style={{ textAlign: "left", color: "black" }}>
-                  {`${index + 1}.  `}
-                  {getShowName(trending.showId)}
+                  <div>
+                    {" "}
+                    {`${index + 1}.  `}
+                    {getShowName(trending.showId)}
+                  </div>
+                  <div>
+                    {" "}
+                    <PersonIcon /> {trending.count}
+                  </div>
                 </div>
                 <div style={{ textAlign: "right", color: "black" }}>
-                  {" "}
-                  Subscriber count: {trending.count}
                   <img
                     height='60px'
                     width='60px'

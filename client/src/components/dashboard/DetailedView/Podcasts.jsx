@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DetailedView } from "./DetailedView";
+import PersonIcon from "@material-ui/icons/Person";
 
 const Podcasts = ({ podcasts, loading, share_id }) => {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,10 @@ const Podcasts = ({ podcasts, loading, share_id }) => {
           className='list-group-item'
         >
           <div style={{ textAlign: "left", color: "black" }}>
-            {podcasts.name}
+            <div>{podcasts.name}</div>
+            <div>
+              <PersonIcon /> {podcasts.subsCount}
+            </div>
           </div>
           <div style={{ textAlign: "right", color: "black" }}>
             <img

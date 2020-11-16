@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const { NotFound } = require("../../utils/errors");
 const router = express.Router();
+const Subscriptions = require("../../models/SubscriptionModel");
 
 // @route   GET api/spotify/search/:queryToBeSearched
 // @desc    Search for shows
@@ -21,6 +22,33 @@ router.get(
         Authorization: `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
       };
       const spotifyResponse = await axios.get(uri, { headers });
+
+      const subscriptions = await Subscriptions.aggregate([
+        {
+          $group: {
+            _id: "$showId",
+            data: { $push: "$$ROOT" },
+            count: { $sum: 1 },
+          },
+        },
+      ]);
+
+      //  for O(1) performance !
+      const showIdAndCount = {};
+
+      subscriptions.map((subs) => {
+        showIdAndCount[`${subs.data[0].showId}`] = subs.count;
+        return subs;
+      });
+
+      const modifiedResponseItems = spotifyResponse.data.shows.items.map(
+        (show) => ({
+          ...show,
+          subsCount: show.id in showIdAndCount ? showIdAndCount[show.id] : 0,
+        })
+      );
+
+      spotifyResponse.data.shows.items = modifiedResponseItems;
 
       return res.status(200).json(spotifyResponse.data);
     } catch (err) {
